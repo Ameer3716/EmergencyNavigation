@@ -1,0 +1,30 @@
+OMNeT++ Discrete Event Simulation  (C) 1992-2025 Andras Varga, OpenSim Ltd.
+Version: 6.3.0, build: 251110-bb3d6a4731, edition: Academic Public License -- NOT FOR COMMERCIAL USE
+See the license for distribution terms and warranty disclaimer
+
+Setting up Cmdenv...
+
+Loading NED files from /home/opp_env/workspace/veins-5.3.1/src/veins:  44
+Loading NED files from /mnt/d/codex/EmergencyNavigation/src:  14
+
+Preparing for running configuration RsuRelay, run #0...
+Assigned runID=RsuRelay-0-20260920-18:27:28-45217
+Setting up network "emergencynavigation.scenario.EmergencyGridScenario"...
+Initializing...
+
+Running simulation...
+** Event #0   t=0   Elapsed: 1.2e-05s (0m 00s)  0% completed  (0% total)
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 50   present: 50   in FES: 7
+** Event #2816   t=67.015089450212   Elapsed: 1.14199s (0m 01s)  55% completed  (55% total)
+     Speed:     ev/sec=2466.77   simsec/sec=58.6832   ev/simsec=42.0353
+     Messages:  created: 3195   present: 706   in FES: 71
+** Event #5159   t=120   Elapsed: 1.78508s (0m 01s)  100% completed  (100% total)
+     Speed:     ev/sec=3641.82   simsec/sec=82.3918   ev/simsec=44.2013
+     Messages:  created: 5460   present: 969   in FES: 67
+
+<!> Simulation time limit reached -- at t=120s, event #5159
+
+Calling finish() at end of Run #0...
+
+End.

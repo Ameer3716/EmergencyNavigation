@@ -1,8 +1,8 @@
 package emergencynavigation.apps;
 
-import org.car2x.veins.modules.application.ieee80211p.DemoBaseApplLayer;
+import emergencynavigation.apps.EmergencyRelayApp;
 
-simple EmergencyVehicleApp extends DemoBaseApplLayer
+simple EmergencyVehicleApp extends EmergencyRelayApp
 {
     @class(emergencynavigation::EmergencyVehicleApp);
     @display("i=block/app2");

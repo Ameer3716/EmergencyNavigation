@@ -2,7 +2,7 @@
 set -euo pipefail
 : "${VEINS_ROOT:?Run this script inside the matching opp_env Veins environment}"
 project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-config="${1:-Smoke}"
+config="${1:-${EN_CONFIG:-Smoke}}"
 cd "$project_dir/simulations/grid"
 log_file="$project_dir/artifacts/logs/grid-${config}-stdout.txt"
 opp_run -u Cmdenv -c "$config" \

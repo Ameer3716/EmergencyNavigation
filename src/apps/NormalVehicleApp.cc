@@ -1,15 +1,16 @@
-#include "veins/modules/application/ieee80211p/DemoBaseApplLayer.h"
+#include "apps/EmergencyRelayApp.h"
 
 namespace emergencynavigation {
 
-class NormalVehicleApp : public veins::DemoBaseApplLayer {
+class NormalVehicleApp : public EmergencyRelayApp {
 protected:
     void initialize(int stage) override {
-        veins::DemoBaseApplLayer::initialize(stage);
+        EmergencyRelayApp::initialize(stage);
         if (stage == 1) {
             EV_INFO << "ENTITY role=normal vehicle=" << mobility->getExternalId() << " time=" << simTime() << "\n";
         }
     }
+    const char* nodeRole() const override { return "normal"; }
 };
 
 } // namespace emergencynavigation

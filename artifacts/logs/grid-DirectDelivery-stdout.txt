@@ -1,0 +1,30 @@
+OMNeT++ Discrete Event Simulation  (C) 1992-2025 Andras Varga, OpenSim Ltd.
+Version: 6.3.0, build: 251110-bb3d6a4731, edition: Academic Public License -- NOT FOR COMMERCIAL USE
+See the license for distribution terms and warranty disclaimer
+
+Setting up Cmdenv...
+
+Loading NED files from /home/opp_env/workspace/veins-5.3.1/src/veins:  44
+Loading NED files from /mnt/d/codex/EmergencyNavigation/src:  14
+
+Preparing for running configuration DirectDelivery, run #0...
+Assigned runID=DirectDelivery-0-20260920-18:26:19-45031
+Setting up network "emergencynavigation.scenario.EmergencyGridScenario"...
+Initializing...
+
+Running simulation...
+** Event #0   t=0   Elapsed: 1.1e-05s (0m 00s)  0% completed  (0% total)
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 50   present: 50   in FES: 7
+** Event #2816   t=68.5   Elapsed: 1.18045s (0m 01s)  57% completed  (57% total)
+     Speed:     ev/sec=2386.39   simsec/sec=58.029   ev/simsec=41.1241
+     Messages:  created: 3202   present: 696   in FES: 50
+** Event #4865   t=120   Elapsed: 1.53718s (0m 01s)  100% completed  (100% total)
+     Speed:     ev/sec=5741.26   simsec/sec=144.373   ev/simsec=39.767
+     Messages:  created: 5214   present: 965   in FES: 67
+
+<!> Simulation time limit reached -- at t=120s, event #4865
+
+Calling finish() at end of Run #0...
+
+End.
