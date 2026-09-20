@@ -4,10 +4,10 @@
 *.exe
 __pycache__/
 .venv/
+simulations/grid/results/
 results/raw/*
 !results/raw/.gitkeep
 results/processed/*
 !results/processed/.gitkeep
 results/graphs/*
 !results/graphs/.gitkeep
-
