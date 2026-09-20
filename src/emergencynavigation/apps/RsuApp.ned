@@ -12,4 +12,6 @@ simple RsuApp extends EmergencyRelayApp
     string accidentVehicleId = default("accident");
     string accidentRoad = default("D3C3");
     int payloadBytes = default(256);
+    double trafficStatusInterval @unit(s) = default(1s);
+    double trafficDataTtl @unit(s) = default(2s);
 }

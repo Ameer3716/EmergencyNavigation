@@ -5,6 +5,10 @@
 __pycache__/
 .venv/
 simulations/grid/results/
+simulations/batch/
+tests/routing_test
+artifacts/logs/batch/
+artifacts/logs/*.csv
 src/Makefile
 src/out/
 src/**/*_m.cc

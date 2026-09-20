@@ -36,6 +36,8 @@ packet TrafficStatus extends veins::BaseFrame1609_4
 packet RouteRequest extends veins::BaseFrame1609_4
 {
     string requestId;
+    string targetRsu;
+    bool useCloud;
     string emergencyVehicleId;
     string startEdge;
     string destinationEdge;
@@ -50,12 +52,16 @@ packet RouteRequest extends veins::BaseFrame1609_4
 packet RouteReply extends veins::BaseFrame1609_4
 {
     string requestId;
+    string emergencyVehicleId;
     string routeEdges;
     double estimatedCost;
     string computationLocation;
     double computationStarted;
     double computationFinished;
     bool routeValid;
+    double backhaulDelay;
+    double processingDelay;
+    int expandedNodes;
 }
 
 packet CloudRouteRequest extends veins::BaseFrame1609_4

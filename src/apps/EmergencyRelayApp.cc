@@ -10,6 +10,22 @@ EmergencyRelayApp::~EmergencyRelayApp()
     cancelAndDelete(cleanupTimer);
 }
 
+void EmergencyRelayApp::sendControl(veins::BaseFrame1609_4* frame)
+{
+    ++controlTransmissions;
+    controlBytes += frame->getByteLength();
+    sendDown(frame);
+}
+
+void EmergencyRelayApp::finish()
+{
+    recordScalar("controlTransmissions", controlTransmissions);
+    recordScalar("controlBytes", controlBytes);
+    recordScalar("emergencyTransmissions", emergencyTransmissions);
+    recordScalar("emergencyBytes", emergencyBytes);
+    veins::DemoBaseApplLayer::finish();
+}
+
 void EmergencyRelayApp::initialize(int stage)
 {
     veins::DemoBaseApplLayer::initialize(stage);
@@ -79,6 +95,26 @@ void EmergencyRelayApp::logEvent(const char* action, const std::string& eventId,
 
 void EmergencyRelayApp::onWSM(veins::BaseFrame1609_4* frame)
 {
+    if (auto* beacon = dynamic_cast<TrafficBeacon*>(frame)) {
+        onTrafficBeacon(*beacon);
+        return;
+    }
+    if (auto* status = dynamic_cast<TrafficStatus*>(frame)) {
+        onTrafficStatus(*status);
+        return;
+    }
+    if (auto* request = dynamic_cast<RouteRequest*>(frame)) {
+        onRouteRequest(*request);
+        return;
+    }
+    if (auto* reply = dynamic_cast<RouteReply*>(frame)) {
+        onRouteReply(*reply);
+        return;
+    }
+    if (auto* request = dynamic_cast<TLPreemptionRequest*>(frame)) {
+        onTLPreemptionRequest(*request);
+        return;
+    }
     auto* message = dynamic_cast<EmergencyMessage*>(frame);
     if (!message) return;
     pruneCache();
@@ -112,6 +148,8 @@ void EmergencyRelayApp::handleSelfMsg(omnetpp::cMessage* message)
     }
     if (auto* emergency = dynamic_cast<EmergencyMessage*>(message)) {
         logEmergency("transmit", *emergency, "broadcast");
+        ++emergencyTransmissions;
+        emergencyBytes += emergency->getByteLength();
         sendDown(emergency);
         return;
     }

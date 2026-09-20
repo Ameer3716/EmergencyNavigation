@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="congestionType" vClass="passenger" color="0.7,0,0.8"/>
+    <route id="congestionRoute" edges="C1C2 C2D2"/>
+    <vehicle id="congestionBlocker" type="congestionType" route="congestionRoute" depart="95" departPos="40" departSpeed="0">
+        <stop lane="C1C2_0" endPos="50" until="190"/>
+    </vehicle>
+</routes>

@@ -6,4 +6,5 @@ simple NormalVehicleApp extends EmergencyRelayApp
 {
     @class(emergencynavigation::NormalVehicleApp);
     @display("i=block/app2");
+    double trafficBeaconInterval @unit(s) = default(1s);
 }

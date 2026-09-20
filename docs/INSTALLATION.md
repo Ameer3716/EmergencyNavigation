@@ -1,27 +1,51 @@
-# Installation
+# Installation and execution
 
-Installation is in progress. The machine audit and current state are recorded in `PROGRESS.md`.
+Verified on Windows 10 Pro with WSL2, the official `opp_env` WSL distribution (`0.36.1.20260515`), OMNeT++ 6.3.0, Veins 5.3.1, and an exact SUMO 1.18.0 wheel. Python 3.14.7 and Matplotlib 3.11.1 were used for host-side analysis. This project uses native Veins IEEE 802.11p. INET 4.6.0 was installed as an optional Veins build dependency; its radio is not used in these vehicles.
 
-The requested stack is OMNeT++ 6.3.0, Veins 5.3.1, and SUMO 1.18.0. INET 4.6.0 is optional because native Veins IEEE 802.11p is the intended radio model. The official Veins 5.3.1 compatibility list names SUMO 1.18.0 but does not name OMNeT++ 6.3.0. Therefore the stock Veins example build and run are mandatory compatibility checks before custom development. Source: https://veins.car2x.org/download/ .
-
-OMNeT++ recommends `opp_env` for versioned installs under WSL2. Source: https://omnetpp.org/download-items/omnetpp/omnetpp-630.html . Installation commands and any required compatibility patch will be documented after they execute successfully.
-
-Observed successful host setup:
+The host installation used:
 
 ```powershell
 wsl --install -d Ubuntu-24.04 --no-launch
 curl.exe -L --fail --output D:\codex\opp_env.wsl https://github.com/omnetpp/opp_env/releases/download/wsl/opp_env.wsl
 wsl --install --from-file D:\codex\opp_env.wsl --no-launch
-wsl -d opp_env -- bash -lc 'opp_env --version'
 ```
 
-The official `opp_env` image reports version `0.36.1.20260515`. It resolves Veins 5.3.1, OMNeT++ 6.3.0, and INET 4.6.0. A release-only installation is in progress using:
+The `opp_env` image needed a mount of the Windows D: drive inside the distribution:
+
+```bash
+mkdir -p /mnt/d
+mount -t drvfs D: /mnt/d
+```
+
+The project uses `/home/opp_env/workspace` for the versioned stack. The following release build was used:
 
 ```bash
 cd ~/workspace
-opp_env install veins-5.3.1 omnetpp-6.3.0 --build-modes release --smoke-test
+opp_env install veins-5.3.1 omnetpp-6.3.0 --build-modes release
 ```
 
-The exact SUMO binary was installed from `eclipse-sumo==1.18.0` into `/home/opp_env/sumo118_pkg`; `sumo --version` reports 1.18.0. The Veins launcher must be pointed at `/home/opp_env/sumo118_pkg/sumo/bin/sumo` explicitly because the `opp_env` Nix environment otherwise exposes SUMO 1.22.0. Native Veins 802.11p remains the planned radio model even though `opp_env` compiles its optional INET integration as a dependency.
+An `opp_env ... --smoke-test` variant compiled the optional Veins-INET integration and ran its smoke simulation, but returned exit code 1 during its launchd cleanup (`kill: No such process`). The independently run stock native Veins example passed to 200 s, exit code 0; see `artifacts/logs/veins-example-stdout.txt` and its launchd log. This is a test-wrapper cleanup failure, not a version change. The exact SUMO binary was installed from `eclipse-sumo==1.18.0` to `/home/opp_env/sumo118_pkg/sumo`:
 
-The core Veins example passed by starting the launcher with the explicit SUMO binary, then running `scripts/verify-veins-example.sh` in an `opp_env run veins-5.3.1 omnetpp-6.3.0 --no-deps --no-build --build-modes release` session. The output and launcher transcript are saved in `artifacts/logs/`. The `opp_env` WSL image did not automount Windows drives; `/mnt/d` was created and mounted with `mount -t drvfs D: /mnt/d` as root before using project scripts and log paths.
+```bash
+python3 -m pip install --target /home/opp_env/sumo118_pkg 'eclipse-sumo==1.18.0'
+/home/opp_env/sumo118_pkg/sumo/bin/sumo --version
+```
+
+Ubuntu runtime packages `libx11-6`, `libxext6`, `libxrender1`, and `libgl1` were needed. The `opp_env` Nix environment exposes SUMO 1.22.0, so the Veins launcher must explicitly use the 1.18.0 binary.
+
+Start the SUMO launcher in the `opp_env` distribution before a co-simulation:
+
+```bash
+cd ~/workspace/veins-5.3.1
+./bin/veins_launchd -d -p 9998 -vv -c /home/opp_env/sumo118_pkg/sumo/bin/sumo -L /mnt/d/codex/EmergencyNavigation/artifacts/logs/grid-launchd.log
+```
+
+Build and run from a WSL shell:
+
+```bash
+cd ~/workspace
+opp_env run veins-5.3.1 omnetpp-6.3.0 --no-deps --no-build --build-modes release -c /mnt/d/codex/EmergencyNavigation/scripts/build.sh
+EN_CONFIG=MistAStar opp_env run veins-5.3.1 omnetpp-6.3.0 --no-deps --no-build --build-modes release -k EN_CONFIG -c /mnt/d/codex/EmergencyNavigation/scripts/run_grid.sh
+```
+
+Valid comparison configuration names are `FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, and `MistDynamicFogFallback`. `ForcedMistFailure` and `CongestionReroute` are validation configurations. `scripts/run_initial_suite.sh` executes the four comparison configurations and the forced-failure case, then copies their raw OMNeT++ files to `results/raw/`. From Windows, run `python analysis/process_results.py --require-all` to generate processed CSV and PNG graphs. Run `wsl -d opp_env -- python3 /mnt/d/codex/EmergencyNavigation/scripts/capture_sumo.py` for genuine SUMO-GUI frames in `artifacts/screenshots/`.
