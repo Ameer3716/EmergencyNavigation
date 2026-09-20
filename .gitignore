@@ -1,0 +1,13 @@
+*.o
+*.so
+*.dll
+*.exe
+__pycache__/
+.venv/
+results/raw/*
+!results/raw/.gitkeep
+results/processed/*
+!results/processed/.gitkeep
+results/graphs/*
+!results/graphs/.gitkeep
+
