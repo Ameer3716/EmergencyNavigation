@@ -18,11 +18,12 @@ Audit date: 2026-09-20, Windows host in Asia/Karachi timezone.
 
 The version-command transcript is in `artifacts/logs/machine-audit.txt`. This audit establishes that the requested Veins example and custom simulations cannot yet run.
 
-## Stage 2: repository structure — in progress
+## Stage 2: repository structure — complete
 
-Git repository and required directories created. No implementation or validation tests have passed yet.
+Git repository and required directories created and committed as `ed239d8` and `28d04ce`. No simulation validation tests have passed yet.
 
 ## Stage 3: simulator installation — in progress
 
-Requested Ubuntu 24.04 distribution installation through `wsl --install -d Ubuntu-24.04 --no-launch`. Installation outcome pending.
+Ubuntu 24.04.5 LTS installed through `wsl --install -d Ubuntu-24.04 --no-launch`; launch and `/etc/os-release` inspection succeeded. The official `opp_env.wsl` image was downloaded and installed through `wsl --install --from-file D:\codex\opp_env.wsl --no-launch`. Its `opp_env --version` command reports `0.36.1.20260515`. The image is also a WSL2 distribution. Both launches reported a WSL NAT configuration fallback to VirtioProxy; neither failed.
 
+An `opp_env` workspace was initialized at `/home/opp_env/workspace`. Installation of `veins-5.3.1` and `omnetpp-6.3.0` is running with `--smoke-test`. Dependency resolution selected `inet-4.6.0` automatically. This does not change the chosen native Veins radio model. `opp_env info veins-5.3.1` explicitly lists OMNeT++ 6.3.0 and INET 4.6.0 as compatible requirements, and its Nix environment supplies SUMO without an independently selectable `sumo-1.18.0` project. The exact SUMO 1.18.0 runtime must still be installed and verified.
