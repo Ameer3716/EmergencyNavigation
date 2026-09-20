@@ -15,4 +15,13 @@ wsl --install --from-file D:\codex\opp_env.wsl --no-launch
 wsl -d opp_env -- bash -lc 'opp_env --version'
 ```
 
-The official `opp_env` image reports version `0.36.1.20260515`. Installation of the target packages is in progress. The current package resolver also selects INET 4.6.0; native Veins 802.11p remains the planned radio model.
+The official `opp_env` image reports version `0.36.1.20260515`. It resolves Veins 5.3.1, OMNeT++ 6.3.0, and INET 4.6.0. A release-only installation is in progress using:
+
+```bash
+cd ~/workspace
+opp_env install veins-5.3.1 omnetpp-6.3.0 --build-modes release --smoke-test
+```
+
+The exact SUMO binary was installed from `eclipse-sumo==1.18.0` into `/home/opp_env/sumo118_pkg`; `sumo --version` reports 1.18.0. The Veins launcher must be pointed at `/home/opp_env/sumo118_pkg/sumo/bin/sumo` explicitly because the `opp_env` Nix environment otherwise exposes SUMO 1.22.0. Native Veins 802.11p remains the planned radio model even though `opp_env` compiles its optional INET integration as a dependency.
+
+The core Veins example passed by starting the launcher with the explicit SUMO binary, then running `scripts/verify-veins-example.sh` in an `opp_env run veins-5.3.1 omnetpp-6.3.0 --no-deps --no-build --build-modes release` session. The output and launcher transcript are saved in `artifacts/logs/`. The `opp_env` WSL image did not automount Windows drives; `/mnt/d` was created and mounted with `mount -t drvfs D: /mnt/d` as root before using project scripts and log paths.
