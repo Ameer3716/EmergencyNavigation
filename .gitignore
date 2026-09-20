@@ -5,6 +5,10 @@
 __pycache__/
 .venv/
 simulations/grid/results/
+src/Makefile
+src/out/
+src/**/*_m.cc
+src/**/*_m.h
 results/raw/*
 !results/raw/.gitkeep
 results/processed/*

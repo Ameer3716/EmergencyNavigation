@@ -89,3 +89,91 @@ Step #120.00 (0ms ?*RT. ?UPS, TraCI: 1631ms, vehicles TOT 50 ACT 47 BUF 0)
 </status>
 "
 DEBUG:root:Closing connection from 127.0.0.1 on port 59669
+DEBUG:root:Connection from 127.0.0.1 on port 58602
+DEBUG:root:Handling connection from 127.0.0.1 on port 58602
+DEBUG:root:Got TraCI message of length 2
+DEBUG:root:Got TraCI command of length 1
+DEBUG:root:Got TraCI command 0x0
+DEBUG:root:Got CMD_GETVERSION
+DEBUG:root:Got TraCI message of length 299
+DEBUG:root:Got TraCI command of length 294
+DEBUG:root:Got TraCI command 0x75
+DEBUG:root:Got CMD_FILE_SEND for "b'sumo-launchd.launch.xml'"
+DEBUG:root:Got CMD_FILE_SEND with data "b'<launch>\n  <copy file="grid.net.xml"/>\n  <copy file="normal-medium-seed1.rou.xml"/>\n  <copy file="special.rou.xml"/>\n  <copy file="grid.sumocfg" type="config"/>\n  <basedir path="/mnt/d/codex/EmergencyNavigation/simulations/grid/"/>\n  <seed value="0"/>\n</launch>\n'"
+DEBUG:root:Creating temporary directory...
+DEBUG:root:Temporary dir is /tmp/sumo-launchd-tmp-8m0w96nn
+DEBUG:root:Base dir is /mnt/d/codex/EmergencyNavigation/simulations/grid/
+DEBUG:root:Seed is 0
+DEBUG:root:Finding free port number...
+DEBUG:root:Claiming lock on port
+DEBUG:root:...found port 33959
+INFO:root:Starting SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 33959, seed 0
+DEBUG:root:Connecting to SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 33959 (try 1)
+DEBUG:root:Error ([Errno 111] Connection refused)
+DEBUG:root:Connecting to SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 33959 (try 2)
+DEBUG:root:Releasing lock on port
+DEBUG:root:Starting proxy mode
+DEBUG:root:Done with proxy mode
+DEBUG:root:Done with proxy mode, killing SUMO
+INFO:root:Done running SUMO
+DEBUG:root:Cleaning up
+DEBUG:root:Result: "<?xml version="1.0"?>
+<status>
+	<exit-code>0</exit-code>
+	<start>1789910137</start>
+	<end>1789910142</end>
+	<status>Done.</status>
+	<stdout><![CDATA[Step #0.00 (0ms ?*RT. ?UPS, TraCI: 584ms, vehicles TOT 2 ACT 2 BUF 0)                     
+Step #50.00 (0ms ?*RT. ?UPS, TraCI: 5ms, vehicles TOT 22 ACT 22 BUF 0)                    
+Step #100.00 (0ms ?*RT. ?UPS, TraCI: 7ms, vehicles TOT 43 ACT 41 BUF 0)                   
+Step #120.00 (0ms ?*RT. ?UPS, TraCI: 1375ms, vehicles TOT 50 ACT 47 BUF 0)                
+]]></stdout>
+	<stderr><![CDATA[Warning: Environment variable SUMO_HOME is not set properly, disabling XML validation. Set 'auto' or 'always' for web lookups.
+]]></stderr>
+</status>
+"
+DEBUG:root:Closing connection from 127.0.0.1 on port 58602
+DEBUG:root:Connection from 127.0.0.1 on port 58623
+DEBUG:root:Handling connection from 127.0.0.1 on port 58623
+DEBUG:root:Got TraCI message of length 2
+DEBUG:root:Got TraCI command of length 1
+DEBUG:root:Got TraCI command 0x0
+DEBUG:root:Got CMD_GETVERSION
+DEBUG:root:Got TraCI message of length 299
+DEBUG:root:Got TraCI command of length 294
+DEBUG:root:Got TraCI command 0x75
+DEBUG:root:Got CMD_FILE_SEND for "b'sumo-launchd.launch.xml'"
+DEBUG:root:Got CMD_FILE_SEND with data "b'<launch>\n  <copy file="grid.net.xml"/>\n  <copy file="normal-medium-seed1.rou.xml"/>\n  <copy file="special.rou.xml"/>\n  <copy file="grid.sumocfg" type="config"/>\n  <basedir path="/mnt/d/codex/EmergencyNavigation/simulations/grid/"/>\n  <seed value="0"/>\n</launch>\n'"
+DEBUG:root:Creating temporary directory...
+DEBUG:root:Temporary dir is /tmp/sumo-launchd-tmp-jw5_qewn
+DEBUG:root:Base dir is /mnt/d/codex/EmergencyNavigation/simulations/grid/
+DEBUG:root:Seed is 0
+DEBUG:root:Finding free port number...
+DEBUG:root:Claiming lock on port
+DEBUG:root:...found port 41677
+INFO:root:Starting SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 41677, seed 0
+DEBUG:root:Connecting to SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 41677 (try 1)
+DEBUG:root:Error ([Errno 111] Connection refused)
+DEBUG:root:Connecting to SUMO (/home/opp_env/sumo118_pkg/sumo/bin/sumo -c grid.sumocfg) on port 41677 (try 2)
+DEBUG:root:Releasing lock on port
+DEBUG:root:Starting proxy mode
+DEBUG:root:Done with proxy mode
+DEBUG:root:Done with proxy mode, killing SUMO
+INFO:root:Done running SUMO
+DEBUG:root:Cleaning up
+DEBUG:root:Result: "<?xml version="1.0"?>
+<status>
+	<exit-code>0</exit-code>
+	<start>1789910273</start>
+	<end>1789910278</end>
+	<status>Done.</status>
+	<stdout><![CDATA[Step #0.00 (0ms ?*RT. ?UPS, TraCI: 594ms, vehicles TOT 2 ACT 2 BUF 0)                     
+Step #50.00 (0ms ?*RT. ?UPS, TraCI: 5ms, vehicles TOT 22 ACT 22 BUF 0)                    
+Step #100.00 (1ms ~= 500.00*RT, ~41000.00UPS, TraCI: 10ms, vehicles TOT 43 ACT 41 BUF 0)  
+Step #120.00 (0ms ?*RT. ?UPS, TraCI: 1317ms, vehicles TOT 50 ACT 47 BUF 0)                
+]]></stdout>
+	<stderr><![CDATA[Warning: Environment variable SUMO_HOME is not set properly, disabling XML validation. Set 'auto' or 'always' for web lookups.
+]]></stderr>
+</status>
+"
+DEBUG:root:Closing connection from 127.0.0.1 on port 58623
