@@ -1,0 +1,14 @@
+Loading net-file from '/mnt/d/codex/EmergencyNavigation/simulations/grid/grid.net.xml' ... done (75ms).
+Loading done.
+Simulation version 1.18.0 started with time: 0.00.
+Simulation ended at time: 1800.00
+Reason: The final simulation step has been reached.
+Performance: 
+ Duration: 3.84s
+ Real time factor: 468.384
+ UPS: 45839.708561
+Vehicles: 
+ Inserted: 283 (Loaded: 290)
+ Running: 24
+ Waiting: 7
+
