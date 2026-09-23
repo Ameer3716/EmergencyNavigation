@@ -50,8 +50,7 @@ scripts/generate_duplicate_ttl_screenshot.py
 scripts/generate_evidence_screenshots.py
 scripts/test_gui_settings.py
 
-# ─── Graph / document generating scripts ──────────────────────────────────────
-scripts/generate_final_graph.py
+# ─── Document generating scripts (not needed for reproduction) ────────────────
 scripts/generate_final_docx.py
 scripts/inspect_docx.py
 
