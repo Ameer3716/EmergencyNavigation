@@ -198,6 +198,42 @@ bash scripts/run_grid.sh Smoke
 
 The Smoke configuration ends at simulation time 120 s. It writes `simulations/grid/results/Smoke-#0.sca`, `.vec`, and `.vci`, plus `artifacts/logs/grid-Smoke-stdout.txt`. Check the last lines of that log for `End.` before continuing.
 
+### Run a single scenario with GUI windows
+
+Use this from the repository root inside the `opp_env` shell on a WSL setup with graphical display support (such as WSLg). The `-k` flag replaces the existing port-9998 launch daemon, and `--start` lets SUMO-GUI advance under TraCI control. The Smoke run below opens SUMO-GUI while OMNeT++ runs in its terminal interface:
+
+```bash
+echo "$DISPLAY"
+python3 "$VEINS_ROOT/bin/veins_launchd" -d -k -p 9998 -vv -s \
+  -c "$SUMO_HOME/bin/sumo-gui --start {}" \
+  -L "$PWD/artifacts/logs/grid-launchd-gui.log"
+bash scripts/run_grid.sh Smoke
+```
+
+To open OMNeT++'s Qtenv as well, use the same GUI launch daemon, then run this instead of `bash scripts/run_grid.sh Smoke`. Press **Run** in Qtenv to start the simulation; SUMO-GUI opens when Veins launches SUMO. This Qtenv startup was checked, but interactive clicking was not automated:
+
+```bash
+cd simulations/grid
+library="$(find ../../src/out -name libsrc.so -print -quit)"
+test -n "$library"
+opp_run -u Qtenv -c Smoke \
+  -n "$VEINS_ROOT/src/veins:../../src" \
+  -l "$VEINS_ROOT/src/veins" \
+  -l "${library%/libsrc.so}/src" \
+  -f omnetpp.ini
+cd ../..
+```
+
+After closing Qtenv, restore the command-line SUMO daemon before running a batch:
+
+```bash
+python3 "$VEINS_ROOT/bin/veins_launchd" -d -k -p 9998 -vv \
+  -c "$SUMO_HOME/bin/sumo" \
+  -L "$PWD/artifacts/logs/grid-launchd.log"
+```
+
+The batch runner uses OMNeT++ `Cmdenv` and is intended for unattended terminal execution. The GUI commands above are for inspecting one configuration at a time.
+
 ### One matched seed before the full batch
 
 This runs all five configurations for one low-density seed. The batch wrapper starts `veins_launchd` automatically if port 9998 is not already listening.
