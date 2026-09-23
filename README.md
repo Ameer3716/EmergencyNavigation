@@ -255,14 +255,18 @@ ls -lh artifacts/logs/batch/*-low-seed1-stdout.txt
 
 Runs all 5 configurations × 3 densities × 30 seeds. Estimated time: 3–6 hours depending on hardware.
 
+Run this **one command** from the repository root in the WSL terminal:
+
 ```bash
-bash scripts/run_batch_env.sh \
-  --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline \
-  --densities low medium high --seed-start 1 --seed-end 30
+bash scripts/run_batch_env.sh --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline --densities low medium high --seed-start 1 --seed-end 30
 ```
 
+You can stop the batch with **Ctrl+C** and later run the same command again. The runner skips cases after their `.sca`, `.vec`, and `.vci` files have been copied to `results/raw/`. Do not use `--force` unless you want to overwrite completed cases.
+
+Start/stop check (23 September 2026): this exact command was launched in a temporary local checkout using the already installed WSL toolchain and built project library. `FogCloudAStar-low-seed1` completed to simulation time 900 s and produced all three raw files; Ctrl+C stopped the command during the next case. This verifies startup and interruption, **not** a new 450-case completion or a fresh software installation. The original results directory was not changed.
+
 Raw results (`.sca`, `.vec`, `.vci`) are written to `results/raw/`.  
-Event logs (`.csv`) and stdout logs are written to `artifacts/logs/batch/`. Completed runs with all three nonempty raw files are skipped on a repeat invocation; use `--force` only to rerun selected cases. Plan for several gigabytes of free disk space.
+Event logs (`.csv`) and stdout logs are written to `artifacts/logs/batch/`. Completed runs with all three nonempty raw files are skipped on a repeat invocation. Plan for several gigabytes of free disk space.
 
 ### Validate generated results
 
