@@ -58,9 +58,14 @@ def main() -> None:
     if args.seed_start < 1 or args.seed_end < args.seed_start:
         parser.error("Invalid seed range")
     veins_root = Path(os.environ["VEINS_ROOT"])
-    library = ROOT / "src/out/clang-release/src"
-    if not (library.parent / "libsrc.so").exists():
-        raise SystemExit("Build the custom OMNeT++ library first")
+    library = next((candidate for candidate in (
+        ROOT / "src/out/clang-release/src",
+        ROOT / "src/out/gcc-release/src",
+    ) if (candidate.parent / "libsrc.so").is_file()), None)
+    if library is None:
+        raise SystemExit("Missing libsrc.so; run bash scripts/build.sh first")
+    (ROOT / "results/raw").mkdir(parents=True, exist_ok=True)
+    (ROOT / "artifacts/logs/batch").mkdir(parents=True, exist_ok=True)
     for density in args.densities:
         for seed in range(args.seed_start, args.seed_end + 1):
             base = ROOT / "simulations/batch" / f"{density}-seed{seed}"

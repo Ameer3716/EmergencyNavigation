@@ -37,11 +37,24 @@ Runtime libraries required: `libx11-6`, `libxext6`, `libxrender1`, `libgl1`. The
 
 ## 2. Compilation
 
-To clean and compile the custom OMNeT++/Veins shared library (`libsrc.so`) in release mode:
+Enter the full toolchain environment first and return to the repository root:
 
-```powershell
-wsl -d opp_env bash -l -c "source /home/opp_env/workspace/omnetpp-6.3.0/setenv && export OPP_ENV_VERSION=0.36.1 && export OMNETPP_ROOT=/home/opp_env/workspace/omnetpp-6.3.0 && export VEINS_ROOT=/home/opp_env/workspace/veins-5.3.1 && cd /mnt/d/Codex/EmergencyNavigation/src && make clean && make -j4 MODE=release"
+```bash
+cd /home/opp_env/workspace
+opp_env shell veins-5.3.1 inet-4.6.0 omnetpp-6.3.0
+export VEINS_ROOT=/home/opp_env/workspace/veins-5.3.1
+export SUMO_HOME=/home/opp_env/sumo118_pkg/sumo
+cd /path/to/EmergencyNavigation
 ```
+
+From the repository root inside the configured `opp_env` shell, generate the Makefile and compile the custom OMNeT++/Veins shared library in release mode:
+
+```bash
+bash scripts/build.sh
+find src/out -name libsrc.so -print
+```
+
+The library is normally under `src/out/clang-release/` and may be under `src/out/gcc-release/`, depending on the environment. The run scripts detect either location.
 
 ---
 
@@ -51,8 +64,11 @@ wsl -d opp_env bash -l -c "source /home/opp_env/workspace/omnetpp-6.3.0/setenv &
 Before running co-simulations, start the Veins launch daemon on port 9998:
 
 ```bash
-cd ~/workspace/veins-5.3.1
-./bin/veins_launchd -d -p 9998 -vv -c /home/opp_env/sumo118_pkg/sumo/bin/sumo -L /mnt/d/Codex/EmergencyNavigation/artifacts/logs/grid-launchd.log
+mkdir -p artifacts/logs
+python3 "$VEINS_ROOT/bin/veins_launchd" -d -p 9998 -vv \
+  -c /home/opp_env/sumo118_pkg/sumo/bin/sumo \
+  -L "$PWD/artifacts/logs/grid-launchd.log"
+bash scripts/run_grid.sh Smoke
 ```
 
 ### Supported Experimental Configurations
@@ -72,19 +88,18 @@ Diagnostic configurations:
 
 To run the individual diagnostic failover cases:
 
-```powershell
-# Diagnostic 1: Immediate exception-triggered failover
-wsl -d opp_env /mnt/d/Codex/EmergencyNavigation/scripts/run_grid.sh ForcedMistFailure
-
-# Diagnostic 2: Genuine 800 ms watchdog timeout failover
-wsl -d opp_env /mnt/d/Codex/EmergencyNavigation/scripts/run_grid.sh ForcedMistTimeout
+```bash
+bash scripts/run_grid.sh ForcedMistFailure
+bash scripts/run_grid.sh ForcedMistTimeout
 ```
 
 Execute the complete 450-run matrix (5 configurations × 3 densities × 30 seeds):
 
-```powershell
-wsl -d opp_env /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline --densities low medium high --seed-start 1 --seed-end 30
+```bash
+bash scripts/run_batch_env.sh --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline --densities low medium high --seed-start 1 --seed-end 30
 ```
+
+The tracked source excludes raw runs, processed tables, graphs, and screenshots. The tracked `artifacts/checksums.sha256` describes the earlier evidence package and cannot be verified in full from a fresh clone. Generate `artifacts/checksums-local.sha256` with `python scripts/generate_checksums.py` after producing and auditing the outputs.
 
 ---
 
@@ -95,6 +110,8 @@ To process the complete batch matrix into summary CSVs, calculate bounded Wilson
 ```powershell
 python analysis/process_results.py --batch --require-all
 ```
+
+Install the pinned Python analysis dependencies first with `python -m pip install -r requirements.txt`.
 
 To regenerate the 3-panel thesis comparison chart:
 

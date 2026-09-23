@@ -31,7 +31,7 @@ RESPONSE_TIME_VERIF = ROOT / "artifacts/response_time_verification.csv"
 EVENT_TIMELINE_VERIF = ROOT / "artifacts/event_timeline_verification.csv"
 GRAPHS_DIR = ROOT / "results/graphs"
 SCREENSHOTS_DIR = ROOT / "artifacts/screenshots"
-CHECKSUMS_FILE = ROOT / "artifacts/checksums.sha256"
+CHECKSUMS_FILE = ROOT / "artifacts/checksums-local.sha256"
 
 CONFIGS = ["FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline"]
 DENSITIES = ["low", "medium", "high"]
@@ -905,15 +905,16 @@ def run_audit() -> dict:
         if not t.exists() or t.stat().st_size == 0:
             missing_deliverables.append(t.relative_to(ROOT).as_posix())
 
+    required_count = len(TARGETS) - 1
     st_csum = "PASS" if len(missing_deliverables) == 0 else "FAIL"
     add_check(
         "CHK-26-DELIVERABLES-MANIFEST-COVERAGE",
         "Verification of deliverable artifact coverage and presence (excluding self-referential audit_report.json hash)",
         CHECKSUMS_FILE.relative_to(ROOT).as_posix(),
-        "All 64 pre-manifest deliverables exist (>0 B); full 65-file cryptographic hash verification executed post-manifest generation",
-        f"{len(TARGETS) - 1 - len(missing_deliverables)}/64 deliverable files present on disk (>0 B), {len(missing_deliverables)} missing",
+        f"All {required_count} locally selected pre-manifest deliverables exist (>0 B)",
+        f"{required_count - len(missing_deliverables)}/{required_count} locally selected deliverable files present on disk (>0 B), {len(missing_deliverables)} missing",
         st_csum,
-        "All deliverable CSV tables, graphs, evidence screenshots, and documentation exist on disk. Authoritative SHA-256 hash verification for all 65 deliverables including audit_report.json is executed post-manifest generation." if st_csum == "PASS" else f"Missing: {missing_deliverables[:3]}"
+        "Selected local CSV tables, graphs, available screenshots, and documentation exist; run generate_checksums.py after the audit to hash them." if st_csum == "PASS" else f"Missing: {missing_deliverables[:3]}"
     )
 
     report = {

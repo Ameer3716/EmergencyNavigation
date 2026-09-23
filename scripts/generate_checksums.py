@@ -6,7 +6,7 @@ Generate SHA-256 checksums for all final deliverables:
 - audit_report.json
 - publication graphs (36 density graphs)
 - visual evidence screenshots
-- root markdown files (README.md, PROJECT_SPEC.md, AGENTS.md, progress.md)
+- tracked root markdown files (README.md, PROJECT_SPEC.md, AGENTS.md)
 - docs/*.md
 """
 from __future__ import annotations
@@ -33,7 +33,6 @@ TARGETS: list[Path] = [
     REPO_ROOT / "README.md",
     REPO_ROOT / "PROJECT_SPEC.md",
     REPO_ROOT / "AGENTS.md",
-    REPO_ROOT / "progress.md",
 ]
 
 # docs/*.md
@@ -45,7 +44,8 @@ TARGETS.extend(sorted((REPO_ROOT / "results" / "graphs").glob("*.png")))
 # Final visual evidence screenshots
 TARGETS.extend(sorted((REPO_ROOT / "artifacts" / "screenshots").glob("*.png")))
 
-OUTPUT_FILE = REPO_ROOT / "artifacts" / "checksums.sha256"
+# Keep the committed historical evidence manifest intact.
+OUTPUT_FILE = REPO_ROOT / "artifacts" / "checksums-local.sha256"
 
 
 def generate_checksums() -> int:

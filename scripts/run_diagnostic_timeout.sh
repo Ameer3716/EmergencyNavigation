@@ -8,6 +8,7 @@ export OMNETPP_ROOT=/home/opp_env/workspace/omnetpp-6.3.0
 export VEINS_ROOT=/home/opp_env/workspace/veins-5.3.1
 export SUMO_HOME=/home/opp_env/sumo118_pkg/sumo
 export PATH="$SUMO_HOME/bin:$PATH"
+mkdir -p "$project_dir/artifacts/logs"
 
 if ! pgrep -f "veins_launchd.*9998" > /dev/null; then
     echo "Starting veins_launchd on port 9998..."
