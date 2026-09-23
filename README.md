@@ -18,30 +18,42 @@ The simulation models an ambulance navigating a signalized urban grid. It evalua
 8. [Architecture Overview](#8-architecture-overview)
 9. [Key Parameters](#9-key-parameters)
 
+For a direct build-to-batch walkthrough, start at [Installation](#3-installation) and follow sections 3–6 in order. All simulation commands there run inside the `opp_env` WSL distribution, from the repository root.
+
 ---
 
 ## 1. Prerequisites
 
 | Software | Version | Notes |
 |---|---|---|
-| Windows 10/11 Pro | — | WSL2 must be enabled |
+| Windows 10/11 | — | WSL2 must be enabled |
 | WSL2 distribution | `opp_env` 0.36.1 | Provides the matching framework environment |
 | OMNeT++ | 6.3.0 | Inside `opp_env` at `/home/opp_env/workspace/omnetpp-6.3.0` |
 | Veins | 5.3.1 | Inside `opp_env` at `/home/opp_env/workspace/veins-5.3.1` |
 | SUMO | 1.18.0 | Binary at `/home/opp_env/sumo118_pkg/sumo/bin/sumo` |
 | Python | ≥ 3.11 | For analysis scripts; see `requirements.txt` |
 
-### Install Python analysis dependencies
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-```
-
 ### Obtain the opp_env WSL image
 
-Follow [the platform setup guide](docs/INSTALLATION.md) to install the `opp_env` WSL distribution, OMNeT++ 6.3.0, Veins 5.3.1, and SUMO 1.18.0.
+If the `opp_env` distribution is already installed with the versions above, continue to section 3. Otherwise, install WSL2 in an Administrator PowerShell window, restart if requested, and import the [official `opp_env` WSL image](https://github.com/omnetpp/opp_env):
+
+```powershell
+wsl --install
+wsl --update
+curl.exe -L https://github.com/omnetpp/opp_env/releases/download/wsl/opp_env.wsl | wsl --import opp_env -
+```
+
+Start it with `wsl -d opp_env --cd ~`. Inside WSL, install the matching frameworks in `/home/opp_env/workspace` if they are not already present:
+
+```bash
+mkdir -p /home/opp_env/workspace
+cd /home/opp_env/workspace
+opp_env init
+opp_env install veins-5.3.1 inet-4.6.0 omnetpp-6.3.0 --no-pause
+python3 -m pip install --target /home/opp_env/sumo118_pkg 'eclipse-sumo==1.18.0'
+```
+
+The build and batch commands below were tested with that installed stack. See [installation details](docs/INSTALLATION.md) for the host setup.
 
 ---
 
@@ -115,50 +127,45 @@ EmergencyNavigation/
 
 ## 3. Installation
 
-### Step 1 — Clone the repository
+### Step 1 — Enter WSL and clone the repository
+
+In PowerShell, start the installed `opp_env` distribution:
+
+```powershell
+wsl -d opp_env --cd /home/opp_env/workspace
+```
+
+Run every Bash command below in that WSL terminal. Clone into the WSL filesystem:
 
 ```bash
+cd /home/opp_env/workspace
 git clone https://github.com/Ameer3716/EmergencyNavigation.git
 cd EmergencyNavigation
 ```
 
-### Step 2 — Verify the WSL environment
+### Step 2 — Verify the exact simulation tools
 
-Open a PowerShell terminal and confirm the `opp_env` distribution is available:
-
-```powershell
-wsl -l -v
+```bash
+/home/opp_env/sumo118_pkg/sumo/bin/sumo --version
+test -d /home/opp_env/workspace/omnetpp-6.3.0
+test -d /home/opp_env/workspace/veins-5.3.1
+test -d /home/opp_env/workspace/inet-4.6.0
 ```
 
-You should see `opp_env` listed with status `Running` or `Stopped`.
+The SUMO output must report version 1.18.0. The three `test` commands should finish without errors. If any check fails, complete [the platform setup](docs/INSTALLATION.md) first.
 
-### Step 3 — Confirm SUMO is installed at the expected path
-
-```powershell
-wsl -d opp_env bash -l -c "/home/opp_env/sumo118_pkg/sumo/bin/sumo --version"
-```
-
-Expected output: `SUMO Version 1.18.0`
-
-### Step 4 — Confirm OMNeT++ and Veins paths
-
-```powershell
-wsl -d opp_env bash -l -c "source /home/opp_env/workspace/omnetpp-6.3.0/setenv && opp_run --version"
-```
-
-Expected output: `OMNeT++ Discrete Event Simulation  (C) 1992-2023 Andras Varga and OpenSim Ltd.  Version: 6.3.0`
-
-For the commands below, enter the full toolchain environment from WSL and return to the clone:
+### Step 3 — Enter the full `opp_env` toolchain
 
 ```bash
 cd /home/opp_env/workspace
 opp_env shell veins-5.3.1 inet-4.6.0 omnetpp-6.3.0
 export VEINS_ROOT=/home/opp_env/workspace/veins-5.3.1
 export SUMO_HOME=/home/opp_env/sumo118_pkg/sumo
-cd /path/to/EmergencyNavigation
+cd /home/opp_env/workspace/EmergencyNavigation
+opp_run --version
 ```
 
-Replace `/path/to/EmergencyNavigation` with the clone path. Run the following build and simulation commands from that directory.
+`opp_run` must report OMNeT++ 6.3.0. Enter this toolchain again in each new WSL terminal before building or running the simulation. Sourcing OMNeT++ `setenv` alone does not provide the full build toolchain in this image.
 
 ---
 
@@ -189,26 +196,41 @@ python3 "$VEINS_ROOT/bin/veins_launchd" -d -p 9998 -vv \
 bash scripts/run_grid.sh Smoke
 ```
 
-The smoke run writes `simulations/grid/results/Smoke-#0.sca`, `.vec`, and `.vci`, plus `artifacts/logs/grid-Smoke-stdout.txt`. Wait for it to finish before starting the full batch.
+The Smoke configuration ends at simulation time 120 s. It writes `simulations/grid/results/Smoke-#0.sca`, `.vec`, and `.vci`, plus `artifacts/logs/grid-Smoke-stdout.txt`. Check the last lines of that log for `End.` before continuing.
+
+### One matched seed before the full batch
+
+This runs all five configurations for one low-density seed. The batch wrapper starts `veins_launchd` automatically if port 9998 is not already listening.
+
+```bash
+bash scripts/run_batch_env.sh \
+  --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline \
+  --densities low --seed-start 1 --seed-end 1
+```
+
+Verify that each configuration has three nonempty raw files (`.sca`, `.vec`, `.vci`) and a batch stdout log:
+
+```bash
+ls -lh results/raw/*-low-seed1.{sca,vec,vci}
+ls -lh artifacts/logs/batch/*-low-seed1-stdout.txt
+```
 
 ### Full batch (450 runs)
 
 Runs all 5 configurations × 3 densities × 30 seeds. Estimated time: 3–6 hours depending on hardware.
 
 ```bash
-bash scripts/run_batch_env.sh --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline --densities low medium high --seed-start 1 --seed-end 30
+bash scripts/run_batch_env.sh \
+  --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback NoPreemptionBaseline \
+  --densities low medium high --seed-start 1 --seed-end 30
 ```
 
 Raw results (`.sca`, `.vec`, `.vci`) are written to `results/raw/`.  
-Event logs (`.csv`) are written to `artifacts/logs/batch/`.
+Event logs (`.csv`) and stdout logs are written to `artifacts/logs/batch/`. Completed runs with all three nonempty raw files are skipped on a repeat invocation; use `--force` only to rerun selected cases. Plan for several gigabytes of free disk space.
 
 ### Validate generated results
 
-Run these only after the corresponding simulations and evidence files have been generated. The repository does not include the original 450-run output package.
-
-```powershell
-python scripts/validate_integrated.py
-```
+Run the result processing commands in section 6 only after all 450 cases have completed. The repository does not include the original 450-run output package. Some legacy validation scripts also expect that earlier evidence package and are not suitable as a fresh-clone smoke test.
 
 The tracked `artifacts/checksums.sha256` records the original evidence package, including generated outputs absent from a fresh clone. It cannot be fully verified against the source checkout. After reproducing and auditing the results, run `python scripts/generate_checksums.py` to create `artifacts/checksums-local.sha256` for the local package. The script preserves the historical manifest; graph image hashes can still differ with rendering environment.
 
@@ -216,18 +238,22 @@ The tracked `artifacts/checksums.sha256` records the original evidence package, 
 
 ## 6. Processing Results & Graphs
 
-Once the batch has finished, run these from the repo root in PowerShell:
+Once the full batch has finished, leave the `opp_env` shell with `exit`. From the repository root in the WSL terminal, create a separate analysis environment with `uv` (included in the tested `opp_env` image), install the pinned dependencies, and process the batch. The image's system Python lacks `ensurepip`, so `python3 -m venv` is not suitable here:
 
-```powershell
-# Aggregate .sca files into summary CSVs with 95% confidence intervals
+```bash
+cd /home/opp_env/workspace/EmergencyNavigation
+uv venv .venv
+uv pip install --python .venv/bin/python -r requirements.txt
+source .venv/bin/activate
 python analysis/process_results.py --batch --require-all
-
-# Extract watchdog / fallback event evidence
+python scripts/generate_final_graph.py
 python analysis/extract_fallback_evidence.py
-
-# Audit all 450 runs for completeness and formula correctness
+python scripts/verify_response_times.py
 python scripts/audit_batch.py
+python scripts/generate_checksums.py
 ```
+
+`--require-all` rejects an incomplete 450-run matrix. The historical screenshot and diagnostic evidence is not bundled with the source clone, so checks that require those files may still report missing evidence; see the checksum note above.
 
 Outputs:
 - `results/processed/summary-batch.csv` — mean ± 95% CI for every metric per config/density

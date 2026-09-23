@@ -111,7 +111,7 @@ To process the complete batch matrix into summary CSVs, calculate bounded Wilson
 python analysis/process_results.py --batch --require-all
 ```
 
-Install the pinned Python analysis dependencies first with `python -m pip install -r requirements.txt`.
+For analysis in the `opp_env` WSL image, leave the simulation shell, then create an environment with `uv venv .venv` and install the pinned packages with `uv pip install --python .venv/bin/python -r requirements.txt`. Activate it using `source .venv/bin/activate`. The image's system Python does not provide `ensurepip`, so `python3 -m venv` fails there.
 
 To regenerate the 3-panel thesis comparison chart:
 
