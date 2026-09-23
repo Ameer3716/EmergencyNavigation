@@ -10,7 +10,7 @@ RouteResult MistRoutingModule::compute(const std::string& startEdge, const std::
                                         const std::map<std::string, EdgeObservation>& observations, bool dynamic)
 {
     if (!par("available").boolValue()) return {};
-    return dynamic ? DynamicAStarRouter(*graph, observations, par("densityLambda")).route(startEdge, destinationEdge)
+    return dynamic ? DynamicAStarRouter(*graph, observations, par("densityLambda"), 1.0 / 7.5, par("minimumObservedVehicles").intValue()).route(startEdge, destinationEdge)
                    : AStarRouter(*graph).route(startEdge, destinationEdge);
 }
 double MistRoutingModule::processingDelay(int expandedNodes) const

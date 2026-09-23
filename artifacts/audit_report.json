@@ -1,0 +1,270 @@
+{
+  "audit_version": "2.1.0",
+  "total_checks": 26,
+  "passed_checks": 26,
+  "failed_checks": 0,
+  "warned_checks": 0,
+  "overall_status": "PASS",
+  "checks": [
+    {
+      "check_id": "CHK-01-MATRIX-KEYS",
+      "description": "Verification of exactly 450 unique simulation run keys",
+      "source_file": "results\\processed\\individual_runs-batch.csv",
+      "expected_result": "450 unique keys (5 configs x 3 densities x 30 seeds)",
+      "observed_result": "450 unique keys across 450 total rows",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All 450 expected runs exist with unique composite keys."
+    },
+    {
+      "check_id": "CHK-02-SCHEDULED-SEEDS",
+      "description": "Verification of exactly 30 scheduled seeds per experimental cell (15 cells)",
+      "source_file": "results\\processed\\individual_runs-batch.csv",
+      "expected_result": "15 cells each with exactly 30 scheduled seeds (seeds 1-30)",
+      "observed_result": "15 cells evaluated, 0 irregular cells",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Each of the 15 configuration-density combinations contains exactly 30 seeds."
+    },
+    {
+      "check_id": "CHK-03-NO-DUPLICATES",
+      "description": "Verification of zero duplicate records in individual runs dataset",
+      "source_file": "results\\processed\\individual_runs-batch.csv",
+      "expected_result": "0 duplicate records across 450 rows",
+      "observed_result": "0 duplicate records",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Dataset contains strictly unique records without replication."
+    },
+    {
+      "check_id": "CHK-04-SUMMARY-MEANS",
+      "description": "Verification that summary means recompute from aggregated individual runs",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "All 180 summary means recompute within 1e-4 tolerance",
+      "observed_result": "0 mismatches detected (max diff: 0.00e+00)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "Summary means independently recomputed from individual runs agree across all 180 metric cells."
+    },
+    {
+      "check_id": "CHK-05-SUMMARY-SDS",
+      "description": "Verification that summary standard deviations recompute from individual runs",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "All 180 summary sample standard deviations recompute within 1e-4 tolerance",
+      "observed_result": "0 mismatches detected (max diff: 0.00e+00)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "Summary sample standard deviations agree across all 180 metric cells."
+    },
+    {
+      "check_id": "CHK-06-PDR-WILSON-INTERVALS",
+      "description": "Verification that PDR binomial Wilson 95% confidence intervals recompute exactly in [0, 1]",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "Exact Wilson score intervals strictly bounded in [0, 1] within 1e-6 tolerance",
+      "observed_result": "0 issues detected (max diff: 0.00e+00)",
+      "tolerance": "1e-6",
+      "status": "PASS",
+      "message": "Binomial Wilson score intervals maintain rigorous probability domain bounds [0, 1] across all cells."
+    },
+    {
+      "check_id": "CHK-07-STUDENT-T-INTERVALS",
+      "description": "Verification that continuous metric Student-t 95% confidence intervals recompute exactly",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "All Student-t intervals match exact theoretical formula within 1e-4 tolerance",
+      "observed_result": "0 discrepancies detected (max diff: 9.31e-10)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "Student-t confidence intervals recomputed with exact critical values across continuous metrics."
+    },
+    {
+      "check_id": "CHK-08-BOOTSTRAP-INTERVALS",
+      "description": "Verification that nonnegative metrics use reproducible bootstrap percentile CIs (seed 42, 10k resamples)",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "All bootstrap percentile CIs recompute identically within 1e-4 tolerance",
+      "observed_result": "0 discrepancies detected (max diff: 7.11e-15)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "Non-parametric bootstrap percentile 95% CIs verified for traffic_light_wait_s and ev_delay_vs_freeflow_s."
+    },
+    {
+      "check_id": "CHK-09-NO-SILENT-CLAMPING",
+      "description": "Verification that confidence intervals are not artificially or silently clamped",
+      "source_file": "results\\processed\\summary-batch.csv",
+      "expected_result": "0 silently clamped confidence interval bounds",
+      "observed_result": "0 clamped intervals detected",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All metrics employ appropriate distributional bounds without ad-hoc clamping."
+    },
+    {
+      "check_id": "CHK-10-PAIRED-ROWS-RECOMPUTE",
+      "description": "Verification that all 36 paired comparison rows recompute exactly from individual runs",
+      "source_file": "results\\processed\\paired_comparisons.csv",
+      "expected_result": "Exactly 36 paired rows recomputed within 1e-4 tolerance",
+      "observed_result": "36 rows checked, 0 discrepancies (max diff: 1.16e-10)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "All 36 paired inferential comparisons recompute exactly with matched seed pairings."
+    },
+    {
+      "check_id": "CHK-11-COHEN-DZ-RECOMPUTES",
+      "description": "Verification that paired Cohen's dz effect sizes recompute exactly (dz = mean_diff / sd_diff)",
+      "source_file": "results\\processed\\paired_comparisons.csv",
+      "expected_result": "All Cohen's dz effect sizes match formula within 1e-4 tolerance",
+      "observed_result": "0 discrepancies (max diff: 0.00e+00)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "All paired effect sizes recompute exactly from mean and sample standard deviation of differences."
+    },
+    {
+      "check_id": "CHK-12-ZERO-VARIANCE-NA",
+      "description": "Verification that exactly 9 zero-variance comparisons are marked not_applicable_zero_variance",
+      "source_file": "results\\processed\\paired_comparisons.csv",
+      "expected_result": "Exactly 9 comparisons marked not_applicable_zero_variance with p_value=NA and diff=0.0",
+      "observed_result": "9 zero-variance rows detected, 0 anomalies",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Zero-variance traffic light waiting comparisons correctly designated as not applicable."
+    },
+    {
+      "check_id": "CHK-13-DELIVERED-RESPONSE-RECORDS",
+      "description": "Verification that exactly 425 delivered runs pass response-time verification (arrival - generation == stored)",
+      "source_file": "artifacts\\response_time_verification.csv",
+      "expected_result": "Exactly 425 delivered response records verified as PASS within 1e-4 tolerance",
+      "observed_result": "425/425 PASS records, 0 formula mismatches",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "All 425 delivered runs match raw scalar arrival minus generation timestamps."
+    },
+    {
+      "check_id": "CHK-14-PARTITION-RESPONSE-RECORDS",
+      "description": "Verification that exactly 25 network partition runs are classified as NOT_APPLICABLE_NETWORK_PARTITION",
+      "source_file": "artifacts\\response_time_verification.csv",
+      "expected_result": "Exactly 25 partition records classified as NOT_APPLICABLE_NETWORK_PARTITION",
+      "observed_result": "25 partition records, 0 unclassified records",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All 25 partition runs correctly classified as not applicable without false PASS assertions."
+    },
+    {
+      "check_id": "CHK-15-NO-MISSING-TIMESTAMP-PASS",
+      "description": "Verification that no record with missing or empty arrival/response timestamp is marked PASS",
+      "source_file": "artifacts\\response_time_verification.csv",
+      "expected_result": "0 records with missing timestamps marked PASS",
+      "observed_result": "0 false PASS records detected",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Audit rule verified: missing timestamps are never classified as PASS."
+    },
+    {
+      "check_id": "CHK-16-PARTITION-EM-GEN-TIMESTAMPS",
+      "description": "Verification that real EM generation timestamps are preserved for partition runs from raw emergency logs",
+      "source_file": "artifacts\\response_time_verification.csv",
+      "expected_result": "All 25 partition records contain valid numeric raw_em_generation_s (>60.0s)",
+      "observed_result": "25/25 valid generation timestamps",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Real EM generation timestamps preserved from raw logs for all partitioned runs."
+    },
+    {
+      "check_id": "CHK-17-FALLBACK-EVENT-ORDERING",
+      "description": "Verification of chronological causality in fallback event sequences",
+      "source_file": "results\\processed\\fallback_validation.csv",
+      "expected_result": "fog_request_time_s >= fallback_trigger_time_s and final_decision_time_s >= fog_request_time_s",
+      "observed_result": "0 temporal ordering violations",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All fallback event timestamps conform to physical and network causality."
+    },
+    {
+      "check_id": "CHK-18-TIMEOUT-FALLBACK-EXPIRY",
+      "description": "Verification that genuine timeout fallback occurs strictly at or after 800ms watchdog expiry",
+      "source_file": "results\\processed\\fallback_validation.csv",
+      "expected_result": "expiry = mist_start + 0.8s, trigger >= expiry, fog_route applied at 68.1540s",
+      "observed_result": "Verified: start=67.0273s, expiry=67.8273s, trigger=67.8273s, applied=68.1540s",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Watchdog timeout failover independently verified with empirical 800ms expiration and Fog takeover."
+    },
+    {
+      "check_id": "CHK-19-NUMERIC-COLUMNS-STRICT",
+      "description": "Verification that numeric columns contain strictly float numbers or empty strings",
+      "source_file": "fallback_validation.csv & response_time_verification.csv",
+      "expected_result": "0 text strings or explanatory notes in numeric columns",
+      "observed_result": "0 non-numeric entries detected",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All numeric columns adhere strictly to float-compatible representation with clean types."
+    },
+    {
+      "check_id": "CHK-20-ALL-GRAPHS-EXIST",
+      "description": "Verification of complete publication-grade graphs across all 12 metrics and 3 densities (37 files)",
+      "source_file": "results/graphs",
+      "expected_result": "36 density-specific graphs + 1 final 3-panel comparative EV response graph exist (>1000 B)",
+      "observed_result": "37/37 graphs verified",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All quantitative figure files exist with non-empty graphics payloads."
+    },
+    {
+      "check_id": "CHK-21-GRAPH-SAMPLE-SIZES",
+      "description": "Verification that graph sample sizes match metric-specific CSV sample sizes (N=30 vs n=28/29/28)",
+      "source_file": "results\\processed\\graph_plot_data.csv",
+      "expected_result": "180/180 plot points have exact sample sizes matching summary-batch.csv",
+      "observed_result": "180/180 verified sample sizes",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Graph plotting sidecar confirms exact metric-specific sample sizes (30 network, 28/29/28 mobility)."
+    },
+    {
+      "check_id": "CHK-22-GRAPH-INTERVAL-LABELS",
+      "description": "Verification that graph confidence interval method labels match underlying mathematics",
+      "source_file": "results\\processed\\graph_plot_data.csv",
+      "expected_result": "Bootstrap percentile for wait & delay; Wilson for PDR; Student-t for continuous metrics",
+      "observed_result": "180/180 correctly labelled graph points",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Figure legends and sidecar records accurately label the statistical CI method."
+    },
+    {
+      "check_id": "CHK-23-GRAPH-PLOTTED-VALUES",
+      "description": "Verification that graph plotted values match summary data through sidecar table graph_plot_data.csv",
+      "source_file": "results/processed/graph_plot_data.csv",
+      "expected_result": "All 180 plot points match summary means and 95% CIs within 1e-4 tolerance",
+      "observed_result": "180/180 matching points (max diff: 0.00e+00)",
+      "tolerance": "1e-4",
+      "status": "PASS",
+      "message": "Plotted figure data verified via sidecar plot-data table to reconcile with summary datasets."
+    },
+    {
+      "check_id": "CHK-24-DOCS-NO-OBSOLETE-CLAIMS",
+      "description": "Verification that documentation contains no obsolete timing, verification-count, or unverified claims",
+      "source_file": "docs/ and root Markdown files",
+      "expected_result": "0 occurrences of obsolete statistics or contradiction phrases",
+      "observed_result": "0 forbidden phrases detected",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "Documentation fully reconciled with empirical simulation evidence and exact audit counts."
+    },
+    {
+      "check_id": "CHK-25-MARKDOWN-TABLES-CONSISTENT",
+      "description": "Verification that all Markdown tables render consistently with uniform column counts",
+      "source_file": "All root and docs/ Markdown documents",
+      "expected_result": "0 table column count mismatches across all documents",
+      "observed_result": "0 table formatting inconsistencies",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All Markdown table headers, separators, and data rows have matching column counts."
+    },
+    {
+      "check_id": "CHK-26-DELIVERABLES-MANIFEST-COVERAGE",
+      "description": "Verification of deliverable artifact coverage and presence (excluding self-referential audit_report.json hash)",
+      "source_file": "artifacts/checksums.sha256",
+      "expected_result": "All 64 pre-manifest deliverables exist (>0 B); full 65-file cryptographic hash verification executed post-manifest generation",
+      "observed_result": "64/64 deliverable files present on disk (>0 B), 0 missing",
+      "tolerance": "exact",
+      "status": "PASS",
+      "message": "All deliverable CSV tables, graphs, evidence screenshots, and documentation exist on disk. Authoritative SHA-256 hash verification for all 65 deliverables including audit_report.json is executed post-manifest generation."
+    }
+  ]
+}

@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GRID = ROOT / "simulations/grid"
-CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
 SUMO_HOME = Path(os.environ.get("SUMO_HOME", "/home/opp_env/sumo118_pkg/sumo"))
 
 
@@ -53,6 +53,7 @@ def main() -> None:
     parser.add_argument("--seed-start", type=int, default=1)
     parser.add_argument("--seed-end", type=int, default=30)
     parser.add_argument("--configs", nargs="+", choices=CONFIGS, default=CONFIGS)
+    parser.add_argument("--force", action="store_true", help="Rerun selected seeds even when raw outputs exist")
     args = parser.parse_args()
     if args.seed_start < 1 or args.seed_end < args.seed_start:
         parser.error("Invalid seed range")
@@ -76,11 +77,16 @@ def main() -> None:
             for config in args.configs:
                 stem = f"{config}-{density}-seed{seed}"
                 outputs = [ROOT / "results/raw" / f"{stem}.{extension}" for extension in ("sca", "vec", "vci")]
-                if all(path.exists() and path.stat().st_size > 0 for path in outputs):
+                if not args.force and all(path.exists() and path.stat().st_size > 0 for path in outputs):
                     print(f"Skip completed {stem}", flush=True)
                     continue
                 run_dir = base / config
                 run_dir.mkdir(exist_ok=True)
+                logs_dir = ROOT / "artifacts/logs/batch"
+                for prefix in ("emergency-", "routing-", "fallback-", "mobility-", "traffic-light-"):
+                    old_log = logs_dir / f"{prefix}{stem}.csv"
+                    if old_log.exists():
+                        old_log.unlink()
                 for common in ("grid.net.xml", "special.rou.xml", "antenna.xml", "config.xml", route_name,
                                "grid.sumocfg", "grid.launchd.xml"):
                     shutil.copyfile(base / common, run_dir / common)

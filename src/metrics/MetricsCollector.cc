@@ -43,7 +43,7 @@ void MetricsCollector::handleMessage(omnetpp::cMessage* message)
         if (present) {
             auto vehicle = command->vehicle(id);
             const double speed = vehicle.getSpeed();
-            if (!seenVehicle) { seenVehicle = true; departure = simTime().dbl(); }
+            if (!seenVehicle && speed > 0.1) { seenVehicle = true; departure = simTime().dbl(); }
             distance = vehicle.getDistanceTravelled();
             lastEdge = vehicle.getRoadId();
             lastLanePosition = vehicle.getLanePosition();

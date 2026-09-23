@@ -1,3 +1,0 @@
-Eclipse SUMO sumo Version 1.18.0
- Build features: Linux-5.15.0-1040-azure x86_64 GNU 10.2.1 Release FMI Proj GUI Intl SWIG GL2PS
- Copyright (C) 2001-2023 German Aerospace Center (DLR) and others; https://sumo.dlr.de

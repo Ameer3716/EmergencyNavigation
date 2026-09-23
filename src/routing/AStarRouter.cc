@@ -67,8 +67,8 @@ RouteResult AStarRouter::route(const std::string& startEdge, const std::string& 
 
 DynamicAStarRouter::DynamicAStarRouter(const RoadGraph& graph,
                                        const std::map<std::string, EdgeObservation>& observations,
-                                       double lambda, double capacityPerMeter)
-    : AStarRouter(graph), observations(observations), lambda(lambda), capacityPerMeter(capacityPerMeter)
+                                       double lambda, double capacityPerMeter, int minVehicles)
+    : AStarRouter(graph), observations(observations), lambda(lambda), capacityPerMeter(capacityPerMeter), minVehicles(minVehicles)
 {
     if (lambda < 0 || capacityPerMeter <= 0) throw std::invalid_argument("Invalid dynamic A* cost parameters");
 }
@@ -76,7 +76,7 @@ DynamicAStarRouter::DynamicAStarRouter(const RoadGraph& graph,
 double DynamicAStarRouter::edgeCost(const RoadEdge& edge) const
 {
     const auto found = observations.find(edge.id);
-    if (found == observations.end() || found->second.vehicleCount <= 0) return AStarRouter::edgeCost(edge);
+    if (found == observations.end() || found->second.vehicleCount < minVehicles) return AStarRouter::edgeCost(edge);
     const auto& observation = found->second;
     const double speed = std::max(observation.meanSpeed, 1.0);
     const double density = std::min(1.0, observation.vehicleCount / (edge.length * capacityPerMeter));

@@ -24,13 +24,14 @@ protected:
 class DynamicAStarRouter : public AStarRouter {
 public:
     DynamicAStarRouter(const RoadGraph& graph, const std::map<std::string, EdgeObservation>& observations,
-                       double lambda, double capacityPerMeter = 1.0 / 7.5);
+                       double lambda, double capacityPerMeter = 1.0 / 7.5, int minVehicles = 3);
 protected:
     double edgeCost(const RoadEdge& edge) const override;
 private:
     const std::map<std::string, EdgeObservation>& observations;
     double lambda;
     double capacityPerMeter;
+    int minVehicles;
 };
 
 } // namespace emergencynavigation

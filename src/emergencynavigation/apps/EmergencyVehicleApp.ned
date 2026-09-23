@@ -14,13 +14,17 @@ simple EmergencyVehicleApp extends EmergencyRelayApp
     double watchdogThreshold @unit(s) = default(800ms);
     string nearestFogRsu = default("EmergencyGridScenario.rsu[0]");
     string fallbackLogPath = default("../../artifacts/logs/fallback-events.csv");
+    bool preemptionEnabled = default(true);
     double preemptionCheckInterval @unit(s) = default(500ms);
     double preemptionDistance @unit(m) = default(250m);
     double preemptionEta @unit(s) = default(15s);
+    double navigationHoldTime @unit(s) = default(64s);
+    double releaseSpeed @unit(mps) = default(13.9mps);
     double dynamicUpdateInterval @unit(s) = default(5s);
     double congestionSpeedThreshold = default(0.3);
     double minimumRouteImprovement = default(0.1);
     int minimumSlowSamples = default(2);
+    int minimumObservedVehicles = default(3);
     double slowRouteImprovement = default(0.05);
     double minimumRerouteGap @unit(s) = default(30s);
     double densityLambda = default(0.5);

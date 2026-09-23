@@ -8,4 +8,5 @@ simple MistRoutingModule
     double densityLambda = default(0.5);
     double routeBaseDelay @unit(s) = default(300ms);
     double routeNodeDelay @unit(s) = default(2ms);
+    int minimumObservedVehicles = default(3);
 }

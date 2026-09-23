@@ -1,11 +1,41 @@
 # Experiments and evidence
 
-The prototype comparison runs each of `FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, and `MistDynamicFogFallback` once with medium traffic and seed 1. The forced mist-failure case is a separate 120-second validation run. A congestion-injection case checks rerouting on an upcoming blocked edge. These are not repeated-seed efficacy results. The full thesis matrix is four configurations × three densities × 30 matched seeds = 360 runs, only after the validation checklist passes.
+The comprehensive thesis evaluation suite evaluates five comparison configurations across three traffic densities and 30 matched random seeds (seeds 1–30), totaling exactly **450 simulation runs** (5 configurations × 3 densities × 30 seeds = 450 runs):
 
-`scripts/run_initial_suite.sh` performs the prototype runs. The four comparison runs must use identical SUMO route files, accident position, signal programs, radio parameters, and SUMO and OMNeT++ seeds. Never compare a low-density seed against a high-density or differently seeded run. Seeded trip generation is in `scripts/generate_demand.py`. The example grid route files for seed 1 are checked in. The exact experimental log paths are set per configuration in `simulations/grid/omnetpp.ini`.
+1. **`FogCloudAStar`**: Edge/cloud route planning via RSU and WAN backhaul, serving as the active-preemption baseline with static A*.
+2. **`MistAStar`**: Local autonomous mist route planning executed directly on the emergency vehicle's On-Board Unit (OBU) with static A*.
+3. **`MistDynamicAStar`**: Autonomous mist route planning with periodic 5.0 s dynamic A* updates and real-time V2V/V2I congestion feedback (`minVehicles = 3`).
+4. **`MistDynamicFogFallback`**: Dynamic mist route planning backed by an active 800 ms fail-safe watchdog delegating to the nearest Fog RSU upon computation stalls.
+5. **`NoPreemptionBaseline`**: Route planning identical to `FogCloudAStar` but with V2I traffic light preemption disabled, providing the empirical no-preemption control reference.
 
-The raw `.sca`, `.vec`, and `.vci` OMNeT++ outputs belong in `results/raw/`. `artifacts/logs/` contains emergency events, routing decisions, fog fallback, mobility, signal transitions, and the simulator stdout/launcher transcript. `analysis/process_results.py` reads real scalars and emergency-event rows, writes `results/processed/individual_runs.csv` and `summary.csv`, and exports 11 comparison charts to `results/graphs/`. Empty standard deviation and confidence-interval cells for `n=1` are intentional. All graph bars are measured simulation outputs, without interpolation or hand edits.
+In addition, two targeted diagnostic runs validate specialized failure and timeout mechanics:
+* **`ForcedMistFailure`**: Deliberately injects an immediate mist computation exception to verify instant fallback to the nearest Fog RSU.
+* **`ForcedMistTimeout`**: Deliberately delays mist computation (1200 ms) beyond the 800 ms watchdog threshold to verify genuine timeout-driven Fog takeover.
+* **`CongestionReroute`**: Injects localized link blockage to verify turn-valid macro-rerouting.
 
-For a manual formula check, pick one row from `individual_runs.csv`, read its matching raw `.sca` and `emergency-<configuration>-verified.csv`, and verify: response time equals `evArrivalTime − emGenerationTime`; delivery ratio equals unique `ev_processed` IDs divided by unique `generated` IDs; end-to-end delay equals `ev_processed.eventTime − generated.generationTime`; NRL equals the sum of app `controlTransmissions` and `emergencyTransmissions` scalars divided by one delivered unique packet. The response time uses a 0.5 s SUMO polling resolution.
+## Matched Multi-Seed Execution
 
-`scripts/validate_emergency.py` checks the isolated direct, vehicle-relay, RSU-relay, duplicate, and TTL runs. `scripts/test_routing.sh` checks A* connectivity and an independent congestion-cost route change. The final verification report in `docs/PROGRESS.md` states which end-to-end checks passed and which need more work. A failed or missing check must not be counted as passed.
+All five configurations within any given density and seed share identical SUMO demand route files, accident positioning (disabled vehicle approaching junction D3 at $t=60\text{ s}$, incident detected and broadcast at $t_{\text{gen}} \in [65.5, 68.0]\text{ s}$), traffic light controllers, IEEE 802.11p radio propagation, and random seed initializations. Seeded trip generation is automated in `scripts/generate_demand.py`. Exact experimental configurations and per-run log paths are defined in `simulations/grid/omnetpp.ini` and orchestrated via `scripts/run_batch.py` and `scripts/run_batch_env.sh`.
+
+## Data Pipeline & Results Artifacts
+
+* **Raw Simulation Outputs**: Stored in `results/raw/` as OMNeT++ scalar (`.sca`), vector (`.vec`), and index (`.vci`) files (450 batch runs + diagnostic runs).
+* **Per-Run Event Logs**: Maintained in `artifacts/logs/batch/` covering emergency dissemination (`emergency-*.csv`), dynamic routing decisions (`routing-*.csv`), vehicle trajectories (`mobility-*.csv`), and signal phase actuation (`traffic-light-*.csv`).
+* **Processed Datasets**: Generated via `python analysis/process_results.py --batch --require-all`:
+  * `results/processed/individual_runs-batch.csv`: 450 individual run records with full network, mobility, and delay metrics.
+  * `results/processed/summary-batch.csv`: Means, sample standard deviations, sample counts ($N=30$ for network metrics; conditional $n=28/29/28$ for arrival metrics), Student-t 95% confidence intervals for ordinary continuous metrics, reproducible bootstrap percentile 95% confidence intervals for traffic-light waiting time and corridor delay, and bounded Wilson score intervals for PDR.
+  * `results/processed/paired_comparisons.csv`: Matched seed-by-seed differences, standard errors, paired Student-t statistics, exact two-sided p-values, and Cohen's $d_z$ effect sizes.
+  * `results/processed/fallback_validation.csv`: 25-column normalized schema of watchdog and fog takeover decisions across batch runs, `ForcedMistFailure`, and `ForcedMistTimeout`.
+* **Publication Figures**: 12 metric families evaluated across low, medium, and high traffic densities are saved to `results/graphs/` (36 density-specific charts). Legacy single-run prototype figures are cleanly archived under `results/graphs/legacy/`.
+
+## Metric Definitions and Formulas
+
+* **Packet Delivery Ratio (PDR)**: Ratio of unique Emergency Messages received and processed by the ambulance (`ev_processed`) to unique Emergency Messages generated by RSU 2 (`generated`). Evaluated across all $N=30$ runs per density. 95% confidence intervals use the bounded binomial Wilson score interval.
+* **End-to-End (E2E) Delay**: $t_{\text{ev\_processed}} - t_{\text{gen}}$ for delivered messages.
+* **Useful Throughput**: Payload bits received divided by total simulation duration (900 s).
+* **Normalized Routing Load (NRL)**: Total transmitted packets (beacons, status tables, preemption requests, and EM relays) divided by delivered unique emergency messages. Evaluated conditionally ($n=28/29$) because zero deliveries leave the ratio undefined.
+* **EV Response Time**: Elapsed time from that run's logged Emergency Message generation timestamp ($t_{\text{gen}} \in [65.5, 68.0]\text{ s}$) to emergency vehicle arrival at the accident destination in SUMO ($t_{\text{arrival}} - t_{\text{gen}}$).
+* **Route Decision Latency**: Elapsed duration from route computation initiation to route application on the vehicle OBU.
+* **Traffic Light Waiting Time (`traffic_light_wait_s`)**: Total cumulative duration spent at near-standstill ($v < 0.1\text{ m/s}$) within 20 m of an intersection stop line. Evaluated using a reproducible non-parametric bootstrap percentile 95% confidence interval (10,000 resamples, fixed seed 42).
+* **Corridor Delay vs. Free-Flow (`ev_delay_vs_freeflow_s`)**: Net travel delay relative to the 140.0 s unimpeded green-wave transit time (`max(0.0, ev_travel_s - 140.0)`). Evaluated using a reproducible non-parametric bootstrap percentile 95% confidence interval (10,000 resamples, fixed seed 42).
+

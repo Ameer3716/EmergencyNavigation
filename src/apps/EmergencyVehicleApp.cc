@@ -17,7 +17,7 @@ namespace emergencynavigation {
 
 class EmergencyVehicleApp : public EmergencyRelayApp {
 public:
-    ~EmergencyVehicleApp() override { cancelAndDelete(routeReady); cancelAndDelete(dynamicTimer); cancelAndDelete(watchdog); cancelAndDelete(preemptionTimer); }
+    ~EmergencyVehicleApp() override { cancelAndDelete(routeReady); cancelAndDelete(dynamicTimer); cancelAndDelete(watchdog); cancelAndDelete(preemptionTimer); cancelAndDelete(holdTimer); }
 protected:
     void initialize(int stage) override {
         EmergencyRelayApp::initialize(stage);
@@ -26,11 +26,18 @@ protected:
             dynamicTimer = new omnetpp::cMessage("dynamic update");
             watchdog = new omnetpp::cMessage("mist watchdog");
             preemptionTimer = new omnetpp::cMessage("preemption check");
+            holdTimer = new omnetpp::cMessage("navigation hold");
         }
         if (stage == 1) {
             EV_INFO << "ENTITY role=emergency vehicle=" << mobility->getExternalId() << " time=" << simTime() << "\n";
             graph = std::make_unique<RoadGraph>(par("roadNetworkFile").stdstringValue());
             recordScalar("roadGraphEdges", static_cast<double>(graph->edgeCount()));
+            // Immobilize the ambulance immediately after SUMO creates it.  A
+            // route stop at a downstream position is not sufficient: SUMO
+            // accelerates toward that stop before the post-accident route
+            // decision, which would make communication delay invisible in
+            // mobility and response-time metrics.
+            scheduleAt(simTime() + 0.1, holdTimer);
         }
     }
     const char* nodeRole() const override { return "emergency"; }
@@ -107,6 +114,12 @@ protected:
             scheduleAt(simTime() + par("preemptionCheckInterval"), preemptionTimer);
             return;
         }
+        if (message == holdTimer) {
+            auto* command = veins::TraCIScenarioManagerAccess().get()->getCommandInterface();
+            command->vehicle(nodeId()).setSpeed(0);
+            navigationHeld = true;
+            return;
+        }
         if (message == routeReady) {
             if (watchdog->isScheduled()) cancelEvent(watchdog);
             applyRoute(pending, "initial");
@@ -131,13 +144,16 @@ private:
     omnetpp::cMessage* dynamicTimer = nullptr;
     omnetpp::cMessage* watchdog = nullptr;
     omnetpp::cMessage* preemptionTimer = nullptr;
+    omnetpp::cMessage* holdTimer = nullptr;
     RouteResult pending;
     std::vector<std::string> selected;
     double decisionStart = 0;
     bool navigationStarted = false;
+    bool navigationHeld = false;
     std::string requestId;
     std::set<std::string> requestedLights;
     std::map<std::string, int> consecutiveSlowSamples;
+    std::string lastSlowEdges;
     double lastRerouteTime = -1e9;
 
     MistRoutingModule* mist() const {
@@ -238,8 +254,12 @@ private:
         auto* command = veins::TraCIScenarioManagerAccess().get()->getCommandInterface();
         if (!command->vehicle(nodeId()).changeVehicleRoute(edges))
             throw omnetpp::cRuntimeError("SUMO rejected ambulance route");
+        if (navigationHeld) {
+            command->vehicle(nodeId()).setSpeed(par("releaseSpeed"));
+            navigationHeld = false;
+        }
         selected = route.edges;
-        if (!preemptionTimer->isScheduled()) scheduleAt(simTime() + par("preemptionCheckInterval"), preemptionTimer);
+        if (par("preemptionEnabled").boolValue() && !preemptionTimer->isScheduled()) scheduleAt(simTime() + par("preemptionCheckInterval"), preemptionTimer);
         logRoute("applied", reason, route, 0);
         recordScalar("lastRouteCost", route.cost);
     }
@@ -249,20 +269,23 @@ private:
         if (found == selected.end()) return;
         const std::vector<std::string> remaining(found, selected.end());
         const auto snapshot = trafficSnapshot();
-        DynamicAStarRouter router(*graph, snapshot, par("densityLambda"));
+        DynamicAStarRouter router(*graph, snapshot, par("densityLambda"), 1.0 / 7.5, par("minimumObservedVehicles").intValue());
         const std::vector<std::string> future(remaining.size() > 1 ? remaining.begin() + 1 : remaining.end(), remaining.end());
         const double oldCost = future.empty() ? 0 : router.routeCost(future);
         pending = mist()->compute(mobility->getRoadId(), par("destinationEdge").stdstringValue(), snapshot, true);
-        logRoute("evaluated", "periodic", pending, 0);
         if (pending.edges.empty()) return;
         bool slow = false;
+        std::ostringstream slowEdges;
         for (const auto& id : future) {
             auto sample = snapshot.find(id);
-            const bool below = sample != snapshot.end() && sample->second.vehicleCount > 0
+            const bool below = sample != snapshot.end() && sample->second.vehicleCount >= par("minimumObservedVehicles").intValue()
                 && sample->second.meanSpeed < par("congestionSpeedThreshold").doubleValue() * graph->edge(id).speedLimit;
             consecutiveSlowSamples[id] = below ? consecutiveSlowSamples[id] + 1 : 0;
+            if (below) { if (slowEdges.tellp() > 0) slowEdges << '|'; slowEdges << id; }
             if (consecutiveSlowSamples[id] >= par("minimumSlowSamples").intValue()) slow = true;
         }
+        lastSlowEdges = slowEdges.str();
+        logRoute("evaluated", slow ? "below_threshold_observed" : "periodic", pending, 0);
         const double improvement = oldCost > 0 ? (oldCost - pending.cost) / oldCost : 0;
         const bool enoughTime = simTime().dbl() - lastRerouteTime >= par("minimumRerouteGap").doubleValue();
         if (pending.edges != remaining && enoughTime
@@ -283,7 +306,7 @@ private:
         const bool first = !std::filesystem::exists(path);
         std::ofstream out(path, std::ios::app);
         if (!out) throw omnetpp::cRuntimeError("Cannot open routing log: %s", path.c_str());
-        if (first) out << "action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges\n";
+        if (first) out << "action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges,belowThresholdEdges\n";
         const std::string mode = par("routingMode").stdstringValue();
         const char* configuration = mode == "fog_cloud" ? "FogCloudAStar" :
                                     mode == "mist_fallback" ? "MistDynamicFogFallback" :
@@ -294,7 +317,7 @@ private:
             << ',' << (par("dynamicRouting").boolValue() ? "dynamic_astar" : "astar")
             << ',' << location << ',' << simTime().dbl() << ',' << decisionStart << ',' << delay
             << ',' << route.expandedNodes << ',' << route.cost << ',' << reason << ',' << mobility->getRoadId()
-            << ',' << join(selected) << ',' << join(route.edges) << '\n';
+            << ',' << join(selected) << ',' << join(route.edges) << ',' << lastSlowEdges << '\n';
     }
 };
 
