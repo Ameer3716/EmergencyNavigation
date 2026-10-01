@@ -29,6 +29,7 @@ simple EmergencyVehicleApp extends EmergencyRelayApp
     double minimumRerouteGap @unit(s) = default(30s);
     double densityLambda = default(0.5);
     double trafficDataTtl @unit(s) = default(3s);
+    double telemetryValidationDelay @unit(s) = default(20ms);
     double routeBaseDelay @unit(s) = default(300ms);
     double routeNodeDelay @unit(s) = default(2ms);
     string routingLogPath = default("../../artifacts/logs/routing-events.csv");

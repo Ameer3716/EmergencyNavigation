@@ -5,6 +5,7 @@
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 
 #include <algorithm>
+#include <deque>
 #include <filesystem>
 #include <fstream>
 #include <list>
@@ -43,11 +44,13 @@ protected:
     const char* nodeRole() const override { return "emergency"; }
     void onTrafficBeacon(const TrafficBeacon& message) override {
         beacons[message.getVehicleId()] = {message.getCurrentEdge(), message.getSpeed(), simTime().dbl()};
+        telemetryArrivals.push_back(simTime().dbl());
     }
     void onTrafficStatus(const TrafficStatus& message) override {
         const std::string id = message.getEdgeId();
         if (!status.count(id) || status[id].timestamp <= message.getTimestamp())
             status[id] = {message.getVehicleCount(), message.getMeanSpeed(), message.getTimestamp()};
+        telemetryArrivals.push_back(simTime().dbl());
     }
     void onEmergencyAccepted(const EmergencyMessage& message) override {
         if (navigationStarted) return;
@@ -80,7 +83,17 @@ protected:
             }
             throw omnetpp::cRuntimeError("Mist A* found no route");
         }
-        const double delay = mist()->processingDelay(pending.expandedNodes);
+        // A single OBU worker validates recently received V2V/V2I telemetry
+        // before committing a route. The count is measured from actual radio
+        // receptions and the same queue cost applies to every Mist variant.
+        const double horizon = par("trafficDataTtl").doubleValue();
+        while (!telemetryArrivals.empty() && telemetryArrivals.front() < simTime().dbl() - horizon)
+            telemetryArrivals.pop_front();
+        const int queued = static_cast<int>(telemetryArrivals.size());
+        const double loadDelay = queued * par("telemetryValidationDelay").doubleValue();
+        recordScalar("initialTelemetryValidationQueue", queued);
+        recordScalar("initialTelemetryValidationDelay", loadDelay);
+        const double delay = mist()->processingDelay(pending.expandedNodes) + loadDelay;
         logRoute("computed", "initial", pending, delay);
         scheduleAt(simTime() + delay, routeReady);
     }
@@ -139,6 +152,7 @@ private:
     struct BeaconSample { std::string edge; double speed; double timestamp; };
     std::map<std::string, BeaconSample> beacons;
     std::map<std::string, EdgeObservation> status;
+    std::deque<double> telemetryArrivals;
     std::unique_ptr<RoadGraph> graph;
     omnetpp::cMessage* routeReady = nullptr;
     omnetpp::cMessage* dynamicTimer = nullptr;

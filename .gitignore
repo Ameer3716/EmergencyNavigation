@@ -26,6 +26,7 @@ results/processed/*
 
 # ─── Large raw data archive (not needed for reproduction) ─────────────────────
 archive_raw_20260921_2308/
+archive_raw_20261001_650m/
 
 # ─── Scratch / throwaway analysis workspace ───────────────────────────────────
 scratch/

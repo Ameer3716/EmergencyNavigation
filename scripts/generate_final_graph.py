@@ -10,9 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SUMMARY = ROOT / "results/processed/summary-batch.csv"
 OUTPUT = ROOT / "artifacts/screenshots/final-ev-response-graph.png"
 
-CONFIG_NAMES = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
-CONFIG_LABELS = ("FogCloud", "Mist", "MistDyn.", "MistDyn+Fog", "NoPreempt")
-COLORS = ["#4e6d9b", "#439775", "#d98a3e", "#8c62a8", "#b85450"]
+CONFIG_NAMES = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+CONFIG_LABELS = ("FogCloud", "Mist", "MistDyn.", "MistDyn+Fog")
+COLORS = ["#4e6d9b", "#439775", "#d98a3e", "#8c62a8"]
 
 def main():
     if not SUMMARY.exists():

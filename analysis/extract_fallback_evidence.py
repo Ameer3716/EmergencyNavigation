@@ -120,11 +120,20 @@ def extract_fallback():
 
             # Extract EM generation time from sca or emergency csv
             em_gen = None
+            decision_scalar = None
+            fog_processing = None
+            communication_delay = None
             if sca_file.exists():
                 for line in sca_file.read_text(encoding="utf-8", errors="ignore").splitlines():
                     parts = line.split()
                     if len(parts) == 4 and parts[0] == "scalar" and parts[2] == "emGenerationTime":
                         em_gen = float(parts[3])
+                    if len(parts) == 4 and parts[0] == "scalar" and parts[2] == "routeDecisionLatency":
+                        decision_scalar = float(parts[3])
+                    if len(parts) == 4 and parts[0] == "scalar" and parts[2] == "fogProcessingDelay":
+                        fog_processing = float(parts[3])
+                    if len(parts) == 4 and parts[0] == "scalar" and parts[2] == "routeCommunicationDelay":
+                        communication_delay = float(parts[3])
 
             if em_gen is None and em_csv.exists():
                 with em_csv.open(newline="", encoding="utf-8") as f:
@@ -168,12 +177,45 @@ def extract_fallback():
                 })
                 continue
 
-            # Delivered batch run
-            applied_rows = [r for r in rt_rows if r.get("action") == "applied" and r.get("reason") == "initial"]
+            # Batch evidence comes from this run's actual routing and fallback logs.
+            fallback_csv = LOG_DIR / f"fallback-{stem}.csv"
+            if fallback_csv.exists():
+                with fallback_csv.open(newline="", encoding="utf-8") as f:
+                    fallback_rows = list(csv.DictReader(f))
+            else:
+                fallback_rows = []
+            fb = fallback_rows[0] if fallback_rows else None
+            computed = next((r for r in rt_rows if r.get("action") == "computed"), None)
+            applied_rows = [r for r in rt_rows if r.get("action") == "applied"]
+            if not applied_rows:
+                start_t = float(rt_rows[0]["decisionStart"])
+                records.append({
+                    "scenario": f"Batch {density.capitalize()} Seed {seed}",
+                    "configuration": "MistDynamicFogFallback", "density": density, "seed": seed,
+                    "em_generation_time_s": em_gen if em_gen is not None else "",
+                    "mist_start_s": start_t, "mist_completion_s": "",
+                    "scheduled_mist_duration_s": float(computed["computationDelay"]) if computed else "",
+                    "observed_mist_duration_s": float(fb["time"]) - start_t if fb else "",
+                    "watchdog_threshold_s": float(fb["watchdogThreshold"]) if fb else 0.8,
+                    "watchdog_expiry_s": start_t + (float(fb["watchdogThreshold"]) if fb else 0.8),
+                    "mist_status": "FOG_TAKEOVER_UNRESOLVED" if fb else "ROUTE_UNRESOLVED",
+                    "failure_reason": fb["fallbackReason"] if fb else "none",
+                    "fallback_triggered": int(fb is not None),
+                    "fallback_trigger_type": "timeout" if fb and fb["fallbackReason"] == "watchdog_timeout" else ("other" if fb else "none"),
+                    "fallback_trigger_time_s": float(fb["time"]) if fb else "",
+                    "fog_request_time_s": float(fb["fogRequestTime"]) if fb else "",
+                    "fog_reception_time_s": "", "fog_computation_s": "", "communication_delay_s": "",
+                    "cloud_backhaul_s": "", "final_decision_time_s": "", "final_decision_latency_s": "",
+                    "applied_route": "", "supplying_tier": "none",
+                })
+                continue
             app = applied_rows[0] if applied_rows else rt_rows[0]
             start_t = float(app["decisionStart"])
             applied_t = float(app["time"])
-            decision_latency = round(applied_t - start_t, 4)
+            decision_latency = decision_scalar if decision_scalar is not None else applied_t - start_t
+            watchdog_threshold = float(fb["watchdogThreshold"]) if fb else 0.8
+            trigger_t = float(fb["time"]) if fb else None
+            scheduled_mist = float(computed["computationDelay"]) if computed else None
 
             records.append({
                 "scenario": f"Batch {density.capitalize()} Seed {seed}",
@@ -182,20 +224,20 @@ def extract_fallback():
                 "seed": seed,
                 "em_generation_time_s": em_gen if em_gen is not None else "",
                 "mist_start_s": start_t,
-                "mist_completion_s": applied_t,
-                "scheduled_mist_duration_s": 0.3260,
-                "observed_mist_duration_s": decision_latency,
-                "watchdog_threshold_s": 0.8,
-                "watchdog_expiry_s": round(start_t + 0.8, 4),
-                "mist_status": "SUCCESS",
-                "failure_reason": "none",
-                "fallback_triggered": 0,
-                "fallback_trigger_type": "none",
-                "fallback_trigger_time_s": "",
-                "fog_request_time_s": "",
-                "fog_reception_time_s": "",
-                "fog_computation_s": "",
-                "communication_delay_s": "",
+                "mist_completion_s": "" if fb else applied_t,
+                "scheduled_mist_duration_s": scheduled_mist if scheduled_mist is not None else "",
+                "observed_mist_duration_s": trigger_t - start_t if fb else decision_latency,
+                "watchdog_threshold_s": watchdog_threshold,
+                "watchdog_expiry_s": start_t + watchdog_threshold,
+                "mist_status": "WATCHDOG_TIMEOUT" if fb and fb["fallbackReason"] == "watchdog_timeout" else ("FALLBACK" if fb else "SUCCESS"),
+                "failure_reason": fb["fallbackReason"] if fb else "none",
+                "fallback_triggered": int(fb is not None),
+                "fallback_trigger_type": "timeout" if fb and fb["fallbackReason"] == "watchdog_timeout" else ("other" if fb else "none"),
+                "fallback_trigger_time_s": trigger_t if fb else "",
+                "fog_request_time_s": float(fb["fogRequestTime"]) if fb else "",
+                "fog_reception_time_s": applied_t if fb else "",
+                "fog_computation_s": fog_processing if fb and fog_processing is not None else "",
+                "communication_delay_s": communication_delay if fb and communication_delay is not None else "",
                 "cloud_backhaul_s": "",
                 "final_decision_time_s": applied_t,
                 "final_decision_latency_s": decision_latency,
@@ -203,6 +245,9 @@ def extract_fallback():
                 "supplying_tier": app.get("location", "mist")
             })
 
+    for record in records:
+        raw_latency = record.pop("final_decision_latency_s")
+        record["final_decision_latency_ms"] = float(raw_latency) * 1000 if raw_latency != "" else ""
     out_file = PROCESSED_DIR / "fallback_validation.csv"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     with out_file.open("w", newline="", encoding="utf-8") as f:

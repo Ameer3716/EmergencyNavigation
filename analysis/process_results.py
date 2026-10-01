@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import itertools
 import re
 import shutil
 import statistics
@@ -16,17 +17,21 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
+CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
 METRICS = {
     "pdr": ("Packet delivery ratio", "ratio"),
-    "e2e_delay_s": ("EM end-to-end delay", "s"),
-    "throughput_bps": ("Useful EM throughput", "bit/s"),
+    "e2e_delay_ms": ("EM end-to-end delay", "ms"),
+    "throughput_bps": ("EM throughput", "bit/s"),
     "nrl": ("Normalized routing load", "packets/delivery"),
     "control_transmissions": ("Control transmissions", "packets"),
     "control_bytes": ("Control bytes", "bytes"),
     "ev_response_s": ("EV response time", "s"),
-    "route_decision_s": ("Route decision latency", "s"),
+    "route_decision_ms": ("Route decision latency", "ms"),
     "traffic_light_wait_s": ("EV traffic-light waiting", "s"),
+    "route_changes": ("Route changes", "events/run"),
+    "route_reviews": ("Route computation frequency", "reviews/run"),
+    "fallback_triggered": ("Fallback activation rate", "ratio"),
+    "fallback_decision_ms": ("Fallback decision latency", "ms"),
     "ev_delay_vs_freeflow_s": ("EV corridor delay vs free-flow", "s"),
     "ev_distance_m": ("EV route distance", "m"),
     "ev_travel_s": ("EV travel time", "s"),
@@ -56,6 +61,9 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
             event_path: Path | None = None) -> dict[str, object]:
     value = scalars(scalar_path)
     em = events(event_path or ROOT / "artifacts/logs" / f"emergency-{config}-verified.csv")
+    stem = f"{config}-{density}-seed{seed}"
+    routing = events(ROOT / "artifacts/logs/batch" / f"routing-{stem}.csv")
+    fallback = events(ROOT / "artifacts/logs/batch" / f"fallback-{stem}.csv")
     generated = {row["messageId"]: row for row in em if row["action"] == "generated"}
     delivered = {row["messageId"]: row for row in em if row["action"] == "ev_processed"}
     transmissions = [row for row in em if row["action"] == "transmit"]
@@ -78,15 +86,19 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
         "generated_messages": len(generated),
         "delivered_messages": delivery_count,
         "pdr": delivery_count / len(generated) if generated else None,
-        "e2e_delay_s": delay(),
+        "e2e_delay_ms": delay() * 1000 if delay() is not None else None,
         "throughput_bps": payload_bits / duration,
         "nrl": (control_tx + em_tx) / delivery_count if delivery_count else None,
         "control_transmissions": control_tx if value.get("controlTransmissions") else None,
         "control_bytes": control_bytes if value.get("controlBytes") else None,
         "emergency_transmissions": em_tx,
         "ev_response_s": first("evResponseTime"),
-        "route_decision_s": first("routeDecisionLatency"),
+        "route_decision_ms": first("routeDecisionLatency") * 1000 if first("routeDecisionLatency") is not None else None,
         "traffic_light_wait_s": first("evTrafficLightWaitingTime"),
+        "route_changes": sum(r["action"] == "applied" and r["reason"] in ("low_speed", "cost_improvement") for r in routing) if config.startswith("MistDynamic") else None,
+        "route_reviews": sum(r["action"] == "evaluated" for r in routing) if config.startswith("MistDynamic") else None,
+        "fallback_triggered": int(bool(fallback)) if config == "MistDynamicFogFallback" else None,
+        "fallback_decision_ms": first("routeDecisionLatency") * 1000 if fallback and first("routeDecisionLatency") is not None else None,
         "ev_delay_vs_freeflow_s": max(0.0, first("evTravelTime") - 140.0) if first("evTravelTime") is not None else None,
         "ev_distance_m": first("evDistance"),
         "ev_travel_s": first("evTravelTime"),
@@ -123,7 +135,8 @@ import scipy.stats as st
 
 NONNEGATIVE_METRICS = {
     "traffic_light_wait_s", "ev_delay_vs_freeflow_s", "ev_response_s",
-    "ev_travel_s", "ev_distance_m", "e2e_delay_s", "route_decision_s",
+    "ev_travel_s", "ev_distance_m", "e2e_delay_ms", "route_decision_ms",
+    "route_changes", "route_reviews", "fallback_triggered", "fallback_decision_ms",
     "throughput_bps", "control_transmissions", "control_bytes", "nrl"
 }
 
@@ -155,8 +168,8 @@ def summarize(rows: list[dict[str, object]]) -> list[dict[str, object]]:
             sd = statistics.stdev(values) if n > 1 else 0.0
             mean_val = statistics.mean(values)
 
-            if key == "pdr":
-                successes = sum(1 for row in group if row.get("delivered_messages", 0) > 0)
+            if key in ("pdr", "fallback_triggered"):
+                successes = sum(1 for row in group if row.get("delivered_messages", 0) > 0) if key == "pdr" else int(sum(values))
                 ci_low, ci_high = wilson_interval(successes, n)
             elif key in ("traffic_light_wait_s", "ev_delay_vs_freeflow_s"):
                 # Bounded nonnegative zero-inflated metrics: use reproducible bootstrap percentile interval (10,000 resamples, seed=42)
@@ -180,17 +193,17 @@ def summarize(rows: list[dict[str, object]]) -> list[dict[str, object]]:
                 "mean": mean_val,
                 "stddev": sd,
                 "ci95_lower": ci_low,
-                "ci95_upper": ci_high
+                "ci95_upper": ci_high,
+                "event_count": int(sum(values)) if key == "fallback_triggered" else ""
             })
     return result
 
 
 def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     comparisons = [
-        ("MistAStar", "FogCloudAStar", ["ev_response_s", "ev_travel_s", "route_decision_s"]),
+        ("MistAStar", "FogCloudAStar", ["ev_response_s", "ev_travel_s", "route_decision_ms"]),
         ("MistDynamicAStar", "MistAStar", ["ev_response_s", "ev_travel_s", "ev_distance_m"]),
-        ("FogCloudAStar", "NoPreemptionBaseline", ["ev_response_s", "traffic_light_wait_s", "ev_delay_vs_freeflow_s"]),
-        ("MistDynamicFogFallback", "MistDynamicAStar", ["ev_response_s", "route_decision_s", "ev_travel_s"]),
+        ("MistDynamicFogFallback", "MistDynamicAStar", ["ev_response_s", "route_decision_ms", "ev_travel_s"]),
     ]
     results = []
     for density in ("low", "medium", "high"):
@@ -281,15 +294,13 @@ def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]
 
 def archive_legacy_graphs() -> None:
     folder = ROOT / "results/graphs"
-    legacy_dir = folder / "legacy"
+    legacy_dir = ROOT / "archive_raw_20261001_650m" / "graphs"
     legacy_dir.mkdir(parents=True, exist_ok=True)
     for p in folder.glob("*.png"):
-        # Check if it has a density suffix (-low, -medium, -high)
-        if not any(f"-{d}.png" in p.name for d in ("low", "medium", "high")):
-            target = legacy_dir / p.name
-            if not target.exists():
-                shutil.copyfile(p, target)
-            p.unlink()
+        target = legacy_dir / p.name
+        if not target.exists():
+            shutil.copyfile(p, target)
+        p.unlink()
 
 
 def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = None,
@@ -299,33 +310,28 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
     folder = ROOT / "results/graphs"
     folder.mkdir(parents=True, exist_ok=True)
 
-    arrival_counts = {"low": 28, "medium": 29, "high": 28}
     plot_data_records = []
 
-    for density in sorted({str(row["density"]) for row in summary}):
+    for density, key in itertools.product(sorted({str(row["density"]) for row in summary}), METRICS):
+        title, unit = METRICS[key]
         if density_filter and density not in density_filter:
             continue
-        for key, (title, unit) in METRICS.items():
-            if metric_filter and key not in metric_filter:
-                continue
+        if metric_filter and key not in metric_filter:
+            continue
         rows = [row for row in summary if row["metric"] == key and row["density"] == density]
         if not rows:
             continue
-        names = [str(row["configuration"]).replace("DynamicFogFallback", "Dyn+Fog").replace("Dynamic", "Dyn.").replace("NoPreemptionBaseline", "NoPreempt") for row in rows]
+        names = [str(row["configuration"]).replace("DynamicFogFallback", "Dyn+Fog").replace("Dynamic", "Dyn.") for row in rows]
         means = [float(row["mean"]) for row in rows]
         
         # Exact metric-appropriate valid sample size
-        if key in ("pdr", "throughput_bps", "control_transmissions", "control_bytes"):
-            n_valid = 30
-            n_label = "N=30, n=30"
-        else:
-            n_valid = arrival_counts.get(density, 28)
-            n_label = f"N=30, n={n_valid}"
+        n_valid = min(int(row["n"]) for row in rows)
+        n_label = f"n={n_valid}"
 
         # Error bar computation
-        if key == "pdr":
-            err_low = [float(row["mean"]) - float(row["ci95_lower"]) if row["ci95_lower"] is not None else 0 for row in rows]
-            err_high = [float(row["ci95_upper"]) - float(row["mean"]) if row["ci95_upper"] is not None else 0 for row in rows]
+        if key in ("pdr", "fallback_triggered"):
+            err_low = [max(0.0, float(row["mean"]) - float(row["ci95_lower"])) if row["ci95_lower"] is not None else 0 for row in rows]
+            err_high = [max(0.0, float(row["ci95_upper"]) - float(row["mean"])) if row["ci95_upper"] is not None else 0 for row in rows]
             errors = [err_low, err_high]
             ci_label = "Wilson 95% CI"
         elif key in ("traffic_light_wait_s", "ev_delay_vs_freeflow_s"):
@@ -334,7 +340,7 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
             errors = [err_low, err_high]
             ci_label = "Bootstrap percentile 95% CI"
         else:
-            errors = [(float(row["ci95_upper"]) - float(row["mean"])) if row["ci95_upper"] is not None else 0 for row in rows]
+            errors = [max(0.0, float(row["ci95_upper"]) - float(row["mean"])) if row["ci95_upper"] is not None else 0 for row in rows]
             ci_label = "Student-t 95% CI"
 
         # Accumulate sidecar plot data
@@ -346,7 +352,7 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                 "mean": r["mean"],
                 "stddev": r["stddev"],
                 "n_scheduled": 30,
-                "n_valid": n_valid,
+                "n_valid": r["n"],
                 "ci95_lower": r["ci95_lower"],
                 "ci95_upper": r["ci95_upper"],
                 "ci_method": ci_label
@@ -358,10 +364,12 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
         
         # Annotate mean values above upper error bar endpoint to avoid overlapping error bars
         for bar, mean, r in zip(bars, means, rows):
-            if key in ("pdr", "route_decision_s"):
+            if key in ("pdr", "fallback_triggered", "throughput_bps"):
                 val_text = f"{mean:.3f}"
-            elif key == "e2e_delay_s":
-                val_text = f"{mean:.4f}"
+            elif key in ("route_changes", "route_reviews"):
+                val_text = f"{mean:.2f}"
+            elif key in ("e2e_delay_ms", "route_decision_ms", "fallback_decision_ms"):
+                val_text = f"{mean:.1f}"
             else:
                 val_text = f"{mean:.1f}"
 
@@ -372,9 +380,9 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                         textcoords="offset points",
                         ha='center', va='bottom', fontsize=9.0, fontweight='bold')
 
-        ax.set_title(f"{title} — {density.capitalize()} Traffic ({n_label})\n[Error bars: {ci_label}]", fontsize=12, fontweight="bold", pad=12)
+        ax.set_title(f"{title} — {density.capitalize()} Traffic ({n_label})\n[95% CI]", fontsize=12, fontweight="bold", pad=12)
         ax.set_ylabel(f"{title} ({unit})" if unit != "ratio" else title, fontsize=10.5)
-        if key == "pdr":
+        if key in ("pdr", "fallback_triggered"):
             ax.set_ylim(0.0, 1.05)
         elif key in NONNEGATIVE_METRICS:
             uppers = [float(r["ci95_upper"]) for r in rows if r.get("ci95_upper") is not None]
@@ -420,16 +428,24 @@ def main() -> None:
 
     if args.batch:
         rows = []
-        pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback|NoPreemptionBaseline)-(low|medium|high)-seed(\d+)\.sca$")
+        pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback)-(low|medium|high)-seed(\d+)\.sca$")
         for path in sorted((ROOT / "results/raw").glob("*.sca")):
             match = pattern.match(path.name)
             if match:
+                if args.require_all:
+                    raw_text = path.read_text(encoding="utf-8")
+                    if "config *.connectionManager.maxInterfDist 400m" not in raw_text or "config *.node[*].appl.telemetryValidationDelay 20ms" not in raw_text:
+                        raise SystemExit(f"Stale or mismatched simulation parameters: {path}")
                 config, density, seed_text = match.groups()
                 stem = path.stem
                 rows.append(one_run(config, path, density, int(seed_text),
                                     ROOT / "artifacts/logs/batch" / f"emergency-{stem}.csv"))
-        if args.require_all and len(rows) not in (360, 450) and len(rows) < 60:
-            raise SystemExit(f"Expected 450 batch runs (or 360 without baseline), found {len(rows)}")
+        if args.require_all:
+            expected = {(config, density, seed) for config in CONFIGS
+                        for density in ("low", "medium", "high") for seed in range(1, 31)}
+            actual = {(row["configuration"], row["density"], row["seed"]) for row in rows}
+            if actual != expected or len(rows) != 360:
+                raise SystemExit(f"Expected exact 360-run matrix; missing={len(expected - actual)}, extra={len(actual - expected)}")
     else:
         paths = [ROOT / "results/raw" / f"{config}-seed1.sca" for config in CONFIGS]
         if args.require_all and any(not path.exists() for path in paths):

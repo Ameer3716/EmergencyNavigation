@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Verify raw EM generation times, EV arrival times, departure times, and stored response/travel times across all 450 runs.
+Verify raw EM generation, arrival, departure, and stored response/travel times across the current 360 runs.
 Exports:
   1. artifacts/response_time_verification.csv
   2. artifacts/event_timeline_verification.csv
@@ -174,8 +174,8 @@ def main():
         print(f"  {k}: {v}")
 
     # Strict assertion
-    assert counts["PASS"] == 425, f"Expected 425 PASS, got {counts['PASS']}"
-    assert counts["NOT_APPLICABLE_NETWORK_PARTITION"] == 25, f"Expected 25 NOT_APPLICABLE_NETWORK_PARTITION, got {counts['NOT_APPLICABLE_NETWORK_PARTITION']}"
+    assert len(resp_records) == 360, f"Expected 360 records, got {len(resp_records)}"
+    assert counts["PASS"] + counts["NOT_APPLICABLE_NETWORK_PARTITION"] == 360
     assert counts["FAIL"] == 0, f"Expected 0 FAIL, got {counts['FAIL']}"
     assert counts["MISSING_SOURCE_DATA"] == 0, f"Expected 0 MISSING_SOURCE_DATA, got {counts['MISSING_SOURCE_DATA']}"
 

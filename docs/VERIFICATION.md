@@ -1,88 +1,75 @@
-# Verification report
+# Verification
 
-Verified on 2026-09-21 using OMNeT++ 6.3.0, Veins 5.3.1, SUMO 1.18.0, and 30 matched seeds across all five comparison configurations (`FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, `MistDynamicFogFallback`, and `NoPreemptionBaseline`), totaling 450 simulation runs. All 23 functional verification checks pass with complete evidence in `artifacts/logs/batch/`, `results/raw/`, and `results/processed/`.
+## Batch and source checks
 
-## 1. Functional Verification Matrix (23 Checks)
+The current batch contains 360 runs: four configurations by three densities by 30 matched seeds. `scripts/audit_batch.py` checks the exact matrix, raw file triplets, parameter provenance, processed metrics, fallback logs, route event counts, and graph files. The 650 m historical batch is archived outside the current comparison.
 
-| # | Test | Result and evidence |
-| --- | --- | --- |
-| 1 | SUMO network loads | Passed: SUMO-only validation for all three seed-1 densities, `sumo-validation.json`. |
-| 2 | Veins connects with SUMO | Passed: stock example and custom launcher logs on port 9998 (`grid-launchd.log`). |
-| 3 | Vehicles appear and move | Passed: SUMO FCD and OMNeT++ TraCI mobility logs (`mobility-*.csv`). |
-| 4 | Direct RSU → EV EM | Passed: `emergency-DirectDelivery.csv`, hop count 0, direct V2I transmission. |
-| 5 | Vehicle multihop EM | Passed: `emergency-VehicleRelay.csv`, hop count 2, intermediate vehicle relay. |
-| 6 | RSU multihop EM | Passed: `emergency-RsuRelay.csv`, hop count 1, intermediate infrastructure relay. |
-| 7 | Duplicate suppression | Passed: 283 duplicate discarded rows logged with 60 s cache window. |
-| 8 | TTL termination | Passed: TTL=1 run has one source transmission, seven expiration rows, zero EV delivery. |
-| 9 | Static A* connected route | Passed: independent C++ routing test and applied turn-valid SUMO route. |
-| 10 | Dynamic A* route change | Passed: `CongestionReroute` and high-density seed 4 alternate routes applied successfully. |
-| 11 | Mist meets watchdog | Passed: normal mist decision completes in ~0.326 s, well below 800 ms watchdog. |
-| 12 | Forced mist failure | Passed: `fallback-forced-verified.csv` records immediate exception failover (`fallbackReason = forced_failure`). |
-| 13 | Forced mist timeout | Passed: `fallback-timeout-verified.csv` records genuine 800 ms watchdog timeout (`fallbackReason = watchdog_timeout`) and fog takeover applied at t=68.15 s. |
-| 14 | Correct TL phase changes | Passed: `traffic-light-*.csv` records requested incoming edge and green state across all corridor junctions. |
-| 15 | Safe transition phases | Passed: actual SUMO phase transitions confirm yellow (2.0 s) followed by all-red (1.0 s) before green. |
-| 16 | Original program restored | Passed: all preemption events log `program_restored` after EV departure or 25 s maximum hold. |
-| 17 | EV reaches accident | Passed: all delivering runs record `accidentArrivalConfirmed = 1` in `.sca` scalars. |
-| 18 | Result/log files generated | Passed: 450 nonempty `.sca`, `.vec`, `.vci` files and CSV event logs generated. |
-| 19 | Metric formulas | Passed: `validate_integrated.py` and `audit_batch.py` recompute PDR, E2E delay, NRL, throughput, and response time from raw rows/scalars. All 425 delivered response times verified against raw `.sca` files (0 mismatches), and 25 network-partition runs correctly classified as not applicable (`artifacts/response_time_verification.csv`). |
-| 20 | TraCI TLS wiring & preemption | Passed: `MetricsCollector` wired to TraCI `VAR_NEXT_TLS (0x70)`. Preemption requests at 250 m turn signals green ~15 s prior to arrival (+15.208 s margin at B1 for FogCloud high seed 1). |
-| 21 | Network partition analysis | Passed: Genuine IEEE 802.11p network partitions verified from raw logs: low traffic (seeds 12, 28; PDR = 93.33%, Wilson [0.787, 0.982]), medium traffic (seed 21; PDR = 96.67%, Wilson [0.833, 0.994]), high traffic (seeds 13, 21; PDR = 93.33%, Wilson [0.787, 0.982]). |
-| 22 | Balanced batch matrix | Passed: exactly 450 runs across five configurations (30 low, 30 medium, 30 high seeds each). Programmatically verified by `scripts/audit_batch.py`. |
-| 23 | No-preemption baseline control | Passed: `NoPreemptionBaseline` (FogCloud routing without preemption) evaluated across all 30 seeds per density (150 total baseline runs). Without preemption, EV halts at red lights, logging 27.5–31.3 s waiting time. |
+The 400 m range screen used 23 selected MistDynamicAStar runs, including the five previously troublesome seed/density combinations and additional seeds in each density. Two of 23 partitioned at 400 m (low seeds 12 and 28), versus five of the same 23 at 650 m. This selected screen is not an estimate of the full-batch partition rate; the full result below uses all 360 current runs.
 
----
+Across the full current batch, 28/360 runs (7.8%) did not deliver the EM. This is the batch-wide nondelivery/partition proxy; individual seed outcomes appear below.
 
-## 2. Multi-Density Batch Experiment Results (450 Runs across 5 Configurations)
+SUMO route files contain 72, 144, and 200 background vehicles for low, medium, and high density, respectively, for every seed. The trip files show different seeded placements: normal0 starts on A2A3 and ends on D1C1 for seed 1, starts on D2D3 for seed 2, and starts on B0B1 for seed 4. Within one seed, the early trips intentionally match across densities; the trip counts and departure spacing then diverge.
 
-Evaluated across 30 matched random seeds (seeds 1–30) per density per configuration. PDR incorporates all $N=30$ generated runs using bounded binomial Wilson 95% confidence intervals. Downstream mobility metrics are reported conditionally on successful delivery ($n=28$ low, $n=29$ medium, $n=28$ high). Waiting time and corridor delay vs. free-flow use non-parametric bootstrap percentile 95% confidence intervals (10,000 resamples, fixed seed 42) to respect their non-negative zero-inflated distributions:
+## Seven primary metrics
 
-| Traffic Density | Configuration | Total Runs | PDR (Mean ± SD) | Wilson 95% CI | Response Runs ($n$) | Mean Response Time (s) | StdDev (s) | 95% Confidence Interval | TL Wait $\le$20m (s) | Corridor Delay vs Free-Flow (s) |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **High** | FogCloudAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 142.59 | 2.61 | [141.62, 143.56] | 0.00 ± 0.00 | 1.09 ± 2.61 |
-| **High** | MistAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 142.18 | 2.78 | [141.15, 143.21] | 0.00 ± 0.00 | 1.18 ± 2.78 |
-| **High** | MistDynamicAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 142.86 | 9.06 | [139.50, 146.21] | 0.00 ± 0.00 | 2.39 ± 8.85 |
-| **High** | MistDynamicFogFallback | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 142.86 | 9.06 | [139.50, 146.21] | 0.00 ± 0.00 | 2.39 ± 8.85 |
-| **High** | **NoPreemptionBaseline** | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | **197.07** | **24.68** | **[187.93, 206.21]** | **27.48 ± 14.92** | **55.57 ± 24.68** |
-| **Medium** | FogCloudAStar | 30 | 0.967 ± 0.183 | [0.833, 0.994] | 29 | 142.29 | 4.18 | [140.77, 143.81] | 0.59 ± 3.16 | 0.79 ± 4.18 |
-| **Medium** | MistAStar | 30 | 0.967 ± 0.183 | [0.833, 0.994] | 29 | 141.03 | 0.13 | [140.99, 141.08] | 0.00 ± 0.00 | 0.03 ± 0.13 |
-| **Medium** | MistDynamicAStar | 30 | 0.967 ± 0.183 | [0.833, 0.994] | 29 | 140.90 | 0.69 | [140.65, 141.15] | 0.00 ± 0.00 | 0.07 ± 0.18 |
-| **Medium** | MistDynamicFogFallback | 30 | 0.967 ± 0.183 | [0.833, 0.994] | 29 | 140.90 | 0.69 | [140.65, 141.15] | 0.00 ± 0.00 | 0.07 ± 0.18 |
-| **Medium** | **NoPreemptionBaseline** | 30 | 0.967 ± 0.183 | [0.833, 0.994] | 29 | **192.74** | **17.25** | **[186.46, 199.02]** | **29.97 ± 14.99** | **51.24 ± 17.25** |
-| **Low** | FogCloudAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 141.64 | 0.53 | [141.45, 141.84] | 0.00 ± 0.00 | 0.14 ± 0.53 |
-| **Low** | MistAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 141.18 | 0.66 | [140.94, 141.42] | 0.00 ± 0.00 | 0.18 ± 0.66 |
-| **Low** | MistDynamicAStar | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 141.23 | 0.66 | [140.99, 141.48] | 0.00 ± 0.00 | 0.23 ± 0.66 |
-| **Low** | MistDynamicFogFallback | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | 141.23 | 0.66 | [140.99, 141.48] | 0.00 ± 0.00 | 0.23 ± 0.66 |
-| **Low** | **NoPreemptionBaseline** | 30 | 0.933 ± 0.254 | [0.787, 0.982] | 28 | **186.63** | **2.70** | **[185.62, 187.63]** | **31.30 ± 6.21** | **45.13 ± 2.70** |
+Values below are mean [95% CI]. `n` is the metric-specific valid run count. Units remain in the metric label.
 
-### Event Timeline & Kinematic Range Provenance
-Analysis of raw OMNeT++ scalars across all 425 delivered simulation runs establishes the complete empirical event timeline:
-* **Incident Trigger**: Injected at $t = 60.0\text{ s}$ on link D3C3.
-* **Kinematic Deceleration & Standstill**: The disabled vehicle halts; RSU 2 monitors speed until standstill ($v < 0.1\text{ m/s}$) is confirmed.
-* **Accident Detection & EM Generation**: $t_{\text{gen}} \in [65.5, 68.0]\text{ s}$ across all 450 runs (including partitioned runs).
-* **EV Receipt**: $t_{\text{receive}} \in [65.5138, 68.0193]\text{ s}$.
-* **EV Departure**: $t_{\text{departure}} \in [66.5, 69.5]\text{ s}$ (recorded in raw `.sca` `evDepartureTime` after initial route application).
-* **EV Arrival**:
-  * Active preemption configurations (340 delivered runs): $t_{\text{arrival}} \in [204.0, 254.0]\text{ s}$ (response time 138.5–187.5 s).
-  * No-preemption baseline (85 delivered runs): $t_{\text{arrival}} \in [250.0, 349.5]\text{ s}$ (response time 182.5–284.0 s).
-  * All delivered runs combined: $t_{\text{arrival}} \in [204.0, 349.5]\text{ s}$ (response time 138.5–284.0 s).
-Complete per-run timeline records are verified in [`artifacts/event_timeline_verification.csv`](file:///d:/Codex/EmergencyNavigation/artifacts/event_timeline_verification.csv).
+### Low density (72 background vehicles)
 
----
+| Metric | FogCloudAStar | MistAStar | MistDynamicAStar | MistDynamicFogFallback |
+| --- | ---: | ---: | ---: | ---: |
+| PDR (ratio) | 0.800 [0.627, 0.905] (n=30) | 0.800 [0.627, 0.905] (n=30) | 0.800 [0.627, 0.905] (n=30) | 0.800 [0.627, 0.905] (n=30) |
+| NRL (packets/delivery) | 22,035.1 [21,706.4, 22,363.9] (n=24) | 22,025.2 [21,700.7, 22,349.6] (n=24) | 22,051.2 [21,724.5, 22,378.0] (n=24) | 22,051.2 [21,724.5, 22,378.0] (n=24) |
+| EM throughput (bit/s) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) |
+| EM end-to-end delay (ms) | 44.36 [40.33, 48.40] (n=24) | 44.36 [40.33, 48.40] (n=24) | 44.36 [40.33, 48.40] (n=24) | 44.36 [40.33, 48.40] (n=24) |
+| Route decision latency (ms) | 626.54 [626.54, 626.54] (n=24) | 625.17 [579.21, 671.12] (n=24) | 625.17 [579.21, 671.12] (n=24) | 625.17 [579.21, 671.12] (n=24) |
+| EV response time (s) | 141.67 [141.43, 141.91] (n=24) | 141.60 [141.35, 141.86] (n=24) | 141.67 [141.40, 141.93] (n=24) | 141.67 [141.40, 141.93] (n=24) |
+| EV traffic-light waiting time (s) | 0.00 [0.00, 0.00] (n=24) | 0.00 [0.00, 0.00] (n=24) | 0.00 [0.00, 0.00] (n=24) | 0.00 [0.00, 0.00] (n=24) |
 
-## 3. Key Findings & Empirical Analysis
+### Medium density (144 background vehicles)
 
-1. **Mist Routing Latency Advantage**: On static shortest paths, `MistAStar` consistently reduces EV response time by 0.41–1.26 s compared to `FogCloudAStar` (low-density paired difference: $-0.3005\text{ s}$ decision latency, $t = -525596, df = 27, p = 1.1 \times 10^{-136}$, Cohen's $d_z = -99328$), reflecting elimination of wireless transmission and WAN backhaul delays (0.326 s vs 0.627 s). Note that the large $t$ and $d_z$ arise from almost deterministic configured computation delays with very low run-to-run variance ($s_D \approx 3.0 \times 10^{-6}\text{ s}$); the primary finding is the verified 0.3005 s latency savings.
-2. **Dynamic A* Performance and Variance**: In medium traffic, `MistDynamicAStar` delivers an average response time of **140.90 s**, outperforming static MistAStar (141.03 s) and FogCloud (142.29 s). In high traffic, Dynamic A* exhibits higher variance (stddev 9.06 s, mean 142.86 s). Detailed auditing of high-density seed 22 shows that Dynamic A* detected 3 queued vehicles at red signal link B2C2, triggering an alternate detour that added 600 m of distance and 45 s of travel time. This demonstrates that preemption-oblivious dynamic routing can suffer from queue detours in heavy traffic.
-3. **Traffic Light Preemption Waiting Time Reduction**:
-   * **Low Traffic**: Preemption achieves a **100.0% reduction** in waiting time (0.00 s vs. 31.30 s, paired diff $-31.30\text{ s}, t = -26.67, df = 27, p = 6.2 \times 10^{-21}$, Cohen's $d_z = -5.04$) and saves **44.98 s** in total response time ($t = -91.74, df = 27, p = 3.1 \times 10^{-35}$, $d_z = -17.34$).
-   * **Medium Traffic**: Preemption achieves a **98.04% reduction** in waiting time (0.59 s vs. 29.97 s, paired diff $-29.38\text{ s}, t = -10.26, df = 28, p = 5.4 \times 10^{-11}$, Cohen's $d_z = -1.91$) and saves **50.45 s** in total response time ($t = -15.07, df = 28, p = 5.8 \times 10^{-15}$, $d_z = -2.80$). Detailed investigation reveals that in seed 14, an IEEE 802.11p wireless packet loss prevented the C2 preemption request from reaching RSU 1, causing an isolated 17.0 s wait that explains the non-zero medium-density average.
-   * **High Traffic**: Preemption achieves a **100.0% reduction** in waiting time (0.00 s vs. 27.48 s, paired diff $-27.48\text{ s}, t = -9.75, df = 27, p = 2.5 \times 10^{-10}$, Cohen's $d_z = -1.84$) and saves **54.48 s** in total response time ($t = -11.49, df = 27, p = 6.7 \times 10^{-12}$, $d_z = -2.17$).
-4. **Visual Evidence Deliverables**:
-   * `artifacts/screenshots/software-versions-terminal.png`: OMNeT++ 6.3.0, SUMO 1.18.0, Veins 5.3.1 toolchain audit.
-   * `artifacts/screenshots/stock-veins-run-terminal.png`: Stock Veins simulation run to t=200 s with exit code 0.
-   * `artifacts/screenshots/direct-em-delivery-event.png`: Direct RSU-to-EV (V2I) emergency message delivery event trace.
-   * `artifacts/screenshots/multihop-em-delivery-events.png`: Multi-hop vehicle and RSU relay forwarding event chain showing both receive and transmit events chronologically.
-   * `artifacts/screenshots/dynamic-rerouting-trace.png`: Log-derived route schematic of autonomous dynamic A* congestion avoidance (High Seed 4).
-   * `artifacts/screenshots/traffic-light-preemption-phase.png`: Preemption phase transition sequence at Intersection B1 (+15.208 s arrival margin, verified against `traffic-light-FogCloudAStar-high-seed1.csv`).
-   * `artifacts/screenshots/forced-mist-fallback-trace.png`: Two-panel log-derived event transcript demonstrating Panel A (Immediate Failure-Triggered Fallback, `ForcedMistFailure`) and Panel B (800 ms Watchdog Timeout Fallback, `ForcedMistTimeout`).
-   * `artifacts/screenshots/final-ev-response-graph.png`: 3-panel comparison chart displaying all 5 configurations across Low, Medium, and High densities with 95% confidence intervals.
+| Metric | FogCloudAStar | MistAStar | MistDynamicAStar | MistDynamicFogFallback |
+| --- | ---: | ---: | ---: | ---: |
+| PDR (ratio) | 0.967 [0.833, 0.994] (n=30) | 0.967 [0.833, 0.994] (n=30) | 0.967 [0.833, 0.994] (n=30) | 0.967 [0.833, 0.994] (n=30) |
+| NRL (packets/delivery) | 39,859.7 [39,449.2, 40,270.2] (n=29) | 39,897.7 [39,492.2, 40,303.2] (n=29) | 39,898.6 [39,492.0, 40,305.1] (n=29) | 39,918.2 [39,504.9, 40,331.5] (n=29) |
+| EM throughput (bit/s) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) |
+| EM end-to-end delay (ms) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) |
+| Route decision latency (ms) | 626.54 [626.54, 626.55] (n=29) | 844.62 [773.43, 915.81] (n=29) | 844.62 [773.43, 915.81] (n=29) | 946.38 [855.22, 1037.53] (n=29) |
+| EV response time (s) | 141.52 [141.48, 141.55] (n=29) | 141.66 [141.57, 141.74] (n=29) | 141.72 [141.45, 142.00] (n=29) | 141.88 [141.61, 142.15] (n=29) |
+| EV traffic-light waiting time (s) | 0.00 [0.00, 0.00] (n=29) | 0.00 [0.00, 0.00] (n=29) | 0.00 [0.00, 0.00] (n=29) | 0.00 [0.00, 0.00] (n=29) |
+
+### High density (200 background vehicles)
+
+| Metric | FogCloudAStar | MistAStar | MistDynamicAStar | MistDynamicFogFallback |
+| --- | ---: | ---: | ---: | ---: |
+| PDR (ratio) | 1.000 [0.886, 1.000] (n=30) | 1.000 [0.886, 1.000] (n=30) | 1.000 [0.886, 1.000] (n=30) | 1.000 [0.886, 1.000] (n=30) |
+| NRL (packets/delivery) | 54,479.0 [53,976.4, 54,981.7] (n=30) | 54,432.5 [53,977.6, 54,887.4] (n=30) | 54,453.4 [53,986.1, 54,920.8] (n=30) | 54,462.6 [54,004.5, 54,920.8] (n=30) |
+| EM throughput (bit/s) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) |
+| EM end-to-end delay (ms) | 32.17 [29.22, 35.11] (n=30) | 32.17 [29.22, 35.11] (n=30) | 32.17 [29.22, 35.11] (n=30) | 32.17 [29.22, 35.11] (n=30) |
+| Route decision latency (ms) | 626.54 [626.54, 626.54] (n=30) | 1075.33 [995.17, 1155.50] (n=30) | 1075.33 [995.17, 1155.50] (n=30) | 1087.24 [1041.95, 1132.52] (n=30) |
+| EV response time (s) | 142.52 [141.57, 143.46] (n=30) | 142.73 [141.83, 143.64] (n=30) | 142.70 [141.83, 143.57] (n=30) | 142.80 [141.94, 143.66] (n=30) |
+| EV traffic-light waiting time (s) | 0.00 [0.00, 0.00] (n=30) | 0.00 [0.00, 0.00] (n=30) | 0.13 [0.00, 0.40] (n=30) | 0.13 [0.00, 0.40] (n=30) |
+
+## Mechanism evidence
+
+| Density | Fallback activations | Rate | MistDynamicAStar reroutes / reviews | MistDynamicFogFallback reroutes / reviews |
+| --- | ---: | ---: | ---: | ---: |
+| low | 0/30 | 0.000 | 3 / 625 | 3 / 625 |
+| medium | 18/30 | 0.600 | 6 / 758 | 5 / 758 |
+| high | 27/30 | 0.900 | 6 / 784 | 5 / 785 |
+
+The reroute and review entries above are total events across 30 scheduled runs. Divide each by 30 for frequency per run; the exact per-run counts and their density means are in `individual_runs-batch.csv` and `summary-batch.csv`, respectively. Real fallback events and their full-precision decision latencies are in `results/processed/fallback_validation.csv`. The activation count excludes forced diagnostic configurations.
+
+A real batch example is medium seed 1: the scheduled Mist work lasted 1066.00 ms, exceeded the 800 ms watchdog, and Fog applied the route after 1126.65 ms. The recorded reason is `watchdog_timeout`.
+
+## Density and seed behavior
+
+Distinct SUMO traffic counts and seeded trip origins demonstrate different injected demand. Routing log `evaluated` rows record live candidate costs and `applied` rows record actual reroutes; the count table above measures their density dependence.
+
+- **Low**: 30 seeds; 6 EM nondeliveries (seeds 6, 12, 18, 23, 25, 28); 507 positive periodic cost evaluations with 5 distinct costs spanning 20.85–103.10 s; 3 applied reroutes. Examples: seed 8 at 106.803 s (cost_improvement), seed 11 at 111.757 s (cost_improvement), seed 27 at 113.179 s (cost_improvement).
+- **Medium**: 30 seeds; 1 EM nondeliveries (seeds 25); 614 positive periodic cost evaluations with 9 distinct costs spanning 20.85–144.79 s; 6 applied reroutes. Examples: seed 5 at 111.256 s (cost_improvement), seed 8 at 111.658 s (cost_improvement), seed 18 at 136.786 s (cost_improvement).
+- **High**: 30 seeds; 0 EM nondeliveries; 641 positive periodic cost evaluations with 21 distinct costs spanning 20.85–110.04 s; 6 applied reroutes. Examples: seed 5 at 101.78 s (cost_improvement), seed 8 at 131.465 s (cost_improvement), seed 22 at 112.811 s (cost_improvement).
+
+Specific current high-density routing events include a cost-improvement reroute at 112.811 s in seed 22 and at 102.033 s in seed 27. High seed 4 performed 26 periodic evaluations and no applied reroute under the new parameters. These are actual routing-log outcomes; a route review does not necessarily change the route.
+
+The throughput values remain close because the metric divides one fixed 256-byte EM payload by 900 s, with variation driven chiefly by delivery success. `results/processed/before_after_headline.csv` gives the measured 650 m to 400 m change for every primary metric and configuration without treating historical results as part of the current batch.
