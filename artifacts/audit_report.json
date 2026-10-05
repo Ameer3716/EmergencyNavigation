@@ -1,12 +1,12 @@
 {
-  "batch": "400m, four configurations, three densities, 30 matched seeds",
+  "batch": "400m, 360 primary runs plus 90 waiting controls, 22 normal and 8 controlled stall seeds",
   "passed": true,
   "checks": [
     {
       "check": "exact matched matrix",
       "status": "PASS",
-      "observed": 360,
-      "expected": 360
+      "observed": 450,
+      "expected": 450
     },
     {
       "check": "raw triplets",
@@ -18,13 +18,22 @@
       "check": "new parameters in every scalar",
       "status": "PASS",
       "observed": [],
-      "expected": "400m and 20ms"
+      "expected": "400m, 0ms, 500ms, 100ms, 10s minimum green, matched stall assignment"
+    },
+    {
+      "check": "uniform binary and fault provenance",
+      "status": "PASS",
+      "observed": {
+        "errors": [],
+        "binary_count": 1
+      },
+      "expected": "one binary and correct per-run manifests"
     },
     {
       "check": "processed matched matrix",
       "status": "PASS",
-      "observed": 360,
-      "expected": 360
+      "observed": 450,
+      "expected": 450
     },
     {
       "check": "seven primary metrics",
@@ -39,13 +48,14 @@
       "expected": "all applicable summaries"
     },
     {
-      "check": "organic fallback activation",
+      "check": "controlled fallback activation",
       "status": "PASS",
       "observed": {
-        "processed": 45,
-        "logs": 45
+        "processed": 23,
+        "logs": 23,
+        "delivered_stall_cases": 23
       },
-      "expected": "positive matching counts"
+      "expected": "every delivered controlled stall triggers; normal runs do not"
     },
     {
       "check": "fallback route completion",
@@ -64,6 +74,88 @@
       "status": "PASS",
       "observed": [],
       "expected": "no mismatch"
+    },
+    {
+      "check": "waiting-only no-preemption display",
+      "status": "PASS",
+      "observed": [
+        [
+          "NoPreemptionBaseline",
+          "high",
+          "traffic_light_wait_s"
+        ],
+        [
+          "NoPreemptionBaseline",
+          "low",
+          "traffic_light_wait_s"
+        ],
+        [
+          "NoPreemptionBaseline",
+          "medium",
+          "traffic_light_wait_s"
+        ]
+      ],
+      "expected": [
+        [
+          "NoPreemptionBaseline",
+          "high",
+          "traffic_light_wait_s"
+        ],
+        [
+          "NoPreemptionBaseline",
+          "low",
+          "traffic_light_wait_s"
+        ],
+        [
+          "NoPreemptionBaseline",
+          "medium",
+          "traffic_light_wait_s"
+        ]
+      ]
+    },
+    {
+      "check": "actual SUMO loaded vehicle counts",
+      "status": "PASS",
+      "observed": [],
+      "expected": "72/144/200 background vehicles plus two special vehicles loaded in every run"
+    },
+    {
+      "check": "different actual live traffic by density",
+      "status": "PASS",
+      "observed": {
+        "low": 33.166666666666664,
+        "medium": 66.36666666666666,
+        "high": 93.1
+      },
+      "expected": "increasing peak live background counts"
+    },
+    {
+      "check": "priority reduces measured waiting without forcing zero",
+      "status": "PASS",
+      "observed": {
+        "low": {
+          "FogCloudAStar": 1.5416666666666667,
+          "MistAStar": 1.5833333333333333,
+          "MistDynamicAStar": 1.9583333333333333,
+          "MistDynamicFogFallback": 2.0208333333333335,
+          "NoPreemptionBaseline": 26.291666666666668
+        },
+        "medium": {
+          "FogCloudAStar": 0.9482758620689655,
+          "MistAStar": 1.6206896551724137,
+          "MistDynamicAStar": 1.706896551724138,
+          "MistDynamicFogFallback": 1.7413793103448276,
+          "NoPreemptionBaseline": 27.34482758620686
+        },
+        "high": {
+          "FogCloudAStar": 0.6666666666666666,
+          "MistAStar": 0.6166666666666667,
+          "MistDynamicAStar": 0.65,
+          "MistDynamicFogFallback": 0.6,
+          "NoPreemptionBaseline": 22.716666666666665
+        }
+      },
+      "expected": "positive average priority waiting, lower than matched no-priority control"
     },
     {
       "check": "primary and supplemental graphs",

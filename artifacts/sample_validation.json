@@ -1,0 +1,64 @@
+{
+  "passed": true,
+  "checks_passed": 80,
+  "checks_total": 80,
+  "runs": 30,
+  "seed1_mist_response_s": [
+    152.5,
+    154.0,
+    155.0
+  ],
+  "evidence": {
+    "low": {
+      "priority_wait_s": [
+        2.5,
+        1.5
+      ],
+      "control_wait_s": [
+        30.0,
+        29.0
+      ],
+      "normal_mist_decision_ms": 326.00000000001,
+      "stall_mist_decision_ms": 1226.0,
+      "stall_fog_decision_ms": 826.534071677,
+      "peak_background": [
+        30.0,
+        32.0
+      ]
+    },
+    "medium": {
+      "priority_wait_s": [
+        0.0,
+        1.0
+      ],
+      "control_wait_s": [
+        100.5,
+        27.5
+      ],
+      "normal_mist_decision_ms": 326.00000000001,
+      "stall_mist_decision_ms": 1226.0,
+      "stall_fog_decision_ms": 826.64019102701,
+      "peak_background": [
+        60.0,
+        70.0
+      ]
+    },
+    "high": {
+      "priority_wait_s": [
+        0.0,
+        3.0
+      ],
+      "control_wait_s": [
+        29.5,
+        15.5
+      ],
+      "normal_mist_decision_ms": 325.99999999999,
+      "stall_mist_decision_ms": 1226.0,
+      "stall_fog_decision_ms": 826.646178404,
+      "peak_background": [
+        87.0,
+        100.0
+      ]
+    }
+  }
+}

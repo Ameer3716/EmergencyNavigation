@@ -6,22 +6,28 @@ import argparse
 import os
 import shutil
 import subprocess
+import random
+import json
+import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 GRID = ROOT / "simulations/grid"
-CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
+# Fixed independent selection, identical across densities and every Mist approach.
+STALL_SEEDS = frozenset(random.Random(20261005).sample(range(1, 31), 8))
 SUMO_HOME = Path(os.environ.get("SUMO_HOME", "/home/opp_env/sumo118_pkg/sumo"))
 
 
-def one_sumo_config(directory: Path, route_name: str, seed: int) -> None:
+def one_sumo_config(directory: Path, route_name: str, seed: int, summary_path: Path | None = None) -> None:
+    output = f'<output><summary-output value="{summary_path}"/></output>' if summary_path else ""
     (directory / "grid.sumocfg").write_text(
         f'''<?xml version="1.0"?>
 <configuration><input><net-file value="grid.net.xml"/>
 <route-files value="{route_name},special.rou.xml"/></input>
 <time><begin value="0"/><end value="900"/><step-length value="0.5"/></time>
 <processing><time-to-teleport value="-1"/></processing>
-<random_number><seed value="{seed}"/></random_number></configuration>''', encoding="utf-8")
+<random_number><seed value="{seed}"/></random_number>{output}</configuration>''', encoding="utf-8")
     (directory / "grid.launchd.xml").write_text(
         f'''<?xml version="1.0"?><launch><copy file="grid.net.xml"/>
 <copy file="{route_name}"/><copy file="special.rou.xml"/>
@@ -45,6 +51,8 @@ seed-set = {seed}
 '''
     if sim_time_limit is not None:
         override += f"sim-time-limit = {sim_time_limit}s\n"
+    stall = "900ms" if config.startswith("Mist") and seed in STALL_SEEDS else "0ms"
+    override += f"*.node[*].appl.controlledMistStallDelay = {stall}\n"
     (directory / "omnetpp.ini").write_text(base + override, encoding="utf-8")
 
 
@@ -55,6 +63,7 @@ def main() -> None:
     parser.add_argument("--seed-end", type=int, default=30)
     parser.add_argument("--configs", nargs="+", choices=CONFIGS, default=CONFIGS)
     parser.add_argument("--force", action="store_true", help="Rerun selected seeds even when raw outputs exist")
+    parser.add_argument("--resume-incomplete", action="store_true", help="Keep complete raw triplets and rerun only missing/incomplete run keys")
     parser.add_argument("--seeds", nargs="+", type=int, help="Explicit matched seeds for a sample")
     parser.add_argument("--artifact-root", type=Path, default=ROOT, help="Store raw results and logs under a separate root")
     parser.add_argument("--sim-time-limit", type=int, help="Shorter simulation horizon for partition screening")
@@ -68,6 +77,8 @@ def main() -> None:
     ) if (candidate.parent / "libsrc.so").is_file()), None)
     if library is None:
         raise SystemExit("Missing libsrc.so; run bash scripts/build.sh first")
+    with (library.parent / "libsrc.so").open("rb") as handle:
+        binary_hash = hashlib.file_digest(handle, "sha256").hexdigest()
     artifact_root = args.artifact_root.resolve()
     raw_dir = artifact_root / "results/raw"
     logs_dir = artifact_root / "artifacts/logs/batch"
@@ -89,6 +100,9 @@ def main() -> None:
             for config in args.configs:
                 stem = f"{config}-{density}-seed{seed}"
                 outputs = [raw_dir / f"{stem}.{extension}" for extension in ("sca", "vec", "vci")]
+                if args.resume_incomplete and all(path.exists() and path.stat().st_size > 0 for path in outputs):
+                    print(f"Retain completed {stem}", flush=True)
+                    continue
                 if not args.force and all(path.exists() and path.stat().st_size > 0 for path in outputs):
                     print(f"Skip completed {stem}", flush=True)
                     continue
@@ -102,6 +116,13 @@ def main() -> None:
                                "grid.sumocfg", "grid.launchd.xml"):
                     shutil.copyfile(base / common, run_dir / common)
                 one_omnet_config(run_dir, config, density, seed, logs_dir, args.sim_time_limit)
+                one_sumo_config(run_dir, route_name, seed, logs_dir / f"sumo-summary-{stem}.xml")
+                manifest = {"configuration": config, "density": density, "seed": seed,
+                            "binary_sha256": binary_hash,
+                            "scenario_condition": "controlled_stall" if seed in STALL_SEEDS else "normal",
+                            "controlled_mist_stall_ms": 900 if config.startswith("Mist") and seed in STALL_SEEDS else 0,
+                            "ini_sha256": hashlib.sha256((run_dir / "omnetpp.ini").read_bytes()).hexdigest()}
+                (logs_dir / f"manifest-{stem}.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
                 output = logs_dir / f"{stem}-stdout.txt"
                 with output.open("w", encoding="utf-8") as log:
                     subprocess.run(["opp_run", "-u", "Cmdenv", "-c", "Batch",

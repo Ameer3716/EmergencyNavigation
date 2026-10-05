@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the reviewed delivery package from the verified 360-run outputs."""
+"""Build the delivery from 360 primary runs and 90 waiting-time controls."""
 from __future__ import annotations
 
 import csv
@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT.parent / "EmergencyNavigation_Reviewed_400m_Submission"
 ZIP = ROOT.parent / "EmergencyNavigation_Reviewed_400m_Submission.zip"
-CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
 DENSITIES = ("low", "medium", "high")
 EXTENSIONS = ("sca", "vec", "vci")
 
@@ -43,9 +43,11 @@ def main() -> None:
     for name in ("METHODOLOGY.md", "VERIFICATION.md", "PROGRESS.md", "EXPERIMENTS.md", "INSTALLATION.md", "PROCESS_AND_GRAPHS.md"):
         copy(ROOT / "docs" / name, OUT / "docs" / name)
     for name in ("summary-batch.csv", "individual_runs-batch.csv", "paired_comparisons.csv",
-                 "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv"):
+                 "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv", "summary-cohorts.csv"):
         copy(ROOT / "results/processed" / name, OUT / "results/processed" / name)
     copy(ROOT / "artifacts/audit_report.json", OUT / "artifacts/audit_report.json")
+    copy(ROOT / "artifacts/sample_validation.json",
+         OUT / "artifacts/sample_validation.json")
     for path in (ROOT / "results/graphs").glob("*.png"):
         copy(path, OUT / "results/graphs" / path.name)
     for path in (ROOT / "analysis").glob("*.py"):
@@ -53,7 +55,7 @@ def main() -> None:
     for name in ("build.sh", "run_batch_env.sh", "run_batch.py", "generate_demand.py",
                  "audit_batch.py", "verify_response_times.py", "generate_final_graph.py",
                  "write_final_reports.py", "generate_reviewed_submission.py",
-                 "generate_final_docx.py", "package_reviewed_submission.py"):
+                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py"):
         copy(ROOT / "scripts" / name, OUT / "scripts" / name)
     for path in (ROOT / "src").rglob("*"):
         if path.is_file() and (path.suffix in (".cc", ".h", ".ned", ".msg") or path.name == "Makefile"):
@@ -75,6 +77,10 @@ def main() -> None:
                     copy(path, OUT / "artifacts/logs/batch" / path.name)
                 stdout = ROOT / "artifacts/logs/batch" / f"{stem}-stdout.txt"
                 copy(stdout, OUT / "artifacts/logs/batch" / stdout.name)
+                manifest_file = ROOT / "artifacts/logs/batch" / f"manifest-{stem}.json"
+                copy(manifest_file, OUT / "artifacts/logs/batch" / manifest_file.name)
+                sumo_summary = ROOT / "artifacts/logs/batch" / f"sumo-summary-{stem}.xml"
+                copy(sumo_summary, OUT / "artifacts/logs/batch" / sumo_summary.name)
 
     raw = ROOT / "results/raw"
     manifest = []
@@ -97,12 +103,12 @@ def main() -> None:
         writer.writeheader()
         writer.writerows(manifest)
     (OUT / "RAW_EVIDENCE.txt").write_text(
-        "The 1,080 raw .sca/.vec/.vci files are retained at "
+        "The 1,350 raw .sca/.vec/.vci files are retained at "
         "EmergencyNavigation/results/raw/. This package includes their sizes and SHA-256 "
-        "hashes in results/raw_evidence_manifest.csv. The 360 current run event logs, "
+        "hashes in results/raw_evidence_manifest.csv. The 360 primary and 90 waiting-control run event logs, "
         "processed CSVs, graphs, source, and reproduction instructions are included here. "
-        "Historical 650 m and no-preemption evidence is retained separately in "
-        "EmergencyNavigation/archive_raw_20261001_650m/.\n", encoding="utf-8")
+        "Earlier evidence is retained separately in EmergencyNavigation/archive_20261005_400m_telemetry20/ "
+        "and EmergencyNavigation/archive_raw_20261001_650m/.\n", encoding="utf-8")
     with zipfile.ZipFile(ZIP, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in sorted(OUT.rglob("*")):
             if path.is_file():

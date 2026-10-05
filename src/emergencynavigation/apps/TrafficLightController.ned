@@ -7,5 +7,6 @@ simple TrafficLightController
     double yellowDuration @unit(s) = default(2s);
     double allRedDuration @unit(s) = default(1s);
     double maximumHold @unit(s) = default(25s);
+    double minimumGreen @unit(s) = default(10s);
     string trafficLightLogPath = default("../../artifacts/logs/traffic-light-events.csv");
 }

@@ -78,7 +78,8 @@ double DynamicAStarRouter::edgeCost(const RoadEdge& edge) const
     const auto found = observations.find(edge.id);
     if (found == observations.end() || found->second.vehicleCount < minVehicles) return AStarRouter::edgeCost(edge);
     const auto& observation = found->second;
-    const double speed = std::max(observation.meanSpeed, 1.0);
+    // Keep the free-flow heuristic admissible even when a sampled driver speeds.
+    const double speed = std::min(edge.speedLimit, std::max(observation.meanSpeed, 1.0));
     const double density = std::min(1.0, observation.vehicleCount / (edge.length * capacityPerMeter));
     return (edge.length / speed) * (1.0 + lambda * density);
 }

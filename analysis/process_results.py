@@ -18,6 +18,8 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+ALL_CONFIGS = CONFIGS + ("NoPreemptionBaseline",)
+STALL_SEEDS = frozenset((4, 5, 9, 10, 13, 17, 18, 29))
 METRICS = {
     "pdr": ("Packet delivery ratio", "ratio"),
     "e2e_delay_ms": ("EM end-to-end delay", "ms"),
@@ -62,8 +64,9 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
     value = scalars(scalar_path)
     em = events(event_path or ROOT / "artifacts/logs" / f"emergency-{config}-verified.csv")
     stem = f"{config}-{density}-seed{seed}"
-    routing = events(ROOT / "artifacts/logs/batch" / f"routing-{stem}.csv")
-    fallback = events(ROOT / "artifacts/logs/batch" / f"fallback-{stem}.csv")
+    log_dir = event_path.parent if event_path else ROOT / "artifacts/logs/batch"
+    routing = events(log_dir / f"routing-{stem}.csv")
+    fallback = events(log_dir / f"fallback-{stem}.csv")
     generated = {row["messageId"]: row for row in em if row["action"] == "generated"}
     delivered = {row["messageId"]: row for row in em if row["action"] == "ev_processed"}
     transmissions = [row for row in em if row["action"] == "transmit"]
@@ -82,6 +85,8 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
         "configuration": config,
         "density": density,
         "seed": seed,
+        "scenario_condition": "controlled_stall" if seed in STALL_SEEDS else "normal",
+        "controlled_mist_stall_s": first("controlledMistStallDelay"),
         "source_scalar": str(scalar_path.relative_to(ROOT)),
         "generated_messages": len(generated),
         "delivered_messages": delivery_count,
@@ -99,13 +104,15 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
         "route_reviews": sum(r["action"] == "evaluated" for r in routing) if config.startswith("MistDynamic") else None,
         "fallback_triggered": int(bool(fallback)) if config == "MistDynamicFogFallback" else None,
         "fallback_decision_ms": first("routeDecisionLatency") * 1000 if fallback and first("routeDecisionLatency") is not None else None,
-        "ev_delay_vs_freeflow_s": max(0.0, first("evTravelTime") - 140.0) if first("evTravelTime") is not None else None,
+        "ev_delay_vs_freeflow_s": max(0.0, first("evTravelTime") - first("evDistance") / 13.9) if first("evTravelTime") is not None and first("evDistance") is not None else None,
         "ev_distance_m": first("evDistance"),
         "ev_travel_s": first("evTravelTime"),
         "arrival_confirmed": first("accidentArrivalConfirmed"),
         "fog_processing_s": first("fogProcessingDelay"),
         "cloud_backhaul_s": first("cloudBackhaulDelay"),
         "communication_s": first("routeCommunicationDelay"),
+        "background_seen_until_arrival": first("backgroundVehiclesSeenUntilArrival"),
+        "peak_active_background": first("peakActiveBackgroundVehicles"),
     }
 
 
@@ -158,9 +165,11 @@ def bootstrap_ci(values: list[float], n_boot: int = 10000, seed: int = 42) -> tu
 def summarize(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     result = []
     for density in sorted({str(row["density"]) for row in rows}):
-      for config in CONFIGS:
+      for config in ALL_CONFIGS:
         group = [row for row in rows if row["configuration"] == config and row["density"] == density]
         for key in METRICS:
+            if config == "NoPreemptionBaseline" and key != "traffic_light_wait_s":
+                continue
             values = [float(row[key]) for row in group if row[key] is not None]
             if not values:
                 continue
@@ -251,12 +260,12 @@ def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]
                         "n_pairs": n_pairs,
                         "mean_A": mean_a,
                         "mean_B": mean_b,
-                        "mean_paired_diff": 0.0,
+                        "mean_paired_diff": mean_diff,
                         "stddev_diff": 0.0,
                         "se_diff": 0.0,
                         "t_critical_95": t_crit,
-                        "ci95_lower": 0.0,
-                        "ci95_upper": 0.0,
+                        "ci95_lower": mean_diff,
+                        "ci95_upper": mean_diff,
                         "t_statistic": "NA",
                         "p_value": "NA",
                         "cohen_dz": 0.0,
@@ -414,6 +423,8 @@ def main() -> None:
     parser.add_argument("--render-graphs-only", action="store_true", help="Render graphs directly from existing summary-batch.csv without re-extracting simulation runs")
     parser.add_argument("--metrics", nargs="+", help="Specific metric(s) to render")
     parser.add_argument("--densities", nargs="+", help="Specific density/densities to render")
+    parser.add_argument("--artifact-root", type=Path, default=ROOT, help="Process an isolated sample")
+    parser.add_argument("--no-graphs", action="store_true")
     args = parser.parse_args()
 
     if args.render_graphs_only:
@@ -428,24 +439,29 @@ def main() -> None:
 
     if args.batch:
         rows = []
-        pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback)-(low|medium|high)-seed(\d+)\.sca$")
-        for path in sorted((ROOT / "results/raw").glob("*.sca")):
+        artifact_root = args.artifact_root.resolve()
+        pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback|NoPreemptionBaseline)-(low|medium|high)-seed(\d+)\.sca$")
+        for path in sorted((artifact_root / "results/raw").glob("*.sca")):
             match = pattern.match(path.name)
             if match:
                 if args.require_all:
                     raw_text = path.read_text(encoding="utf-8")
-                    if "config *.connectionManager.maxInterfDist 400m" not in raw_text or "config *.node[*].appl.telemetryValidationDelay 20ms" not in raw_text:
+                    if any(p not in raw_text for p in (
+                        "config *.connectionManager.maxInterfDist 400m",
+                        "config *.node[*].appl.telemetryValidationDelay 0ms",
+                        "config *.node[*].appl.watchdogThreshold 500ms",
+                        "config *.metrics.pollInterval 100ms")):
                         raise SystemExit(f"Stale or mismatched simulation parameters: {path}")
                 config, density, seed_text = match.groups()
                 stem = path.stem
                 rows.append(one_run(config, path, density, int(seed_text),
-                                    ROOT / "artifacts/logs/batch" / f"emergency-{stem}.csv"))
+                                    artifact_root / "artifacts/logs/batch" / f"emergency-{stem}.csv"))
         if args.require_all:
-            expected = {(config, density, seed) for config in CONFIGS
+            expected = {(config, density, seed) for config in ALL_CONFIGS
                         for density in ("low", "medium", "high") for seed in range(1, 31)}
             actual = {(row["configuration"], row["density"], row["seed"]) for row in rows}
-            if actual != expected or len(rows) != 360:
-                raise SystemExit(f"Expected exact 360-run matrix; missing={len(expected - actual)}, extra={len(actual - expected)}")
+            if actual != expected or len(rows) != 450:
+                raise SystemExit(f"Expected exact 450-run matrix; missing={len(expected - actual)}, extra={len(actual - expected)}")
     else:
         paths = [ROOT / "results/raw" / f"{config}-seed1.sca" for config in CONFIGS]
         if args.require_all and any(not path.exists() for path in paths):
@@ -455,12 +471,19 @@ def main() -> None:
         raise SystemExit("No raw scalar files found")
     summary = summarize(rows)
     suffix = "-batch" if args.batch else ""
-    write_csv(ROOT / f"results/processed/individual_runs{suffix}.csv", rows)
-    write_csv(ROOT / f"results/processed/summary{suffix}.csv", summary)
+    output_root = args.artifact_root.resolve()
+    write_csv(output_root / f"results/processed/individual_runs{suffix}.csv", rows)
+    write_csv(output_root / f"results/processed/summary{suffix}.csv", summary)
     if args.batch:
         paired = paired_comparisons(rows)
-        write_csv(ROOT / "results/processed/paired_comparisons.csv", paired)
-    graphs(summary)
+        write_csv(output_root / "results/processed/paired_comparisons.csv", paired)
+        cohorts = []
+        for condition in ("normal", "controlled_stall"):
+            for item in summarize([r for r in rows if r["scenario_condition"] == condition]):
+                cohorts.append({"scenario_condition": condition, **item})
+        write_csv(output_root / "results/processed/summary-cohorts.csv", cohorts)
+    if not args.no_graphs:
+        graphs(summary)
     print(f"Processed {len(rows)} genuine simulation runs; generated {len(METRICS)} graph types")
 
 

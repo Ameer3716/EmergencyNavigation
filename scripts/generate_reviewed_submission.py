@@ -36,7 +36,7 @@ GRAPH_INFO = (
     ("route_decision_ms", "Route decision latency", "Time from EV message reception to the initial route being applied, in milliseconds."),
     ("ev_response_s", "EV response time", "Time from emergency message generation until the EV reaches the accident, in seconds."),
     ("traffic_light_wait_s", "EV traffic-light waiting time", "EV standstill near a signal stop line, in seconds. A value of zero means no measured wait."),
-    ("fallback_triggered", "Fallback activation rate", "Share of fallback-configuration runs where the 800 ms Mist watchdog requested Fog."),
+    ("fallback_triggered", "Fallback activation rate", "Share of Mist with Fog runs where the 500 ms watchdog requested Fog. Controlled stalls are explicitly injected in eight of the 30 seeds."),
     ("route_changes", "Applied route changes", "Mean number of actual congestion or cost reroutes per run. Reviews without a replacement are excluded."),
     ("route_reviews", "Route computation frequency", "Mean number of periodic Dynamic A* route evaluations per run, normally scheduled every five seconds."),
     ("fallback_decision_ms", "Fallback decision latency", "Time to apply the Fog route in runs where the watchdog actually triggered, in milliseconds."),
@@ -51,10 +51,10 @@ PROCESS_STEPS = (
     "Add normal traffic to the roads. The low, medium, and high traffic scenarios contain 72, 144, and 200 background vehicles. Thirty random seeds give different trips for each scenario.",
     "Start the emergency event. An accident vehicle stops, and the nearby RSU sends one 256-byte emergency message through the vehicle and roadside network to the emergency vehicle (EV).",
     "When the EV receives the message, calculate a route to the accident using the selected routing configuration. Some configurations use a fixed A* route; the dynamic configurations review live road costs every five seconds.",
-    "While the EV drives, it requests priority at traffic lights. Dynamic routing changes the route only when a better route passes the improvement and stability rules.",
-    "In the Mist with Fog configuration, Mist normally computes the route. The simulated onboard unit spends an assumed 20 ms validating each recently received road message. If Mist has not finished after 800 ms, Fog takes over the route decision.",
+    "While the EV drives under SUMO car-following and signal safety rules, it requests traffic-light priority within 100 m or eight seconds. The controller preserves a minimum ten-second green for traffic already being served, then clears the junction with yellow and all-red before changing priority.",
+    "Mist normally computes the route with no added telemetry validation delay. Eight independently selected seeds receive a controlled 900 ms Mist stall in all three Mist approaches. In Mist with Fog, unfinished work after 500 ms triggers a Fog request. These are labeled fault tests, not naturally occurring failures.",
     "Record whether the message arrived, how long communication and route decisions took, how the EV traveled, and how many reviews, route changes, and fallback events occurred. Each run has a 900 second observation window.",
-    "Repeat the experiment for four configurations, three traffic levels, and 30 matched seeds: 360 runs. Calculate averages and 95% confidence intervals from the recorded results, then draw the graphs.",
+    "Repeat the four primary configurations at three traffic levels and 30 matched seeds: 360 runs. Add 90 no-preemption control runs, displayed only for traffic-light waiting. Calculate averages and 95% confidence intervals, report normal and controlled-stall results separately, and draw the graphs.",
 )
 
 
@@ -89,31 +89,32 @@ def graph_blocks(summary: dict[tuple[str, str, str], dict[str, str]]) -> list[tu
         for density in DENSITIES:
             path = ROOT / "results/graphs" / f"{key}-{density}.png"
             if not path.exists():
-                if key == "fallback_decision_ms" and density == "low":
-                    continue  # No low-density fallback; latency is undefined.
                 raise SystemExit(f"Missing graph: {path}")
             values = []
-            for cfg, short in zip(CONFIGS, SHORT):
+            labels = list(zip(CONFIGS, SHORT))
+            if key == "traffic_light_wait_s":
+                labels.append(("NoPreemptionBaseline", "No preemption"))
+            for cfg, short in labels:
                 row = summary.get((cfg, density, key))
                 if row is not None:
                     values.append(f"{short} {graph_value(float(row['mean']), key)}")
             caption = (f"{density.capitalize()} traffic ({VEHICLES[density]} background vehicles): "
                        + "; ".join(values) + ". Bars show means and 95% confidence intervals.")
             blocks.append((key, label, explanation, path, caption))
-    if len(blocks) != 47:
-        raise SystemExit(f"Expected all 47 current graphs, found {len(blocks)}")
+    if {b[3].name for b in blocks} != {p.name for p in (ROOT / "results/graphs").glob("*.png")}:
+        raise SystemExit("The report gallery must include every current graph exactly once")
     return blocks
 
 
 def write_graph_guide(blocks: list[tuple[str, str, str, Path, str]]) -> None:
     lines = ["# Emergency vehicle navigation: project and graph guide", "",
-             "This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same 47 graphs.", "",
+             f"This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same {len(blocks)} graphs.", "",
              "## How the system works", ""]
     for index, step in enumerate(PROCESS_STEPS, 1):
         lines += [f"{index}. {step}", ""]
     lines += ["## How to read the figures", "",
-              "Each bar is a density and configuration mean. Error bars show 95% confidence intervals; the exact methods are in [METHODOLOGY.md](METHODOLOGY.md). Metrics requiring EM delivery use only valid delivered runs. PDR, EM throughput, and fallback activation use all 30 scheduled runs where applicable. A missing low-density fallback decision graph means no fallback activated there; it is not a measured latency of zero.", "",
-              "## All 47 graphs", ""]
+              "Each bar is a density and configuration mean. Error bars show 95% confidence intervals; the exact methods are in [METHODOLOGY.md](METHODOLOGY.md). Metrics requiring EM delivery use only valid delivered runs. PDR, EM throughput, and fallback activation use all 30 scheduled runs where applicable. Fallback latency uses only runs where the watchdog actually activated.", "",
+              f"## All {len(blocks)} graphs", ""]
     previous = None
     for key, label, explanation, path, caption in blocks:
         if key != previous:
@@ -137,6 +138,14 @@ def table(doc: Document, headers: tuple[str, ...], body: list[tuple[str, ...]]) 
     t.style = "Table Grid"
     t.alignment = WD_TABLE_ALIGNMENT.CENTER
     t.autofit = True
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        border = OxmlElement(f"w:{edge}")
+        border.set(qn("w:val"), "single")
+        border.set(qn("w:sz"), "4")
+        border.set(qn("w:color"), "D9D9D9")
+        borders.append(border)
+    t._tbl.tblPr.append(borders)
     tr_pr = t.rows[0]._tr.get_or_add_trPr()
     repeat = OxmlElement("w:tblHeader")
     repeat.set(qn("w:val"), "true")
@@ -172,9 +181,11 @@ def main() -> None:
     summary_rows = read(ROOT / "results/processed/summary-batch.csv")
     individual = read(ROOT / "results/processed/individual_runs-batch.csv")
     fallback = read(ROOT / "results/processed/fallback_validation.csv")
-    if len(individual) != 360:
-        raise SystemExit("The 360-run study is required")
+    if len(individual) != 450:
+        raise SystemExit("The 360 primary runs and 90 waiting controls are required")
     summary = {(r["configuration"], r["density"], r["metric"]): r for r in summary_rows}
+    cohort = {(r['scenario_condition'], r['configuration'], r['density'], r['metric']): r
+              for r in read(ROOT / 'results/processed/summary-cohorts.csv')}
     blocks = graph_blocks(summary)
     real_fallback = [r for r in fallback if r["configuration"] == "MistDynamicFogFallback" and r["fallback_triggered"] == "1"]
     if not real_fallback:
@@ -208,13 +219,13 @@ def main() -> None:
     cover_subtitle = doc.add_paragraph()
     cover_subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cover_subtitle.paragraph_format.space_before = Pt(18)
-    cover_subtitle.add_run("A simulation study of Fog, Mist, dynamic routing, and fallback").italic = True
+    cover_subtitle.add_run("A simulation study of Fog and Mist routing with dynamic updates and fallback").italic = True
     cover_details = doc.add_paragraph()
     cover_details.alignment = WD_ALIGN_PARAGRAPH.CENTER
     cover_details.paragraph_format.space_before = Pt(105)
     cover_details.add_run("SUMO + OMNeT++ + Veins\n")
     cover_details.add_run("4 routing configurations  |  3 traffic levels  |  30 seeds\n")
-    cover_details.add_run("360 simulation runs  |  47 result graphs\n")
+    cover_details.add_run(f"360 primary runs + 90 waiting controls  |  {len(blocks)} result graphs\n")
     cover_details.add_run("October 2026")
     doc.add_page_break()
 
@@ -253,7 +264,7 @@ def main() -> None:
         ("FogCloudAStar", "Fog and cloud services calculate the first A* route. The EV follows that route without periodic route reviews."),
         ("MistAStar", "The EV's nearby Mist layer calculates the first A* route. There are no periodic route reviews."),
         ("MistDynamicAStar", "Mist calculates the route and checks live road costs every five seconds. A better, stable route can replace the current route."),
-        ("MistDynamicFogFallback", "Dynamic Mist routing runs normally. If the initial Mist decision exceeds the 800 ms watchdog, Fog calculates the route instead."),
+        ("MistDynamicFogFallback", "Dynamic Mist routing runs normally. If the initial Mist decision exceeds the 500 ms watchdog, Fog calculates the route instead."),
     ])
     doc.add_paragraph(
         "A* is a shortest-path search. The dynamic versions use recent vehicle and roadside "
@@ -278,11 +289,12 @@ def main() -> None:
     )
 
     heading(doc, "Main results")
+    primary_runs = [r for r in individual if r['configuration'] in CONFIGS]
+    delivered = sum(int(r['delivered_messages']) for r in primary_runs)
     doc.add_paragraph(
-        "The accident alert reached the emergency vehicle in 332 of the 360 runs. Delivery "
-        "succeeded in 24 of 30 seeds in low traffic, 29 of 30 in medium traffic, and all 30 "
-        "in high traffic for each approach. These outcomes reflect this grid and its radio "
-        "connections; they do not imply that heavier traffic always improves delivery."
+        f"The accident alert reached the emergency vehicle in {delivered} of the 360 primary runs. "
+        "The delivery and timing outcomes reflect this grid, its radio connections, and its "
+        "traffic trips. A higher traffic count does not guarantee a particular direction of change in every measure."
     )
     doc.add_paragraph(
         "The tables give the average, its 95% confidence interval in brackets, and the "
@@ -302,24 +314,84 @@ def main() -> None:
 
     heading(doc, "What the main results mean")
     doc.add_paragraph(
-        "Message delivery and end-to-end delay are the same across the four approaches at "
-        "each traffic level because the alert travels through the same network before the "
-        "route calculation starts. Average end-to-end delay is 44.36 ms in low traffic, "
-        "37.12 ms in medium traffic, and 32.17 ms in high traffic for delivered alerts."
+        "The alert is delivered before the EV calculates its route. PDR and EM end-to-end "
+        "delay therefore measure the same radio event in every routing approach. EM "
+        "throughput is calculated from those same deliveries and a fixed payload, so it "
+        "also can match across approaches. These values should change with density when "
+        "the number of successful deliveries changes; they do not have to change just "
+        "because the route calculator is different."
     )
+    heading(doc, "How the measured results change with traffic density", 2)
+    density_rows = []
+    for d in DENSITIES:
+        dynamic_runs = [r for r in individual if r['density'] == d and r['configuration'] == 'MistDynamicAStar']
+        peak = sum(float(r['peak_active_background']) for r in dynamic_runs) / len(dynamic_runs)
+        pdr = float(summary['MistAStar', d, 'pdr']['mean'])
+        throughput = float(summary['MistAStar', d, 'throughput_bps']['mean'])
+        nrl = sum(float(summary[c, d, 'nrl']['mean']) for c in CONFIGS) / len(CONFIGS)
+        response = float(summary['MistDynamicAStar', d, 'ev_response_s']['mean'])
+        density_rows.append((d.capitalize(), str(VEHICLES[d]), f"{peak:.1f}", f"{pdr:.3f}",
+                             f"{throughput:.3f}", f"{nrl:,.0f}", f"{response:.2f}"))
+    table(doc, ("Traffic", "Trips", "Mean peak vehicles", "PDR", "EM throughput (bit/s)",
+                "Mean NRL", "Dynamic Mist response (s)"), density_rows)
     doc.add_paragraph(
-        "The clearest difference between approaches is the first route decision. Fog/Cloud "
-        "averages about 626.54 ms at every traffic level. Mist averages 625.17 ms in low "
-        "traffic, 844.62 ms in medium traffic, and 1075.33 ms in high traffic. Mist with Fog "
-        "fallback averages 946.38 ms in medium traffic and 1087.24 ms in high traffic "
-        "because the Fog takeover adds time in runs that exceed the watchdog."
+        "This shows real density effects: generated demand rises from 72 to 200 trips, "
+        "PDR from 0.800 to 1.000, throughput from 1.820 to 2.276 bit/s, and the mean "
+        "number of active background vehicles rises from about 33 to 93. Throughput is "
+        "similar across routing approaches within each density because their alert delivery "
+        "counts match; it is not constant across all three densities."
     )
+    heading(doc, "What changes between routing approaches", 2)
+    response_rows = []
+    for d in DENSITIES:
+        changes = sum(int(float(r['route_changes'])) for r in individual
+                      if r['density'] == d and r['configuration'] == 'MistDynamicAStar')
+        response_rows.append((d.capitalize(),
+            f"{float(summary['MistAStar', d, 'ev_response_s']['mean']):.2f}",
+            f"{float(summary['MistDynamicAStar', d, 'ev_response_s']['mean']):.2f}",
+            f"{float(summary['MistDynamicFogFallback', d, 'ev_response_s']['mean']):.2f}",
+            str(changes)))
+    table(doc, ("Traffic", "Mist A* response (s)", "Dynamic Mist response (s)",
+                "Dynamic Mist + Fog response (s)", "Dynamic Mist route changes"), response_rows)
     doc.add_paragraph(
-        "The emergency vehicle's average response time stays near 142 seconds in this "
-        "network. Measured traffic-light waiting is zero in low and medium traffic. In high "
-        "traffic, the two dynamic approaches average 0.13 seconds of waiting. These small "
-        "differences should be read alongside the confidence intervals."
+        "Mist A* and Dynamic Mist can have the same initial decision latency because both "
+        "use the same Mist A* calculation. Dynamic Mist then reviews live road costs every "
+        "five seconds; the logs show applied route changes in the table. The response-time "
+        "means differ, but their confidence intervals overlap in several comparisons, so "
+        "small mean differences alone do not establish that one approach is generally faster."
     )
+    for density in DENSITIES:
+        response = [float(summary[c,density,'ev_response_s']['mean']) for c in CONFIGS]
+        doc.add_paragraph(f"In {density} traffic, the four average EV response times range from "
+                          f"{min(response):.2f} to {max(response):.2f} seconds. Read the intervals "
+                          "alongside these averages; a small difference alone does not prove a general advantage.")
+
+    heading(doc, "Normal operation and controlled stalls")
+    doc.add_paragraph(
+        "The main averages include 22 normal seeds and eight independently selected fault-test seeds. "
+        "To show how the routing approaches behave in each condition, the next tables separate "
+        "their initial decision times. All Mist approaches face the same injected stall in the "
+        "selected seeds. The experiment does not estimate how often such a fault occurs on real hardware."
+    )
+    for density in DENSITIES:
+        heading(doc, density.capitalize() + " traffic decision time", 2)
+        body = []
+        for condition, label in (("normal", "Normal seeds"), ("controlled_stall", "Controlled stall seeds")):
+            body.append((label, *(f"{float(cohort[condition,c,density,'route_decision_ms']['mean']):.2f} ms"
+                                  for c in CONFIGS)))
+        table(doc, ("Condition", *SHORT), body)
+
+    heading(doc, "Traffic-light waiting with and without priority")
+    doc.add_paragraph(
+        "The no-preemption control uses Fog/Cloud routing with priority disabled. It appears "
+        "only in this waiting comparison and the three waiting graphs. The priority controller "
+        "preserves a minimum current green and safe clearance before serving the EV. Some "
+        "requests can finish before arrival; others require the EV to wait. Waiting is measured "
+        "from movement rather than added artificially."
+    )
+    table(doc, ("Traffic", *SHORT, "No preemption"), [
+        (d.capitalize(), *(f"{float(summary[c,d,'traffic_light_wait_s']['mean']):.2f} s"
+                           for c in CONFIGS + ("NoPreemptionBaseline",))) for d in DENSITIES])
 
     heading(doc, "Fallback and route changes")
     body = []
@@ -334,23 +406,24 @@ def main() -> None:
                      str(sum(int(float(r["route_reviews"])) for r in group))))
     table(doc, ("Traffic", "Fog takeovers", "Dynamic Mist route changes", "Dynamic Mist reviews", "Mist + Fog route changes", "Mist + Fog reviews"), body)
     example = real_fallback[0]
+    activations = {d: sum(int(float(r['fallback_triggered'])) for r in individual
+                         if r['configuration'] == 'MistDynamicFogFallback' and r['density'] == d) for d in DENSITIES}
     doc.add_paragraph(
-        "Fog took over in 45 of the 90 Mist with Fog runs: zero in low traffic, 18 in "
-        "medium traffic, and 27 in high traffic. The trigger is a modeled queue of recently "
-        "received vehicle and roadside messages that the onboard unit checks before using "
-        "its route. Each check adds an assumed 20 ms of service time. This is a simulation "
-        "assumption, not a measured processor benchmark. For example, in medium traffic "
-        f"seed {example['seed']}, the Mist decision exceeded 800 ms and Fog applied the route "
+        f"Fog took over in {sum(activations.values())} of 90 Mist with Fog runs: "
+        f"{activations['low']} in low, {activations['medium']} in medium, and {activations['high']} "
+        "in high traffic. The controlled 900 ms stall delays initial Mist work beyond the "
+        "500 ms watchdog. For example, in "
+        f"{example['density']} traffic seed {example['seed']}, Fog applied the route "
         f"after {float(example['final_decision_latency_ms']):.2f} ms."
     )
     doc.add_paragraph(
-        "Dynamic Mist reviewed routes 625, 758, and 784 times across the 30 low, medium, "
-        "and high traffic runs, but actually changed them only 3, 6, and 6 times. Most "
-        "reviews therefore kept the current route. Mist with Fog produced 3, 5, and 5 "
-        "route changes across those traffic levels."
+        "The table counts actual route changes separately from five-second reviews. A "
+        "review that finds no sufficiently better route keeps the existing route. The "
+        "routing logs record both the current route cost and the candidate cost, so these "
+        "decisions can be checked from the evidence."
     )
 
-    heading(doc, "Why EM throughput appears flat")
+    heading(doc, "Why EM throughput is similar across routing approaches")
     doc.add_paragraph(
         "The accident alert has a fixed 256-byte useful payload. Throughput divides the "
         "delivered alert bits by the same 900 second window in every run. One successful "
@@ -361,21 +434,23 @@ def main() -> None:
     doc.add_paragraph(
         "Traffic does change with density: the scenarios contain 72, 144, or 200 normal "
         "vehicles; trip starting points differ between random seeds; and the dynamic route "
-        "logs contain different live road costs and route changes. The similar throughput "
-        "bars follow from the fixed message size and fixed measurement window."
+        "logs contain different live road costs and route changes. The throughput means "
+        "are 1.820, 2.200, and 2.276 bit/s from low to high density. Within each density, "
+        "the four routing approaches have similar throughput because they delivered the "
+        "same number of alerts."
     )
 
     heading(doc, "Conclusion and limits")
     doc.add_paragraph(
-        "The four approaches delivered alerts at the same rate within each traffic level. "
-        "Dynamic routing checked current road conditions many times and made a small number "
-        "of actual route changes. The Fog backup activated under the modeled Mist workload, "
-        "especially in medium and high traffic. In this grid, its extra decision time did "
-        "not produce a clear response-time advantage."
+        "The experiment compares alert delivery, route computation, and vehicle movement as "
+        "separate parts of the response. Dynamic routing uses current road reports and only "
+        "replaces a route when its stability rules are met. The controlled stall tests show "
+        "how Fog recovery behaves under a defined fault. The response and waiting tables "
+        "show the measured journey outcomes rather than assuming every route change saves time."
     )
     doc.add_paragraph(
         "These findings apply to the simulated 4 by 4 grid, three RSUs, 400 m radio setting, "
-        "traffic scenarios, and assumed onboard message-check time. They should be tested "
+        "traffic scenarios, and controlled stall model. They should be tested "
         "on other road layouts and with measured onboard processing times before being "
         "generalized to real emergency deployments."
     )
@@ -386,22 +461,23 @@ def main() -> None:
         "confidence interval; the method used for each metric is specified in docs/METHODOLOGY.md. "
         "PDR and EM throughput include all 30 scheduled runs. Delivery-dependent measures "
         "use only runs with a delivered emergency message. A graph can contain fewer than "
-        "four bars when a metric applies only to dynamic routing or fallback."
+        "four bars when a metric applies only to dynamic routing or fallback. Only the "
+        "waiting graphs add a fifth bar for the no-preemption control."
     )
     doc.add_paragraph(
-        "There is no low-traffic fallback decision-latency graph because none of the 30 "
-        "low-traffic Mist with Fog runs needed a takeover. That latency has no value there. "
-        "The following gallery contains all 47 result graphs."
+        f"The following gallery contains all {len(blocks)} result graphs."
     )
 
+    doc.add_page_break()
     heading(doc, "Complete graph gallery")
     previous = None
     for number, (key, label, explanation, path, caption) in enumerate(blocks, 1):
         if key != previous:
             heading(doc, label, 2)
-            doc.add_paragraph(explanation)
+            doc.add_paragraph(explanation).paragraph_format.keep_with_next = True
             previous = key
         figure = doc.add_picture(str(path), width=Inches(6.1))
+        figure._inline.docPr.set("descr", f"{label}. {caption}")
         figure_paragraph = doc.paragraphs[-1]
         figure_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         figure_paragraph.paragraph_format.keep_with_next = True

@@ -15,6 +15,7 @@ private:
     void log(const char* action) const;
     std::string lightId, originalProgram, originalState, evId, incomingEdge, greenState;
     double requestTime = 0;
+    double greenActivated = 0;
     int originalPhase = -1;
     int stage = 0;
     omnetpp::cMessage* phaseTimer = nullptr;

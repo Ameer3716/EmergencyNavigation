@@ -1,278 +1,178 @@
 #!/usr/bin/env python3
-"""Write the final evidence-backed Markdown reports after the 360-run batch."""
-from __future__ import annotations
-
+"""Generate documentation from the current matched experiment evidence."""
 import csv
-import statistics
 import xml.etree.ElementTree as ET
-from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
 DENSITIES = ("low", "medium", "high")
-PRIMARY = (
-    ("pdr", "PDR", "ratio"),
-    ("nrl", "NRL", "packets/delivery"),
-    ("throughput_bps", "EM throughput", "bit/s"),
-    ("e2e_delay_ms", "EM end-to-end delay", "ms"),
-    ("route_decision_ms", "Route decision latency", "ms"),
-    ("ev_response_s", "EV response time", "s"),
-    ("traffic_light_wait_s", "EV traffic-light waiting time", "s"),
-)
+PRIMARY = (("pdr", "PDR", "ratio"), ("nrl", "NRL", "packets/delivery"),
+           ("throughput_bps", "EM throughput", "bit/s"), ("e2e_delay_ms", "EM end-to-end delay", "ms"),
+           ("route_decision_ms", "Route decision latency", "ms"), ("ev_response_s", "EV response time", "s"),
+           ("traffic_light_wait_s", "EV traffic-light waiting time", "s"))
+STALL_SEEDS = (4, 5, 9, 10, 13, 17, 18, 29)
 
 
-def rows(path: Path) -> list[dict[str, str]]:
+def rows(path):
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
 
 
-def fmt(value: float, metric: str) -> str:
-    if metric == "pdr":
-        return f"{value:.3f}"
-    if metric == "nrl":
-        return f"{value:,.1f}"
-    if metric == "throughput_bps":
-        return f"{value:.3f}"
-    return f"{value:.2f}"
+def fmt(value, metric):
+    return f"{float(value):.3f}" if metric in ("pdr", "throughput_bps") else f"{float(value):,.2f}"
 
 
-def main() -> None:
-    new = rows(ROOT / "results/processed/summary-batch.csv")
-    old = rows(ROOT / "archive_raw_20261001_650m/summary-batch-650m.csv")
+def main():
+    summary = rows(ROOT / "results/processed/summary-batch.csv")
     individual = rows(ROOT / "results/processed/individual_runs-batch.csv")
     fallback = rows(ROOT / "results/processed/fallback_validation.csv")
-    if len(individual) != 360:
-        raise SystemExit(f"Expected 360 processed runs, found {len(individual)}")
-    current = {(r["configuration"], r["density"], r["metric"]): r for r in new}
-    historical = {(r["configuration"], r["density"], r["metric"]): r for r in old}
-    for cfg in CONFIGS:
-        for density in DENSITIES:
-            for metric, _, _ in PRIMARY:
-                if (cfg, density, metric) not in current:
-                    raise SystemExit(f"Missing current metric: {cfg}, {density}, {metric}")
+    cohorts = rows(ROOT / "results/processed/summary-cohorts.csv")
+    if len(individual) != 450:
+        raise SystemExit("Expected 360 primary runs and 90 waiting-time control runs")
+    current = {(r['configuration'], r['density'], r['metric']): r for r in summary}
+    cohort_map = {(r['scenario_condition'], r['configuration'], r['density'], r['metric']): r for r in cohorts}
+    counts = {d: len(ET.parse(ROOT / f"simulations/batch/{d}-seed1/normal-{d}-seed1.rou.xml").getroot().findall("vehicle")) for d in DENSITIES}
+    docs = ROOT / "docs"
+    methodology = '''# Methodology
 
-    comparisons = []
-    for cfg in CONFIGS:
-        for density in DENSITIES:
-            for metric, label, unit in PRIMARY:
-                key = (cfg, density, metric)
-                prior_key = (cfg, density, metric.replace("_ms", "_s") if metric.endswith("_ms") else metric)
-                prior = float(historical[prior_key]["mean"])
-                if metric.endswith("_ms"):
-                    prior *= 1000
-                now = float(current[key]["mean"])
-                comparisons.append({"configuration": cfg, "density": density,
-                                    "metric": label, "unit": unit,
-                                    "before_650m_mean": prior, "after_400m_mean": now,
-                                    "change": now - prior,
-                                    "before_n": historical[prior_key]["n"], "after_n": current[key]["n"]})
-    comparison_path = ROOT / "results/processed/before_after_headline.csv"
-    with comparison_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=comparisons[0].keys())
-        writer.writeheader()
-        writer.writerows(comparisons)
+## Experiment design
 
-    counts = {}
+SUMO 1.18.0 moves vehicles on a 4 by 4 signalized grid with 48 directed road links. OMNeT++ 6.3.0 and Veins 5.3.1 simulate wireless communication through TraCI. Three RSUs use a 400 m radio neighborhood. Low, medium, and high demand generates 72, 144, and 200 background trips over 360 seconds. Trip generation count differs from the number simultaneously on the road. The collector records peak active background vehicles and unique background vehicles seen up to EV arrival.
+
+The main comparison is FogCloudAStar, MistAStar, MistDynamicAStar, and MistDynamicFogFallback at three densities and 30 matched seeds (360 runs). A further 90 NoPreemptionBaseline runs use FogCloudAStar routing with signal priority disabled. This control is displayed only for traffic-light waiting time. Its other collected values remain in the individual-run CSV for transparency.
+
+## Routing and controlled fallback tests
+
+Mist initial processing is 300 ms plus 2 ms per expanded A* node. Telemetry validation adds 0 ms per received message. The fallback watchdog is 500 ms. Normal operation is reported separately from controlled stalls. A fixed independent random selection with Python seed 20261005 selects eight seeds: 4, 5, 9, 10, 13, 17, 18, and 29. These receive an additional 900 ms initial Mist worker stall in every Mist configuration and at every density. The other 22 seeds have no injected stall. This is an explicit fault-injection experiment; the delay is not measured OBU behavior and the fallback must not be described as organic. Fog/Cloud is unaffected by a local Mist stall. A selected seed that does not receive the EM cannot activate fallback.
+
+Dynamic A* reads received vehicle beacons and RSU edge reports, requires at least three observed vehicles for a congestion adjustment, and reviews the route every five seconds. A replacement needs 10% lower remaining cost, or a confirmed slow edge with 5% improvement. Two slow observations and a 30-second gap help prevent route oscillation. Observed speeds are capped at the road speed limit in the cost estimate, keeping the A* free-flow heuristic admissible. Initial processing delays are modeled; periodic reviews are atomic simulation evaluations. Reviews and applied route changes are separate counts. Routing logs include candidate cost, current remaining cost, observed edge count, and the controlled stall parameter.
+
+## Vehicle movement and signal priority
+
+The EV is held until its first route is ready. Release uses SUMO automatic speed control, a 13.9 m/s maximum speed, and speed mode 31 so car following, acceleration, junction priority, and red-light safety checks apply. No blue-light device is used to ignore red signals.
+
+The EV sends a priority request within 100 m or an estimated eight seconds of the next signal. If its approach already has a compatible green, that phase is extended. Otherwise the controller first preserves at least ten seconds of the current green, then uses 150 ms processing, two seconds of yellow, and one second of all-red clearance. Priority is released after the EV passes the junction or a 25-second maximum hold, followed by yellow and all-red before restoring the normal program. These are scenario timing assumptions, not a claim of compliance with a local traffic standard. They allow some requests to finish before EV arrival and others to cause waiting; no artificial waiting is added to the measurements.
+
+The collector accumulates and logs at 100 ms. SUMO and the Veins manager still update motion every 500 ms; intervening polls reuse the last SUMO state. The finer accumulator does not claim 100 ms underlying motion accuracy. Traffic-light waiting is EV speed below 0.1 m/s within 20 m of the next signal after alert reception; it includes queue waiting near that stop line.
+
+## Metrics and confidence intervals
+
+PDR is delivered unique EMs divided by generated unique EMs. NRL is control plus EM transmissions divided by delivered EMs. EM throughput is delivered useful payload bits divided by a fixed 900-second window. The payload is 256 bytes: a successful run contributes 2048/900 = 2.27556 bit/s, and a nondelivery contributes zero. This is EM delivery throughput, not total network capacity. PDR and EM delay occur before route computation, so equal values across routing approaches can be correct.
+
+EM end-to-end delay is generation to reception. Initial route decision latency is reception to route application. Both, and fallback decision latency, are displayed in milliseconds with raw precision preserved. EV response time is generation to arrival; EV travel and signal waiting remain in seconds. Response and decision measures require EM delivery, and NRL is undefined without a delivery. Corridor delay is travel time minus route distance/13.9 m/s, bounded at zero; it includes acceleration, turning, queuing, and signal effects.
+
+PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor delay use percentile bootstrap intervals with 10,000 resamples and fixed seed 42. Other continuous metrics use Student-t 95% intervals. Graphs show a generic [95% CI] label. Full mixed-cohort means and separate normal/stall means are both exported. Paired comparisons use matching seeds and preserve a constant nonzero difference even when its sample variance is zero.
+'''
+    (docs / "METHODOLOGY.md").write_text(methodology, encoding="utf-8")
+    lines = ["# Verification", "", "The experiment contains 360 primary runs plus 90 waiting-time control runs. Values below are calculated from unmodified simulation outputs.", ""]
+    lines += ["## Seed variation in generated trips", "", "Trip IDs are reused as labels across seeds; different origins and destinations establish different placements.", "", "| High-density seed | First trip ID | Departure (s) | Origin edge | Destination edge |", "| --- | --- | ---: | --- | --- |"]
+    for seed in (1, 4, 22):
+        trip = ET.parse(ROOT / f"simulations/batch/high-seed{seed}/normal-high-seed{seed}.trips.xml").getroot().find('trip')
+        lines.append(f"| {seed} | {trip.get('id')} | {trip.get('depart')} | {trip.get('from')} | {trip.get('to')} |")
+    lines.append("")
     for density in DENSITIES:
-        sample = ROOT / f"simulations/batch/{density}-seed1/normal-{density}-seed1.rou.xml"
-        counts[density] = len(ET.parse(sample).getroot().findall("vehicle"))
-    fallback_by_density = {d: [r for r in individual if r["configuration"] == "MistDynamicFogFallback"
-                               and r["density"] == d] for d in DENSITIES}
-    fallback_examples = [r for r in fallback if r["configuration"] == "MistDynamicFogFallback"
-                         and r["fallback_triggered"] == "1"]
-    actual_fallbacks = sum(int(float(r["fallback_triggered"])) for group in fallback_by_density.values() for r in group)
-    if actual_fallbacks == 0:
-        raise SystemExit("No organic fallback in the real batch")
-    undelivered = sum(int(r["delivered_messages"]) == 0 for r in individual)
-    reroute_counts = defaultdict(int)
-    review_counts = defaultdict(int)
-    for r in individual:
-        if r["configuration"] in CONFIGS[2:]:
-            key = (r["configuration"], r["density"])
-            reroute_counts[key] += int(float(r["route_changes"]))
-            review_counts[key] += int(float(r["route_reviews"]))
-
-    methodology = f"""# Methodology
-
-## Simulation design
-
-The study couples OMNeT++ 6.3.0 and Veins 5.3.1 to SUMO 1.18.0 through TraCI. The 4 by 4 signalized grid has 48 directed road links and three RSUs. The four comparison configurations are `FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, and `MistDynamicFogFallback`. Every configuration uses the same 30 seeds at each of three background traffic densities: low ({counts['low']} vehicles), medium ({counts['medium']} vehicles), and high ({counts['high']} vehicles). The comparison contains exactly 360 runs.
-
-The common `connectionManager.maxInterfDist` is **400 m**. This changes radio propagation and the relay/interference neighborhood. It is not an axis or cosmetic change. The prior 650 m run is retained separately in `archive_raw_20261001_650m/` and is used only for the explicitly labeled before/after comparison.
-
-## Routing and failover
-
-Static A* uses edge length divided by the 13.89 m/s speed limit. Dynamic A* uses live V2V beacons and V2I edge reports. Congestion adjustments require at least three observed vehicles on an edge. The EV reviews its route every 5 s; a replacement requires at least 10% lower estimated remaining cost, or a confirmed slow edge and at least 5% lower cost, with a 30 s minimum gap between reroutes. Route review and actual route replacement are counted separately from routing logs.
-
-The modeled Mist A* computation is 300 ms plus 2 ms per expanded node. In the earlier 650 m batch, the maximum observed A* expansion was 16 nodes, yielding 332 ms of computation and a 468 ms margin below the 800 ms watchdog; initial decisions expanded at most 13 nodes. Computation alone therefore did not approach the watchdog in this grid. Before committing the initial route, a local OBU worker validates the routing snapshot: each V2V beacon and V2I status message actually received in the preceding three seconds has an **assumed 20 ms route-time service cost**. This is an explicit scenario parameter for a constrained OBU, not a measured hardware benchmark or an implemented cryptographic primitive. The order of magnitude is motivated by [primary VANET security analysis of constrained OBUs](https://nss.proj.kth.se/publications/fulltext/secure-vehicular-communication-system-vanet-security-cm2.pdf), which estimates only a few dozen signature verifications per second on a 400 MHz OBU under its stated assumptions; this study does not claim those assumptions or hardware were reproduced. The service delay applies to every Mist configuration and every seed. The message count is measured from actual radio receptions and written as `initialTelemetryValidationQueue`; the resulting delay is written as `initialTelemetryValidationDelay`. The combined scheduled Mist delay is written in the routing log. The 800 ms watchdog is active only in `MistDynamicFogFallback`; it cancels unfinished Mist work and requests a Fog route. `ForcedMistFailure` and `ForcedMistTimeout` remain separate diagnostics and are excluded from all comparison counts.
-
-## Primary metrics and units
-
-| Metric | Definition | Unit |
-| --- | --- | --- |
-| PDR | Unique EMs processed by the EV divided by unique EMs generated | ratio |
-| NRL | Control plus EM transmissions divided by delivered EMs | packets/delivery |
-| EM throughput | Successfully delivered EM payload bits divided by the fixed 900 s observation window | bit/s |
-| EM end-to-end delay | EV EM reception time minus RSU generation time | ms |
-| Route decision latency | Initial route application time minus EM reception time | ms |
-| EV response time | Accident arrival time minus EM generation time | s |
-| EV traffic-light waiting time | EV standstill below 0.1 m/s within 20 m of a signal stop line | s |
-
-The EM has one fixed useful payload of 256 bytes. A delivered run therefore contributes 2048 / 900 = 2.27556 bit/s; a nondelivery contributes zero. Similar mean EM throughput across densities follows directly from this definition and similar PDR, even when the background traffic and route costs differ. Throughput is not aggregate network capacity.
-
-## Additional metrics and statistics
-
-Fallback activation is reported as a count and fraction of 30 scheduled `MistDynamicFogFallback` runs per density. Fallback decision latency is the initial route decision scalar for the real runs with `fallback_triggered=true`, in milliseconds. Route changes count only applied congestion/cost reroutes. Route computation frequency counts periodic `evaluated` events. Control transmission and byte counts, EV route distance, corridor delay, and EV travel time remain secondary metrics.
-
-PDR and fallback activation use Wilson score 95% confidence intervals. Traffic-light waiting and corridor delay use 10,000-resample percentile bootstrap intervals with fixed seed 42 because they are nonnegative and zero-inflated. Other continuous metrics use Student-t 95% intervals. Graphs show the intervals as `[95% CI]` without method names; the computation methods remain specified here. Response and decision metrics are conditional on EM delivery; NRL is undefined when no EM is delivered. Paired comparisons use matched seeds.
-"""
-    (ROOT / "docs/METHODOLOGY.md").write_text(methodology, encoding="utf-8")
-
-    lines = ["# Verification", "", "## Batch and source checks", "",
-             "The current batch contains 360 runs: four configurations by three densities by 30 matched seeds. `scripts/audit_batch.py` checks the exact matrix, raw file triplets, parameter provenance, processed metrics, fallback logs, route event counts, and graph files. The 650 m historical batch is archived outside the current comparison.", "",
-             "The 400 m range screen used 23 selected MistDynamicAStar runs, including the five previously troublesome seed/density combinations and additional seeds in each density. Two of 23 partitioned at 400 m (low seeds 12 and 28), versus five of the same 23 at 650 m. This selected screen is not an estimate of the full-batch partition rate; the full result below uses all 360 current runs.", "",
-             f"Across the full current batch, {undelivered}/360 runs ({undelivered/360:.1%}) did not deliver the EM. This is the batch-wide nondelivery/partition proxy; individual seed outcomes appear below.", "",
-             f"SUMO route files contain {counts['low']}, {counts['medium']}, and {counts['high']} background vehicles for low, medium, and high density, respectively, for every seed. The trip files show different seeded placements: normal0 starts on A2A3 and ends on D1C1 for seed 1, starts on D2D3 for seed 2, and starts on B0B1 for seed 4. Within one seed, the early trips intentionally match across densities; the trip counts and departure spacing then diverge.", "",
-             "## Seven primary metrics", "", "Values below are mean [95% CI]. `n` is the metric-specific valid run count. Units remain in the metric label.", ""]
-    for density in DENSITIES:
-        lines += [f"### {density.capitalize()} density ({counts[density]} background vehicles)", "",
-                  "| Metric | FogCloudAStar | MistAStar | MistDynamicAStar | MistDynamicFogFallback |",
-                  "| --- | ---: | ---: | ---: | ---: |"]
+        group = [r for r in individual if r['density'] == density and r['configuration'] == 'MistDynamicAStar']
+        peak = [float(r['peak_active_background']) for r in group if r['peak_active_background']]
+        spawned = [int(ET.parse(ROOT / f"artifacts/logs/batch/sumo-summary-MistDynamicAStar-{density}-seed{r['seed']}.xml").getroot().findall('step')[-1].get('inserted')) - 2 for r in group]
+        delivered = sum(int(r['delivered_messages']) for r in group)
+        lines += [f"## {density.capitalize()} traffic", "", f"Generated background vehicles: {counts[density]}. SUMO actually inserted {min(spawned)} to {max(spawned)} background vehicles across seeds. Peak simultaneous background count: {min(peak):.0f} to {max(peak):.0f}. Dynamic Mist alert deliveries: {delivered}/30.", "", "| Main metric | Fog/Cloud | Mist | Dynamic Mist | Mist + Fog |", "| --- | ---: | ---: | ---: | ---: |"]
         for metric, label, unit in PRIMARY:
             cells = []
             for cfg in CONFIGS:
-                r = current[(cfg, density, metric)]
-                mean = fmt(float(r["mean"]), metric)
-                lower = fmt(float(r["ci95_lower"]), metric)
-                upper = fmt(float(r["ci95_upper"]), metric)
-                cells.append(f"{mean} [{lower}, {upper}] (n={r['n']})")
+                r = current[cfg, density, metric]
+                cells.append(f"{fmt(r['mean'], metric)} [{fmt(r['ci95_lower'], metric)}, {fmt(r['ci95_upper'], metric)}] (n={r['n']})")
             lines.append(f"| {label} ({unit}) | " + " | ".join(cells) + " |")
-        lines.append("")
-    lines += ["## Mechanism evidence", "",
-              "| Density | Fallback activations | Rate | MistDynamicAStar reroutes / reviews | MistDynamicFogFallback reroutes / reviews |",
-              "| --- | ---: | ---: | ---: | ---: |"]
-    for density in DENSITIES:
-        activation = sum(int(float(r["fallback_triggered"])) for r in fallback_by_density[density])
-        a = ("MistDynamicAStar", density)
-        b = ("MistDynamicFogFallback", density)
-        lines.append(f"| {density} | {activation}/30 | {activation/30:.3f} | {reroute_counts[a]} / {review_counts[a]} | {reroute_counts[b]} / {review_counts[b]} |")
-    example = fallback_examples[0]
-    lines += ["", "The reroute and review entries above are total events across 30 scheduled runs. Divide each by 30 for frequency per run; the exact per-run counts and their density means are in `individual_runs-batch.csv` and `summary-batch.csv`, respectively. Real fallback events and their full-precision decision latencies are in `results/processed/fallback_validation.csv`. The activation count excludes forced diagnostic configurations.", "",
-              f"A real batch example is {example['density']} seed {example['seed']}: the scheduled Mist work lasted {float(example['scheduled_mist_duration_s'])*1000:.2f} ms, exceeded the 800 ms watchdog, and Fog applied the route after {float(example['final_decision_latency_ms']):.2f} ms. The recorded reason is `{example['failure_reason']}`.", "",
-              "## Density and seed behavior", "",
-              "Distinct SUMO traffic counts and seeded trip origins demonstrate different injected demand. Routing log `evaluated` rows record live candidate costs and `applied` rows record actual reroutes; the count table above measures their density dependence.", ""]
-    for density in DENSITIES:
-        group = [r for r in individual if r["density"] == density and r["configuration"] == "MistDynamicAStar"]
-        lost = sorted((int(r["seed"]) for r in group if int(r["delivered_messages"]) == 0))
-        costs = []
-        changed = []
-        for r in sorted(group, key=lambda item: int(item["seed"])):
-            stem = f"MistDynamicAStar-{density}-seed{r['seed']}"
-            route_path = ROOT / "artifacts/logs/batch" / f"routing-{stem}.csv"
-            if not route_path.exists():
+        baseline = current['NoPreemptionBaseline', density, 'traffic_light_wait_s']
+        lines += ["", f"No-preemption waiting control: {float(baseline['mean']):.2f} s [{float(baseline['ci95_lower']):.2f}, {float(baseline['ci95_upper']):.2f}], n={baseline['n']}.", "", "### Routing and fallback", ""]
+        for cfg in CONFIGS[2:]:
+            g = [r for r in group] if cfg == CONFIGS[2] else [r for r in individual if r['density'] == density and r['configuration'] == cfg]
+            lines.append(f"- {cfg}: {sum(int(float(r['route_reviews'])) for r in g)} reviews; {sum(int(float(r['route_changes'])) for r in g)} applied route changes.")
+        f = [r for r in fallback if r['density'] == density]
+        activated = [r for r in f if r['fallback_triggered'] == '1']
+        lines += [f"- Fallback: {len(activated)}/30 ({len(activated)/30:.1%}); triggered seeds {', '.join(r['seed'] for r in activated) or 'none'}. These are controlled stall tests.", "", "### Normal and controlled-stall decision latency", "", "| Condition | Fog/Cloud | Mist | Dynamic Mist | Mist + Fog |", "| --- | ---: | ---: | ---: | ---: |"]
+        for condition in ('normal', 'controlled_stall'):
+            cells = [f"{float(cohort_map[condition,cfg,density,'route_decision_ms']['mean']):.2f} ms" for cfg in CONFIGS]
+            lines.append(f"| {condition} | " + " | ".join(cells) + " |")
+        costs, changes = [], []
+        for r in group:
+            path = ROOT / f"artifacts/logs/batch/routing-MistDynamicAStar-{density}-seed{r['seed']}.csv"
+            if not path.exists():
                 continue
-            for event in rows(route_path):
-                if event["action"] == "evaluated":
-                    cost = float(event["estimatedCost"])
-                    if cost > 0:
-                        costs.append(cost)
-                if event["action"] == "applied" and event["reason"] in ("low_speed", "cost_improvement"):
-                    changed.append(f"seed {r['seed']} at {event['time']} s ({event['reason']})")
-        lines.append(f"- **{density.capitalize()}**: {len(group)} seeds; {len(lost)} EM nondeliveries"
-                     + (f" (seeds {', '.join(map(str, lost))})" if lost else "")
-                     + f"; {len(costs)} positive periodic cost evaluations with {len(set(costs))} distinct costs spanning {min(costs):.2f}–{max(costs):.2f} s; {len(changed)} applied reroutes."
-                     + (f" Examples: {', '.join(changed[:3])}." if changed else ""))
-    lines += ["", "Specific current high-density routing events include a cost-improvement reroute at 112.811 s in seed 22 and at 102.033 s in seed 27. High seed 4 performed 26 periodic evaluations and no applied reroute under the new parameters. These are actual routing-log outcomes; a route review does not necessarily change the route.", "",
-              "The throughput values remain close because the metric divides one fixed 256-byte EM payload by 900 s, with variation driven chiefly by delivery success. `results/processed/before_after_headline.csv` gives the measured 650 m to 400 m change for every primary metric and configuration without treating historical results as part of the current batch.", ""]
-    (ROOT / "docs/VERIFICATION.md").write_text("\n".join(lines), encoding="utf-8")
-
-    progress = ["# Progress", "", "The client review changes have been applied and the four-configuration, 400 m matched batch has been rerun and processed. The current comparison is 4 configurations by 3 densities by 30 seeds, or **360 runs**. The earlier NoPreemptionBaseline data and 650 m comparison are preserved in `archive_raw_20261001_650m/` and excluded from all current summary tables and graphs.", "",
-                "## Current result counts", "", "| Density | Scheduled runs | Background vehicles | EM deliveries | Fallback activations |", "| --- | ---: | ---: | ---: | ---: |"]
+            for e in rows(path):
+                if e['action'] == 'evaluated' and float(e['estimatedCost']) > 0:
+                    costs.append(float(e['estimatedCost']))
+                if e['action'] == 'applied' and e['reason'] in ('low_speed','cost_improvement'):
+                    changes.append(f"seed {r['seed']} at {float(e['time']):.3f} s")
+        lines += ["", f"Live candidate costs: {len(costs)} evaluations, {len(set(costs))} distinct positive costs, {min(costs):.2f} to {max(costs):.2f} s. Example actual route changes: {', '.join(changes[:3]) or 'none'}.", ""]
+    lines += ["## Interpreting density and approach differences", "",
+              "The alert reaches the EV before route computation starts. PDR and EM end-to-end delay describe that shared radio event; EM throughput uses the same delivery count and fixed 256-byte payload. These metrics can match across routing approaches without indicating that the routing code is inactive.", "",
+              "| Density | Generated background trips | Mean peak live vehicles | PDR | EM throughput (bit/s) | Mist A* response (s) | Dynamic Mist response (s) | Dynamic Mist route changes |",
+              "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     for density in DENSITIES:
-        group = [r for r in individual if r["density"] == density]
-        delivered = sum(int(r["delivered_messages"]) > 0 for r in group)
-        activation = sum(int(float(r["fallback_triggered"])) for r in fallback_by_density[density])
-        progress.append(f"| {density} | {len(group)} | {counts[density]} | {delivered} | {activation}/30 |")
-    progress += ["", "The seven headline metrics, their intervals, routing activity, and real fallback events are in `docs/VERIFICATION.md`. The processing formulas and workload assumption are in `docs/METHODOLOGY.md`. All 84 before/after primary metric comparisons are in `results/processed/before_after_headline.csv`. Raw scalars, vectors, and logs remain available for independent verification.", ""]
-    (ROOT / "docs/PROGRESS.md").write_text("\n".join(progress), encoding="utf-8")
+        dynamic_runs = [r for r in individual if r['configuration'] == 'MistDynamicAStar' and r['density'] == density]
+        peak_mean = sum(float(r['peak_active_background']) for r in dynamic_runs) / len(dynamic_runs)
+        lines.append("| {} | {} | {:.1f} | {:.3f} | {:.3f} | {:.2f} | {:.2f} | {} |".format(
+            density, counts[density], peak_mean,
+            float(current['MistAStar', density, 'pdr']['mean']),
+            float(current['MistAStar', density, 'throughput_bps']['mean']),
+            float(current['MistAStar', density, 'ev_response_s']['mean']),
+            float(current['MistDynamicAStar', density, 'ev_response_s']['mean']),
+            sum(int(float(r['route_changes'])) for r in dynamic_runs)))
+    lines += ["", "Density changes are present: PDR, throughput, and live vehicle counts rise with demand. Dynamic Mist is also active: it reviews live costs and applies route changes. PDR and throughput are expected to remain equal between route tiers when their common alert-delivery stage produces the same deliveries. Response means can differ after routing, but overlapping confidence intervals limit claims about small differences.", "",
+              "## Interpretation", "", "The confidence intervals determine whether measured response differences are convincing. Controlled stalls demonstrate recovery from a defined fault; they do not establish the fault rate in real deployment.", ""]
+    (docs / "VERIFICATION.md").write_text("\n".join(lines), encoding="utf-8")
+    # Retain the measured historical comparison in a sidecar, outside the plain-English report.
+    historical = rows(ROOT / "archive_20261005_400m_telemetry20/results/processed/summary-batch.csv")
+    old = {(r['configuration'],r['density'],r['metric']):r for r in historical}
+    comparison = []
+    for cfg in CONFIGS:
+        for density in DENSITIES:
+            for metric,label,unit in PRIMARY:
+                a, b = old[cfg,density,metric], current[cfg,density,metric]
+                comparison.append(dict(configuration=cfg,density=density,metric=label,unit=unit,
+                                       before_20ms_mean=a['mean'],after_0ms_mean=b['mean'],
+                                       change=float(b['mean'])-float(a['mean']),before_n=a['n'],after_n=b['n']))
+    with (ROOT / 'results/processed/before_after_headline.csv').open('w',newline='',encoding='utf-8') as handle:
+        writer=csv.DictWriter(handle,comparison[0].keys()); writer.writeheader(); writer.writerows(comparison)
+    (docs / "EXPERIMENTS.md").write_text("# Experiments\n\n" + methodology.split("## Routing and controlled fallback tests")[0].split("## Experiment design\n\n")[1] + "\nThe eight controlled stall seeds and all timing assumptions are specified in METHODOLOGY.md. Normal and stall results are in summary-cohorts.csv. NoPreemptionBaseline appears only in waiting-time summaries and graphs.\n",encoding='utf-8')
+    (docs / 'PROGRESS.md').write_text('# Progress\n\nCompleted 360 primary matched runs and 90 no-preemption waiting-time controls. See VERIFICATION.md for measured counts and intervals, and METHODOLOGY.md for controlled fault labels and signal safety timing. Previous outputs are preserved in archive_20261005_400m_telemetry20/.\n',encoding='utf-8')
+    (docs / 'INSTALLATION.md').write_text('''# Installation and reproduction
 
-    (ROOT / "docs/EXPERIMENTS.md").write_text(f"""# Experiments
-
-The current comparison comprises four configurations (`FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, `MistDynamicFogFallback`) by three traffic densities by 30 matched seeds, totaling **360 real simulation runs**. Every density uses the same random seed list for all four configurations. The 400 m radio neighborhood and the 20 ms per received telemetry message OBU validation service assumption are common to all applicable runs.
-
-SUMO route files contain {counts['low']} low, {counts['medium']} medium, and {counts['high']} high background vehicles per seed. The EM is generated by RSU 2 after the accident vehicle stops. `ForcedMistFailure`, `ForcedMistTimeout`, and `CongestionReroute` are diagnostic configurations and are excluded from the comparison. Historical NoPreemptionBaseline results are archived outside the current four-configuration matrix.
-
-The primary metrics are PDR, NRL, EM throughput, EM end-to-end delay (ms), route decision latency (ms), EV response time (s), and EV traffic-light waiting time (s). Supplemental metrics include fallback activation count/rate, route changes, periodic route reviews, and fallback decision latency (ms). Means, valid sample counts, standard deviations, and 95% confidence intervals are in `results/processed/summary-batch.csv`. Raw run records are in `individual_runs-batch.csv`; true fallback events and timings are in `fallback_validation.csv`; paired differences are in `paired_comparisons.csv`.
-
-The graph titles use a generic `[95% CI]` label. `docs/METHODOLOGY.md` specifies the actual interval methods and explains why the fixed-payload EM throughput can be visually flat across densities.
-""", encoding="utf-8")
-    (ROOT / "docs/INSTALLATION.md").write_text("""# Installation and reproduction
-
-Use the provided `opp_env` WSL distribution with OMNeT++ 6.3.0, Veins 5.3.1, and SUMO 1.18.0. Source code is in `src/`, SUMO geometry and OMNeT++ configuration are in `simulations/grid/`, and the runner is `scripts/run_batch_env.sh`.
-
-1. Build `src/libsrc.so` in the `opp_env` environment using `scripts/build.sh` or the environment's OMNeT++ make workflow.
-2. Run the four configurations on all densities and 30 matched seeds:
-
-```bash
-wsl -d opp_env /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --configs FogCloudAStar MistAStar MistDynamicAStar MistDynamicFogFallback --densities low medium high --seed-start 1 --seed-end 30 --force
-```
-
-3. Process and verify the full 360-run matrix:
+The installed stack is opp_env WSL, SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. Run from the project directory in PowerShell:
 
 ```powershell
+wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/build.sh
+wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --force
 python analysis/process_results.py --batch --require-all
 python analysis/extract_fallback_evidence.py
+python scripts/verify_response_times.py
 python scripts/generate_final_graph.py
 python scripts/write_final_reports.py
 python scripts/audit_batch.py
 python scripts/generate_reviewed_submission.py
-python scripts/package_reviewed_submission.py
+python scripts/package_reviewed_submission.py --refresh
 ```
 
-The processor checks that all 360 expected run keys are present and every `.sca` file records the current 400 m and 20 ms parameters. Raw `.sca`, `.vec`, and `.vci` outputs are in `results/raw/`; run logs are in `artifacts/logs/batch/`; plots are in `results/graphs/`. Historical 650 m data is preserved separately in `archive_raw_20261001_650m/` and is excluded from the current processor and graphs.
-""", encoding="utf-8")
-    (ROOT / "PROJECT_SPEC.md").write_text("""# Emergency vehicle navigation project specification
+The default runner creates 450 simulations: 360 primary comparisons and 90 waiting controls. To inspect a small isolated sample, add `--seeds 1 4 --artifact-root /mnt/d/Codex/EmergencyNavigation/scratch/sample` to the runner, then process with `--batch --no-graphs --artifact-root scratch/sample`. A fresh run must not be mixed with old parameter outputs. Raw files are in results/raw, event logs and binary provenance manifests are in artifacts/logs/batch, and processed results are in results/processed.
+''',encoding='utf-8')
+    (ROOT / 'PROJECT_SPEC.md').write_text('# Emergency vehicle navigation project specification\n\nFour primary routing configurations are compared over 360 matched runs. NoPreemptionBaseline adds 90 runs and is displayed only for EV traffic-light waiting. The radio setting is 400 m; telemetry validation is 0 ms; the watchdog is 500 ms; metric accumulation is 100 ms with 500 ms SUMO motion updates. Eight independently selected seeds receive a 900 ms initial controlled Mist stall uniformly across all Mist approaches. Signal priority preserves a ten-second minimum green and yellow/all-red clearance. See docs/METHODOLOGY.md and docs/VERIFICATION.md.\n',encoding='utf-8')
+    (ROOT / 'README.md').write_text('''# Emergency vehicle navigation simulation
 
-The project evaluates hierarchical route computation in a SUMO and OMNeT++/Veins VANET grid. The current research comparison has four configurations: FogCloudAStar, MistAStar, MistDynamicAStar, and MistDynamicFogFallback. Each runs at three traffic densities and 30 matched seeds, producing 360 runs. All configurations retain V2I traffic-light preemption.
+SUMO, OMNeT++, and Veins model accident alert delivery and emergency vehicle routing on a signalized grid. The main comparison contains FogCloudAStar, MistAStar, MistDynamicAStar, and MistDynamicFogFallback (360 matched runs). A further 90 NoPreemptionBaseline runs appear only in the traffic-light waiting comparison.
 
-The common radio neighborhood is 400 m. Dynamic Mist routing reviews live edge costs every five seconds and changes routes only when improvement and stability thresholds are met. Mist initial computation costs 300 ms plus 2 ms per expanded A* node. The OBU also has a modeled 20 ms validation service time for each actually received beacon/status message in the previous three seconds. The fallback configuration uses an 800 ms watchdog and delegates to Fog if the Mist work has not completed. The workload assumption is applied to all Mist configurations and all seeds.
+The [Word report](docs/Emergency_Vehicle_Navigation_Final_Submission.docx) explains the system in plain English and contains every graph. The [graph guide](docs/PROCESS_AND_GRAPHS.md) displays them on GitHub. See [methodology](docs/METHODOLOGY.md), [measured verification](docs/VERIFICATION.md), and [installation](docs/INSTALLATION.md).
 
-The seven primary outcomes are PDR, NRL, EM throughput, EM end-to-end delay (ms), route decision latency (ms), EV response time (s), and EV traffic-light waiting time (s). Supplemental outcomes include fallback activation, route changes, periodic review count, and fallback decision latency (ms). See `docs/METHODOLOGY.md` for exact definitions and confidence interval calculations, and `docs/VERIFICATION.md` for measured results.
-""", encoding="utf-8")
-    (ROOT / "README.md").write_text("""# Emergency vehicle navigation simulation
+The watchdog is 500 ms and the telemetry delay is 0 ms. Eight of 30 seeds are explicitly labeled controlled Mist stalls, applied to every Mist approach for fairness. Normal and controlled results are available separately in results/processed/summary-cohorts.csv. Equal PDR or EM throughput can be valid because the alert precedes route computation and has a fixed payload/window.
+''',encoding='utf-8')
+    (ROOT / 'AGENTS.md').write_text('''# EmergencyNavigation development guide
 
-This repository couples SUMO 1.18.0 and OMNeT++ 6.3.0 / Veins 5.3.1 to compare four emergency vehicle route architectures on a 4 by 4 signalized grid. The reviewed study uses a 400 m radio neighborhood and 360 matched runs (4 configurations × 3 traffic densities × 30 seeds). The historical 650 m data is in `archive_raw_20261001_650m/` and is excluded from current comparisons.
+The project uses SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. The main comparison is four configurations times three densities times 30 seeds (360 runs), plus 90 NoPreemptionBaseline runs shown only for traffic-light waiting. The current parameters are 400 m radio range, 0 ms telemetry delay, 500 ms watchdog, and 100 ms metric accumulation with 500 ms underlying SUMO updates. Eight fixed independently sampled seeds receive 900 ms controlled initial Mist stalls in all Mist configurations. Never describe these as organic fallback or measured OBU performance.
 
-## Configurations
-
-| Configuration | Route computation | Periodic review | Fallback |
-| --- | --- | --- | --- |
-| FogCloudAStar | Fog and cloud static A* | No | No |
-| MistAStar | Local static A* | No | No |
-| MistDynamicAStar | Local dynamic A* | Every 5 s | No |
-| MistDynamicFogFallback | Local dynamic A* | Every 5 s | 800 ms Fog takeover |
-
-All four use V2I signal preemption. Diagnostic forced-failure and forced-timeout configurations remain outside the comparison.
-
-## Results and reproduction
-
-The preferred outcomes are PDR, NRL, EM throughput, EM end-to-end delay (ms), route decision latency (ms), EV response time (s), and EV traffic-light waiting time (s). Supplemental routing and fallback measures are reported separately. `docs/VERIFICATION.md` has the current result tables, `docs/METHODOLOGY.md` has formulas and modeling assumptions, and `docs/INSTALLATION.md` has commands to rebuild, rerun, process, and audit. The source CSVs are in `results/processed/`, raw simulation evidence is in `results/raw/`, and graphs are in `results/graphs/`.
-
-EM throughput uses one 256-byte useful payload divided by the fixed 900 s window, so similar delivery rates yield similar plotted throughput despite different vehicle counts and routing costs. All graphs retain 95% confidence intervals; the actual interval methods are documented in `docs/METHODOLOGY.md`.
-""", encoding="utf-8")
-    (ROOT / "AGENTS.md").write_text("""# EmergencyNavigation development guide
-
-The system couples OMNeT++ 6.3.0 / Veins 5.3.1 wireless simulation to SUMO 1.18.0 via TraCI. The EV application is `src/apps/EmergencyVehicleApp.cc`; local route computation is `src/apps/MistRoutingModule.cc`; traffic-light actuation is in `src/apps/TrafficLightController.cc`; result processing is in `analysis/process_results.py`.
-
-The current study uses four matched configurations (`FogCloudAStar`, `MistAStar`, `MistDynamicAStar`, `MistDynamicFogFallback`), three densities, and seeds 1–30: 360 runs. `simulations/grid/omnetpp.ini` sets the 400 m radio neighborhood and the 800 ms fallback watchdog. Every Mist initial route decision includes a 300 ms base, 2 ms per expanded A* node, and a modeled 20 ms validation service time per actually received V2V/V2I message in the previous three seconds. The latter is an explicit simulation assumption and must not be described as measured OBU hardware performance.
-
-Build in the `opp_env` WSL environment, run the matrix through `scripts/run_batch_env.sh`, process with `analysis/process_results.py --batch --require-all`, extract fallbacks with `analysis/extract_fallback_evidence.py`, and audit with `scripts/audit_batch.py`. The processor rejects missing run keys and stale scalar files. Historical 650 m evidence, including the removed comparison configuration, is in `archive_raw_20261001_650m/`.
-
-Do not manually edit raw simulation logs, result CSVs, or graphs. Regenerate them from the source pipeline. The client-facing seven primary metrics and exact statistical methods are listed in `docs/METHODOLOGY.md`.
-""", encoding="utf-8")
-    print(f"Wrote methodology, verification, progress, and {len(comparisons)} before/after comparisons; {actual_fallbacks} real fallbacks")
+Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with analysis/process_results.py --batch --require-all, extract fallback evidence, then generate reports and audit. Previous evidence is in archive_20261005_400m_telemetry20/ and archive_raw_20261001_650m/. Do not manually edit raw logs, result CSVs, or graphs. Regenerate them from the source pipeline. Keep the no-preemption control out of every summary and plot except traffic-light waiting.
+''',encoding='utf-8')
+    print(f"Wrote reports from {len(individual)} measured runs")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

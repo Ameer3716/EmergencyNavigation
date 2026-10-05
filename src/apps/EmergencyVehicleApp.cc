@@ -13,6 +13,7 @@
 #include <memory>
 #include <sstream>
 #include <set>
+#include <iomanip>
 
 namespace emergencynavigation {
 
@@ -93,7 +94,9 @@ protected:
         const double loadDelay = queued * par("telemetryValidationDelay").doubleValue();
         recordScalar("initialTelemetryValidationQueue", queued);
         recordScalar("initialTelemetryValidationDelay", loadDelay);
-        const double delay = mist()->processingDelay(pending.expandedNodes) + loadDelay;
+        const double stall = par("controlledMistStallDelay").doubleValue();
+        recordScalar("controlledMistStallDelay", stall);
+        const double delay = mist()->processingDelay(pending.expandedNodes) + loadDelay + stall;
         logRoute("computed", "initial", pending, delay);
         scheduleAt(simTime() + delay, routeReady);
     }
@@ -118,8 +121,10 @@ protected:
     void handleSelfMsg(omnetpp::cMessage* message) override {
         if (message == watchdog) {
             cancelEvent(routeReady);
-            logFallback("watchdog_timeout");
-            sendFogRequest(false, "watchdog_timeout");
+            const char* reason = par("controlledMistStallDelay").doubleValue() > 0
+                ? "controlled_stall_timeout" : "watchdog_timeout";
+            logFallback(reason);
+            sendFogRequest(false, reason);
             return;
         }
         if (message == preemptionTimer) {
@@ -169,6 +174,8 @@ private:
     std::map<std::string, int> consecutiveSlowSamples;
     std::string lastSlowEdges;
     double lastRerouteTime = -1e9;
+    double lastCurrentCost = 0;
+    int lastObservedEdges = 0;
 
     MistRoutingModule* mist() const {
         auto* module = dynamic_cast<MistRoutingModule*>(getParentModule()->getSubmodule("mist"));
@@ -259,6 +266,7 @@ private:
         const auto start = mobility->getRoadId();
         const auto destination = par("destinationEdge").stdstringValue();
         const auto snapshot = trafficSnapshot();
+        lastObservedEdges = static_cast<int>(snapshot.size());
         return mist()->compute(start, destination, snapshot, par("dynamicRouting").boolValue());
     }
     void applyRoute(const RouteResult& route, const char* reason) {
@@ -269,7 +277,10 @@ private:
         if (!command->vehicle(nodeId()).changeVehicleRoute(edges))
             throw omnetpp::cRuntimeError("SUMO rejected ambulance route");
         if (navigationHeld) {
-            command->vehicle(nodeId()).setSpeed(par("releaseSpeed"));
+            // Release the hold to SUMO's car-following model, with signal and safety checks.
+            command->vehicle(nodeId()).setMaxSpeed(par("releaseSpeed"));
+            command->vehicle(nodeId()).setSpeedMode(31);
+            command->vehicle(nodeId()).setSpeed(-1);
             navigationHeld = false;
         }
         selected = route.edges;
@@ -286,6 +297,8 @@ private:
         DynamicAStarRouter router(*graph, snapshot, par("densityLambda"), 1.0 / 7.5, par("minimumObservedVehicles").intValue());
         const std::vector<std::string> future(remaining.size() > 1 ? remaining.begin() + 1 : remaining.end(), remaining.end());
         const double oldCost = future.empty() ? 0 : router.routeCost(future);
+        lastCurrentCost = oldCost;
+        lastObservedEdges = static_cast<int>(snapshot.size());
         pending = mist()->compute(mobility->getRoadId(), par("destinationEdge").stdstringValue(), snapshot, true);
         if (pending.edges.empty()) return;
         bool slow = false;
@@ -320,7 +333,8 @@ private:
         const bool first = !std::filesystem::exists(path);
         std::ofstream out(path, std::ios::app);
         if (!out) throw omnetpp::cRuntimeError("Cannot open routing log: %s", path.c_str());
-        if (first) out << "action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges,belowThresholdEdges\n";
+        if (first) out << "action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges,belowThresholdEdges,currentRemainingCost,observedEdges,controlledMistStallDelay\n";
+        out << std::setprecision(15);
         const std::string mode = par("routingMode").stdstringValue();
         const char* configuration = mode == "fog_cloud" ? "FogCloudAStar" :
                                     mode == "mist_fallback" ? "MistDynamicFogFallback" :
@@ -331,7 +345,8 @@ private:
             << ',' << (par("dynamicRouting").boolValue() ? "dynamic_astar" : "astar")
             << ',' << location << ',' << simTime().dbl() << ',' << decisionStart << ',' << delay
             << ',' << route.expandedNodes << ',' << route.cost << ',' << reason << ',' << mobility->getRoadId()
-            << ',' << join(selected) << ',' << join(route.edges) << ',' << lastSlowEdges << '\n';
+            << ',' << join(selected) << ',' << join(route.edges) << ',' << lastSlowEdges
+            << ',' << lastCurrentCost << ',' << lastObservedEdges << ',' << par("controlledMistStallDelay").doubleValue() << '\n';
     }
 };
 

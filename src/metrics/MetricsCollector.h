@@ -2,6 +2,7 @@
 
 #include <omnetpp.h>
 #include <fstream>
+#include <set>
 
 namespace emergencynavigation {
 class MetricsCollector : public omnetpp::cSimpleModule {
@@ -20,5 +21,10 @@ private:
     double lastLanePosition = 0;
     std::string lastEdge;
     std::ofstream trace;
+    std::set<std::string> backgroundSeen;
+    int peakBackground = 0;
+    long lastSumoStep = -1;
+    int activeBackground = 0;
+    bool present = false, nearLight = false;
 };
 }

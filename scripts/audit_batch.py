@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
-"""Audit the current 400 m, four-configuration matched batch from raw evidence."""
+"""Audit 360 primary runs and 90 waiting controls from raw evidence."""
 from __future__ import annotations
 
 import csv
 import json
 import re
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
+ALL_CONFIGS = CONFIGS + ("NoPreemptionBaseline",)
+STALL_SEEDS = frozenset((4, 5, 9, 10, 13, 17, 18, 29))
 DENSITIES = ("low", "medium", "high")
-EXPECTED = {(cfg, density, seed) for cfg in CONFIGS for density in DENSITIES for seed in range(1, 31)}
+EXPECTED = {(cfg, density, seed) for cfg in ALL_CONFIGS for density in DENSITIES for seed in range(1, 31)}
 PRIMARY = ("pdr", "nrl", "throughput_bps", "e2e_delay_ms", "route_decision_ms",
            "ev_response_s", "traffic_light_wait_s")
 SUPPLEMENTAL = ("route_changes", "route_reviews", "fallback_triggered", "fallback_decision_ms")
@@ -33,17 +36,19 @@ def main() -> None:
     logs = ROOT / "artifacts/logs/batch"
     processed = ROOT / "results/processed"
     checks: list[dict[str, object]] = []
-    pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback)-(low|medium|high)-seed(\d+)\.sca$")
+    pattern = re.compile(r"^(FogCloudAStar|MistAStar|MistDynamicAStar|MistDynamicFogFallback|NoPreemptionBaseline)-(low|medium|high)-seed(\d+)\.sca$")
     paths = {}
     for path in raw.glob("*.sca"):
         match = pattern.match(path.name)
         if match:
             cfg, density, seed = match.groups()
             paths[(cfg, density, int(seed))] = path
-    add(checks, "exact matched matrix", set(paths) == EXPECTED, len(paths), 360)
+    add(checks, "exact matched matrix", set(paths) == EXPECTED, len(paths), 450)
 
     missing_files = []
     stale_parameters = []
+    manifest_errors = []
+    binary_hashes = set()
     for key, path in paths.items():
         stem = path.stem
         for extension in ("vec", "vci"):
@@ -51,16 +56,33 @@ def main() -> None:
             if not peer.exists() or peer.stat().st_size == 0:
                 missing_files.append(peer.name)
         content = path.read_text(encoding="utf-8")
-        if ("config *.connectionManager.maxInterfDist 400m" not in content
-                or "config *.node[*].appl.telemetryValidationDelay 20ms" not in content):
+        cfg, density, seed = key
+        stall = 900 if cfg.startswith("Mist") and seed in STALL_SEEDS else 0
+        required = ("config *.connectionManager.maxInterfDist 400m",
+                    "config *.node[*].appl.telemetryValidationDelay 0ms",
+                    "config *.node[*].appl.watchdogThreshold 500ms",
+                    "config *.metrics.pollInterval 100ms",
+                    "config *.tls[*].controller.minimumGreen 10s",
+                    f"config *.node[*].appl.controlledMistStallDelay {stall}ms")
+        if any(p not in content for p in required):
             stale_parameters.append(stem)
+        manifest_path = logs / f"manifest-{stem}.json"
+        if not manifest_path.exists():
+            manifest_errors.append(stem)
+        else:
+            m = json.loads(manifest_path.read_text(encoding="utf-8"))
+            binary_hashes.add(m['binary_sha256'])
+            if m['controlled_mist_stall_ms'] != stall:
+                manifest_errors.append(stem)
     add(checks, "raw triplets", not missing_files, missing_files[:10], "no missing .sca/.vec/.vci")
-    add(checks, "new parameters in every scalar", not stale_parameters, stale_parameters[:10], "400m and 20ms")
+    add(checks, "new parameters in every scalar", not stale_parameters, stale_parameters[:10], "400m, 0ms, 500ms, 100ms, 10s minimum green, matched stall assignment")
+    add(checks, "uniform binary and fault provenance", not manifest_errors and len(binary_hashes) == 1,
+        {"errors": manifest_errors[:10], "binary_count": len(binary_hashes)}, "one binary and correct per-run manifests")
 
     individual = read_csv(processed / "individual_runs-batch.csv")
     observed = {(r["configuration"], r["density"], int(r["seed"])) for r in individual}
-    add(checks, "processed matched matrix", observed == EXPECTED and len(individual) == 360,
-        len(individual), 360)
+    add(checks, "processed matched matrix", observed == EXPECTED and len(individual) == 450,
+        len(individual), 450)
     summary = read_csv(processed / "summary-batch.csv")
     summary_keys = {(r["configuration"], r["density"], r["metric"]) for r in summary}
     missing_primary = [(cfg, density, metric) for cfg in CONFIGS for density in DENSITIES
@@ -76,8 +98,9 @@ def main() -> None:
     fallback_count = sum(int(float(r["fallback_triggered"])) for r in fallback_rows)
     fallback_logs = sum((logs / f"fallback-MistDynamicFogFallback-{r['density']}-seed{r['seed']}.csv").exists()
                         for r in fallback_rows)
-    add(checks, "organic fallback activation", fallback_count > 0 and fallback_count == fallback_logs,
-        {"processed": fallback_count, "logs": fallback_logs}, "positive matching counts")
+    expected_fallbacks = sum(int(r['delivered_messages']) > 0 and int(r['seed']) in STALL_SEEDS for r in fallback_rows)
+    add(checks, "controlled fallback activation", fallback_count == expected_fallbacks and fallback_count == fallback_logs,
+        {"processed": fallback_count, "logs": fallback_logs, "delivered_stall_cases": expected_fallbacks}, "every delivered controlled stall triggers; normal runs do not")
     unresolved = [r for r in fallback_rows if r["fallback_triggered"] == "1" and not r["route_decision_ms"]]
     add(checks, "fallback route completion", not unresolved, len(unresolved), 0)
 
@@ -96,6 +119,33 @@ def main() -> None:
             review_mismatch.append(stem)
     add(checks, "route change counts match logs", not reroute_mismatch, reroute_mismatch[:10], "no mismatch")
     add(checks, "review counts match logs", not review_mismatch, review_mismatch[:10], "no mismatch")
+    baseline_keys = {key for key in summary_keys if key[0] == 'NoPreemptionBaseline'}
+    expected_baseline = {('NoPreemptionBaseline',d,'traffic_light_wait_s') for d in DENSITIES}
+    add(checks, "waiting-only no-preemption display", baseline_keys == expected_baseline,
+        sorted(baseline_keys), sorted(expected_baseline))
+    spawn_errors = []
+    for cfg, density, seed in EXPECTED:
+        path = logs / f'sumo-summary-{cfg}-{density}-seed{seed}.xml'
+        if not path.exists():
+            spawn_errors.append(str(path.name))
+            continue
+        steps = ET.parse(path).getroot().findall('step')
+        expected_inserted = {'low': 74, 'medium': 146, 'high': 202}[density]
+        # `loaded` records the vehicles SUMO has read from the route demand.
+        # `inserted` can be lower at the fixed horizon when vehicles remain queued.
+        if not steps or int(steps[-1].get('loaded', '-1')) != expected_inserted:
+            spawn_errors.append(path.name)
+    add(checks, 'actual SUMO loaded vehicle counts', not spawn_errors, spawn_errors[:10],
+        '72/144/200 background vehicles plus two special vehicles loaded in every run')
+    import statistics
+    peak_means = {d: statistics.mean(float(r['peak_active_background']) for r in individual
+                   if r['configuration'] == 'MistDynamicAStar' and r['density'] == d) for d in DENSITIES}
+    add(checks, "different actual live traffic by density", peak_means['low'] < peak_means['medium'] < peak_means['high'], peak_means, "increasing peak live background counts")
+    lookup = {(r['configuration'],r['density'],r['metric']):float(r['mean']) for r in summary}
+    waiting = {d: {c:lookup[c,d,'traffic_light_wait_s'] for c in ALL_CONFIGS} for d in DENSITIES}
+    add(checks, "priority reduces measured waiting without forcing zero",
+        all(0 < waiting[d]['FogCloudAStar'] < waiting[d]['NoPreemptionBaseline'] for d in DENSITIES),
+        waiting, "positive average priority waiting, lower than matched no-priority control")
 
     graph_dir = ROOT / "results/graphs"
     missing_graphs = [f"{metric}-{density}.png" for metric in PRIMARY + SUPPLEMENTAL
@@ -104,7 +154,7 @@ def main() -> None:
                       and not (graph_dir / f"{metric}-{density}.png").exists()]
     add(checks, "primary and supplemental graphs", not missing_graphs, missing_graphs, "all applicable graphs")
 
-    report = {"batch": "400m, four configurations, three densities, 30 matched seeds",
+    report = {"batch": "400m, 360 primary runs plus 90 waiting controls, 22 normal and 8 controlled stall seeds",
               "passed": all(r["status"] == "PASS" for r in checks), "checks": checks}
     output = ROOT / "artifacts/audit_report.json"
     output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

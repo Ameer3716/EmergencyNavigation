@@ -17,7 +17,7 @@ void MetricsCollector::initialize()
     const bool first = !std::filesystem::exists(path);
     trace.open(path, std::ios::app);
     if (!trace) throw omnetpp::cRuntimeError("Cannot open mobility log");
-    if (first) trace << "time,vehicleId,edge,lanePosition,speed,distance,stopDuration,event\n";
+    if (first) trace << "time,vehicleId,edge,lanePosition,speed,distance,stopDuration,event,trafficLightWaiting,activeBackgroundVehicles\n";
     scheduleAt(simTime() + par("pollInterval"), pollTimer);
 }
 
@@ -38,28 +38,46 @@ void MetricsCollector::handleMessage(omnetpp::cMessage* message)
     auto* command = manager ? manager->getCommandInterface() : nullptr;
     if (command) {
         const std::string id = par("emergencyVehicleId").stdstringValue();
-        const auto ids = command->getVehicleIds();
-        const bool present = std::find(ids.begin(), ids.end(), id) != ids.end();
-        if (present) {
-            auto vehicle = command->vehicle(id);
-            const double speed = vehicle.getSpeed();
-            if (!seenVehicle && speed > 0.1) { seenVehicle = true; departure = simTime().dbl(); }
-            distance = vehicle.getDistanceTravelled();
-            lastEdge = vehicle.getRoadId();
-            lastLanePosition = vehicle.getLanePosition();
-            if (speed < 0.1) stopDuration += par("pollInterval").doubleValue();
-            if (speed < 0.1 && reception >= 0) {
-                const auto lights = vehicle.getNextTls();
-                if (!lights.empty() && std::get<2>(lights.front()) <= 20.0)
-                    trafficLightWaiting += par("pollInterval").doubleValue();
+        // SUMO supplies a new state once per manager step. Poll at 100 ms, but reuse
+        // that state between steps rather than sending identical TraCI queries.
+        const long sumoStep = std::floor((simTime().dbl() + 1e-9) / manager->par("updateInterval").doubleValue());
+        if (sumoStep != lastSumoStep) {
+            lastSumoStep = sumoStep;
+            const auto ids = command->getVehicleIds();
+            activeBackground = 0;
+            for (const auto& vehicleId : ids) if (vehicleId != id && vehicleId != "accident") {
+                backgroundSeen.insert(vehicleId);
+                ++activeBackground;
             }
-            lastSpeed = speed;
-            trace << simTime().dbl() << ',' << id << ',' << vehicle.getRoadId() << ',' << vehicle.getLanePosition()
-                  << ',' << speed << ',' << distance << ',' << stopDuration << ",position\n";
+            peakBackground = std::max(peakBackground, activeBackground);
+            present = std::find(ids.begin(), ids.end(), id) != ids.end();
+            if (present) {
+                auto vehicle = command->vehicle(id);
+                lastSpeed = vehicle.getSpeed();
+                distance = vehicle.getDistanceTravelled();
+                lastEdge = vehicle.getRoadId();
+                lastLanePosition = vehicle.getLanePosition();
+                nearLight = false;
+                if (lastSpeed < 0.1 && reception >= 0) {
+                    const auto lights = vehicle.getNextTls();
+                    nearLight = !lights.empty() && std::get<2>(lights.front()) <= 20.0;
+                }
+            }
+        }
+        if (present) {
+            const double speed = lastSpeed;
+            if (!seenVehicle && speed > 0.1) { seenVehicle = true; departure = simTime().dbl(); }
+            if (speed < 0.1) stopDuration += par("pollInterval").doubleValue();
+            if (speed < 0.1 && reception >= 0 && nearLight)
+                trafficLightWaiting += par("pollInterval").doubleValue();
+            trace << simTime().dbl() << ',' << id << ',' << lastEdge << ',' << lastLanePosition
+                  << ',' << speed << ',' << distance << ',' << stopDuration << ",position,"
+                  << trafficLightWaiting << ',' << activeBackground << '\n';
         } else if (seenVehicle && !finishedVehicle) {
             finishedVehicle = true;
             arrival = simTime().dbl();
-            trace << arrival << ',' << id << ",,,," << distance << ',' << stopDuration << ",arrival\n";
+            trace << arrival << ',' << id << ",,,," << distance << ',' << stopDuration << ",arrival,"
+                  << trafficLightWaiting << ',' << activeBackground << '\n';
             recordScalar("evDepartureTime", departure);
             recordScalar("evArrivalTime", arrival);
             recordScalar("evTravelTime", arrival - departure);
@@ -76,6 +94,8 @@ void MetricsCollector::handleMessage(omnetpp::cMessage* message)
 void MetricsCollector::finish()
 {
     if (!finishedVehicle) recordScalar("accidentArrivalConfirmed", 0);
+    recordScalar("backgroundVehiclesSeenUntilArrival", backgroundSeen.size());
+    recordScalar("peakActiveBackgroundVehicles", peakBackground);
     cancelAndDelete(pollTimer);
     pollTimer = nullptr;
     trace.close();

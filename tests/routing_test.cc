@@ -17,6 +17,10 @@ int main(int argc, char** argv)
     auto dynamicRoute = DynamicAStarRouter(graph, congestion, 0.5).route("A0A1", "D2D3");
     assert(graph.connected(dynamicRoute.edges));
     assert(staticRoute.edges != dynamicRoute.edges);
+    std::map<std::string, EdgeObservation> speeding;
+    for (const auto& edge : staticRoute.edges) speeding[edge] = {3, 100.0, 100};
+    const auto cappedRoute = DynamicAStarRouter(graph, speeding, 0.5).route("A0A1", "D2D3");
+    assert(cappedRoute.cost >= staticRoute.cost - 1e-9);
     std::cout << "static=";
     for (const auto& edge : staticRoute.edges) std::cout << edge << ' ';
     std::cout << "\ndynamic=";

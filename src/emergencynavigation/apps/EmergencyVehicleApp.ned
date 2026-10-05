@@ -11,7 +11,8 @@ simple EmergencyVehicleApp extends EmergencyRelayApp
     bool dynamicRouting = default(false);
     string routingMode = default("mist_static");
     bool forceMistFailure = default(false);
-    double watchdogThreshold @unit(s) = default(800ms);
+    double watchdogThreshold @unit(s) = default(500ms);
+    double controlledMistStallDelay @unit(s) = default(0ms);
     string nearestFogRsu = default("EmergencyGridScenario.rsu[0]");
     string fallbackLogPath = default("../../artifacts/logs/fallback-events.csv");
     bool preemptionEnabled = default(true);
@@ -29,7 +30,7 @@ simple EmergencyVehicleApp extends EmergencyRelayApp
     double minimumRerouteGap @unit(s) = default(30s);
     double densityLambda = default(0.5);
     double trafficDataTtl @unit(s) = default(3s);
-    double telemetryValidationDelay @unit(s) = default(20ms);
+    double telemetryValidationDelay @unit(s) = default(0ms);
     double routeBaseDelay @unit(s) = default(300ms);
     double routeNodeDelay @unit(s) = default(2ms);
     string routingLogPath = default("../../artifacts/logs/routing-events.csv");
