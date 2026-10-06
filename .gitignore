@@ -28,6 +28,7 @@ results/processed/*
 archive_raw_20260921_2308/
 archive_raw_20261001_650m/
 archive_20261005_400m_telemetry20/
+archive_20261005_before_audit_fixes/
 
 # ─── Scratch / throwaway analysis workspace ───────────────────────────────────
 scratch/

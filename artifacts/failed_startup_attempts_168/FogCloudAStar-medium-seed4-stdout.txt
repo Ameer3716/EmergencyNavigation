@@ -1,0 +1,152 @@
+OMNeT++ Discrete Event Simulation  (C) 1992-2025 Andras Varga, OpenSim Ltd.
+Version: 6.3.0, build: 251110-bb3d6a4731, edition: Academic Public License -- NOT FOR COMMERCIAL USE
+See the license for distribution terms and warranty disclaimer
+
+Setting up Cmdenv...
+
+Loading NED files from /home/opp_env/workspace/veins-5.3.1/src/veins:  44
+Loading NED files from /home/opp_env/emergency_navigation_audit_fix_final/src:  14
+
+Preparing for running configuration Batch, run #0...
+Assigned runID=Batch-0-20261006-08:33:03-6079
+Setting up network "emergencynavigation.scenario.EmergencyGridScenario"...
+Initializing...
+
+Running simulation...
+** Event #0   t=0   Elapsed: 2.4e-05s (0m 00s)  0% completed  (0% total)
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 54   present: 54   in FES: 11
+
+[Warning: Program was compiled without debug info, you might not be able to debug.]
+
+RUNTIME ERROR. A cRuntimeError exception is about to be thrown, and you
+requested (by setting debug-on-errors=true in the ini file) that errors
+abort execution and break into the debugger.
+
+You should now probably be running the simulation under gdb or another
+debugger. The simulation kernel will now raise a SIGINT signal which will
+get you into the debugger. If you are not running under a debugger, you can
+still use the core dump for post-mortem debugging. Once in the debugger,
+view the call stack (in gdb: "bt" command) to see the context of the
+runtime error.
+
+<!> Connection to TraCI server lost. Check your server's log. Error message: 104: Connection reset by peer -- in module (veins::TraCIScenarioManagerLaunchd) EmergencyGridScenario.manager (id=6), at t=0s, event #1
+
+TRAPPING on the exception above, due to a debug-on-errors=true configuration option. Is your debugger ready?
+Stack trace (most recent call last):
+#15   Object "/nix/store/cg9s562sa33k78m63njfn1rw47dp9z0i-glibc-2.40-66/lib/ld-linux-x86-64.so.2", at 0xffffffffffffffff, in 
+#14   Object "/home/opp_env/workspace/omnetpp-6.3.0/bin/opp_run", at 0x6275cca93934, in _start
+#13   Object "/nix/store/cg9s562sa33k78m63njfn1rw47dp9z0i-glibc-2.40-66/lib/libc.so.6", at 0x7e8fdf02a538, in __libc_start_main@@GLIBC_2.34
+#12   Object "/nix/store/cg9s562sa33k78m63njfn1rw47dp9z0i-glibc-2.40-66/lib/libc.so.6", at 0x7e8fdf02a47d, in __libc_start_call_main
+#11   Source "/home/opp_env/workspace/omnetpp-6.3.0/src/envir/evmain.cc", line 32, in __throw_bad_cast [0x7e8fe05973f6]
+         29: {
+         30:     cStaticFlag dummy;
+         31:     if (!getenv("OPP_ENV_VERSION") || !getenv("OMNETPP_ROOT")) { std::cerr << "<!> Error: This OMNeT++ installation cannot be used outside an opp_env shell." << std::endl; return 1; }
+      >  32:     int exitCode = setupUserInterface(argc, argv);
+         33:     return exitCode;
+         34: }
+#10   Source "/home/opp_env/workspace/omnetpp-6.3.0/src/envir/startup.cc", line 286, in getWorkingDir [0x7e8fe05961c3]
+        283:             // install and run app
+        284:             simulation = new cSimulation("simulation", app);
+        285:             cSimulation::setActiveSimulation(simulation);
+      > 286:             exitCode = app->run(argc, argv, config);
+        287:         }
+        288:         else {
+        289:             exitCode = 1;
+#9    Source "/home/opp_env/workspace/omnetpp-6.3.0/src/envir/envirbase.cc", line 367, in run [0x7e8fe059bb31]
+        365:     if (simulationRequired()) {
+        366:         if (setup())
+      > 367:             run();  // must not throw, because we want shutdown() always to be called
+        368:         shutdown();
+        369:     }
+        370:     return exitCode;
+#8    Source "/home/opp_env/workspace/omnetpp-6.3.0/src/envir/envirbase.cc", line 791, in omnetpp::envir::EnvirBase::run() [0x7e8fe059e6f2]
+        788: void EnvirBase::run()
+        789: {
+        790:     try {
+      > 791:         doRun();
+        792:     }
+        793:     catch (std::exception& e) {
+        794:         displayException(e);
+#7    Source "/home/opp_env/workspace/omnetpp-6.3.0/src/cmdenv/cmdenv.cc", line 263, in doRun [0x7e8fe0610b2d]
+        261:                 loggingEnabled = opt->logDuringSimulation;
+        262:                 notifyLifecycleListeners(LF_ON_SIMULATION_START);
+      > 263:                 simulate();
+        264: 
+        265:                 if (opt->verbose)
+        266:                     out << "\nCalling finish() at end of Run #" << runNumber << "..." << endl;
+#6    Source "/home/opp_env/workspace/omnetpp-6.3.0/src/cmdenv/cmdenv.cc", line 440, in simulate [0x7e8fe0611503]
+        437:                 }
+        438: 
+        439:                 // execute event
+      > 440:                 simulation->executeEvent(event);
+        441: 
+        442:                 if (fakeGUI)
+        443:                     fakeGUI->afterEvent();
+#5    Source "/home/opp_env/workspace/omnetpp-6.3.0/src/sim/csimulation.cc", line 698, in opp_typename [0x7e8fdfedec31]
+        695:     try {
+        696:         if (!event->isMessage())
+        697:             DEBUG_TRAP_IF_REQUESTED;  // ABOUT TO PROCESS THE EVENT YOU REQUESTED TO DEBUG -- SELECT "STEP INTO" IN YOUR DEBUGGER
+      > 698:         event->execute();
+        699:     }
+        700:     catch (cDeleteModuleException& e) {
+        701:         setGlobalContext();
+#4    Source "/home/opp_env/workspace/veins-5.3.1/src/veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.cc", line 91, in init_traci [0x7e8fd9e65631]
+         88: void TraCIScenarioManagerLaunchd::init_traci()
+         89: {
+         90:     {
+      >  91:         std::pair<uint32_t, std::string> version = getCommandInterface()->getVersion();
+         92:         uint32_t apiVersion = version.first;
+         93:         std::string serverVersion = version.second;
+#3    Source "/home/opp_env/workspace/veins-5.3.1/src/veins/modules/mobility/traci/TraCICommandInterface.cc", line 66, in getVersion [0x7e8fd9e3649e]
+         63: std::pair<uint32_t, std::string> TraCICommandInterface::getVersion()
+         64: {
+         65:     TraCIConnection::Result result;
+      >  66:     TraCIBuffer buf = connection.query(CMD_GETVERSION, TraCIBuffer(), &result);
+         67: 
+         68:     if (!result.success) {
+         69:         ASSERT(buf.eof());
+#2    Source "/home/opp_env/workspace/veins-5.3.1/src/veins/modules/mobility/traci/TraCIConnection.cc", line 157, in query [0x7e8fd9e4c6d2]
+        154: {
+        155:     sendMessage(makeTraCICommand(commandId, buf));
+        156: 
+      > 157:     TraCIBuffer obuf(receiveMessage());
+        158:     uint8_t cmdLength;
+        159:     obuf >> cmdLength;
+        160:     uint8_t commandResp;
+#1    Source "/home/opp_env/workspace/veins-5.3.1/src/veins/modules/mobility/traci/TraCIConnection.cc", line 198, in receiveMessage [0x7e8fd9e4cfcf]
+        195:             else {
+        196:                 if (sock_errno() == EINTR) continue;
+        197:                 if (sock_errno() == EAGAIN) continue;
+      > 198:                 throw cRuntimeError("Connection to TraCI server lost. Check your server's log. Error message: %d: %s", sock_errno(), strerror(sock_errno()));
+        199:             }
+        200:         }
+        201:         TraCIBuffer(std::string(buf2, sizeof(uint32_t))) >> msgLength;
+#0  | Source "", line 205, in ~basic_string
+    | Source "/nix/store/9ds850ifd4jwcccpp3v14818kk74ldf2-gcc-14.2.1.20250322/include/c++/14.2.1.20250322/bits/basic_string.h", line 809, in _M_dispose
+    |   807:       _GLIBCXX20_CONSTEXPR
+    |   808:       ~basic_string()
+    | > 809:       { _M_dispose(); }
+    |   810: 
+    |   811:       /**
+    | Source "/nix/store/9ds850ifd4jwcccpp3v14818kk74ldf2-gcc-14.2.1.20250322/include/c++/14.2.1.20250322/bits/basic_string.h", line 287, in _M_is_local
+    |   285:       _M_dispose()
+    |   286:       {
+    | > 287: 	if (!_M_is_local())
+    |   288: 	  _M_destroy(_M_allocated_capacity);
+    |   289:       }
+    | Source "/nix/store/9ds850ifd4jwcccpp3v14818kk74ldf2-gcc-14.2.1.20250322/include/c++/14.2.1.20250322/bits/basic_string.h", line 269, in _M_data
+    |   267:       _M_is_local() const
+    |   268:       {
+    | > 269: 	if (_M_data() == _M_local_data())
+    |   270: 	  {
+    |   271: 	    if (_M_string_length > _S_local_capacity)
+      Source "/nix/store/9ds850ifd4jwcccpp3v14818kk74ldf2-gcc-14.2.1.20250322/include/c++/14.2.1.20250322/bits/basic_string.h", line 228, in cRuntimeError [0x7e8fdfe87ba2]
+        225:       _GLIBCXX20_CONSTEXPR
+        226:       pointer
+        227:       _M_data() const
+      > 228:       { return _M_dataplus._M_p; }
+        229: 
+        230:       _GLIBCXX20_CONSTEXPR
+        231:       pointer
+Trace/breakpoint trap (Signal sent by the kernel 0 0)

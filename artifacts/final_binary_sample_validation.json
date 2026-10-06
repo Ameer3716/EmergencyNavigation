@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "runs": 6,
+  "green_transitions": 57,
+  "phase_rechecks": 2,
+  "fog_timing_balances": 1,
+  "em_precision_checks": 6,
+  "binary_sha256": [
+    "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+  ],
+  "failures": []
+}

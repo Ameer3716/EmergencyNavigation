@@ -16,6 +16,9 @@ private:
     std::string lightId, originalProgram, originalState, evId, incomingEdge, greenState;
     double requestTime = 0;
     double greenActivated = 0;
+    double priorityStarted = 0;
+    double greenAgeAtTransition = -1;
+    std::string stateBeforeTransition;
     int originalPhase = -1;
     int stage = 0;
     omnetpp::cMessage* phaseTimer = nullptr;

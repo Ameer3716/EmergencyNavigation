@@ -43,11 +43,18 @@ def main() -> None:
     for name in ("METHODOLOGY.md", "VERIFICATION.md", "PROGRESS.md", "EXPERIMENTS.md", "INSTALLATION.md", "PROCESS_AND_GRAPHS.md"):
         copy(ROOT / "docs" / name, OUT / "docs" / name)
     for name in ("summary-batch.csv", "individual_runs-batch.csv", "paired_comparisons.csv",
-                 "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv", "summary-cohorts.csv"):
+                 "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv", "summary-cohorts.csv",
+                 "historical_headline_comparisons.csv", "paired_graph_plot_data.csv",
+                 "graph_plot_data-normal.csv", "graph_plot_data-controlled_stall.csv"):
         copy(ROOT / "results/processed" / name, OUT / "results/processed" / name)
     copy(ROOT / "artifacts/audit_report.json", OUT / "artifacts/audit_report.json")
     copy(ROOT / "artifacts/sample_validation.json",
          OUT / "artifacts/sample_validation.json")
+    copy(ROOT / "artifacts/timing_validation.json", OUT / "artifacts/timing_validation.json")
+    copy(ROOT / "artifacts/final_binary_sample_validation.json", OUT / "artifacts/final_binary_sample_validation.json")
+    for folder in ("failed_startup_attempts_168", "failed_startup_attempts_207", "logs/startup_failures"):
+        for path in (ROOT / "artifacts" / folder).glob("*.txt"):
+            copy(path, OUT / "artifacts" / folder / path.name)
     for path in (ROOT / "results/graphs").glob("*.png"):
         copy(path, OUT / "results/graphs" / path.name)
     for path in (ROOT / "analysis").glob("*.py"):
@@ -55,8 +62,10 @@ def main() -> None:
     for name in ("build.sh", "run_batch_env.sh", "run_batch.py", "generate_demand.py",
                  "audit_batch.py", "verify_response_times.py", "generate_final_graph.py",
                  "write_final_reports.py", "generate_reviewed_submission.py",
-                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py"):
+                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py"):
         copy(ROOT / "scripts" / name, OUT / "scripts" / name)
+    for path in (ROOT / "tests").glob("*.py"):
+        copy(path, OUT / "tests" / path.name)
     for path in (ROOT / "src").rglob("*"):
         if path.is_file() and (path.suffix in (".cc", ".h", ".ned", ".msg") or path.name == "Makefile"):
             copy(path, OUT / "src" / path.relative_to(ROOT / "src"))
@@ -69,6 +78,8 @@ def main() -> None:
             for suffix in ("trips.xml", "rou.xml"):
                 name = f"normal-{density}-seed{seed}.{suffix}"
                 copy(folder / name, OUT / "simulations/batch" / folder.name / name)
+            for config in CONFIGS:
+                copy(folder / config / 'omnetpp.ini', OUT / 'simulations/batch' / folder.name / config / 'omnetpp.ini')
     for config in CONFIGS:
         for density in DENSITIES:
             for seed in range(1, 31):
@@ -107,7 +118,7 @@ def main() -> None:
         "EmergencyNavigation/results/raw/. This package includes their sizes and SHA-256 "
         "hashes in results/raw_evidence_manifest.csv. The 360 primary and 90 waiting-control run event logs, "
         "processed CSVs, graphs, source, and reproduction instructions are included here. "
-        "Earlier evidence is retained separately in EmergencyNavigation/archive_20261005_400m_telemetry20/ "
+        "Earlier evidence is retained separately in EmergencyNavigation/archive_20261005_before_audit_fixes/, EmergencyNavigation/archive_20261005_400m_telemetry20/ "
         "and EmergencyNavigation/archive_raw_20261001_650m/.\n", encoding="utf-8")
     with zipfile.ZipFile(ZIP, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in sorted(OUT.rglob("*")):

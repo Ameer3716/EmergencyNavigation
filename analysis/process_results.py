@@ -12,13 +12,10 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
 ROOT = Path(__file__).resolve().parents[1]
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
 ALL_CONFIGS = CONFIGS + ("NoPreemptionBaseline",)
+CONFIG_COLORS = dict(zip(ALL_CONFIGS, ("#576b95", "#5c9e73", "#d49748", "#8f6bb1", "#b85450")))
 STALL_SEEDS = frozenset((4, 5, 9, 10, 13, 17, 18, 29))
 METRICS = {
     "pdr": ("Packet delivery ratio", "ratio"),
@@ -40,23 +37,7 @@ METRICS = {
 }
 
 
-def scalars(path: Path) -> dict[str, list[float]]:
-    data: dict[str, list[float]] = defaultdict(list)
-    for line in path.read_text(encoding="utf-8").splitlines():
-        fields = line.split()
-        if len(fields) == 4 and fields[0] == "scalar":
-            try:
-                data[fields[2]].append(float(fields[3]))
-            except ValueError:
-                pass
-    return data
-
-
-def events(path: Path) -> list[dict[str, str]]:
-    if not path.exists():
-        return []
-    with path.open(newline="", encoding="utf-8") as handle:
-        return list(csv.DictReader(handle))
+from raw_data import scalars, events
 
 
 def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int = 1,
@@ -78,6 +59,8 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
     def first(name: str) -> float | None:
         return value[name][0] if value.get(name) else None
     def delay() -> float | None:
+        if value.get("emEndToEndDelay"):
+            return statistics.mean(value["emEndToEndDelay"])
         ids = generated.keys() & delivered.keys()
         return statistics.mean(float(delivered[key]["eventTime"]) - float(generated[key]["generationTime"]) for key in ids) if ids else None
     delivery_count = len(delivered.keys() & generated.keys())
@@ -111,6 +94,7 @@ def one_run(config: str, scalar_path: Path, density: str = "medium", seed: int =
         "fog_processing_s": first("fogProcessingDelay"),
         "cloud_backhaul_s": first("cloudBackhaulDelay"),
         "communication_s": first("routeCommunicationDelay"),
+        "wait_before_fog_s": first("routeWaitBeforeFog"),
         "background_seen_until_arrival": first("backgroundVehiclesSeenUntilArrival"),
         "peak_active_background": first("peakActiveBackgroundVehicles"),
     }
@@ -303,7 +287,7 @@ def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]
 
 def archive_legacy_graphs() -> None:
     folder = ROOT / "results/graphs"
-    legacy_dir = ROOT / "archive_raw_20261001_650m" / "graphs"
+    legacy_dir = ROOT / "archive_20261005_before_audit_fixes" / "results/graphs"
     legacy_dir.mkdir(parents=True, exist_ok=True)
     for p in folder.glob("*.png"):
         target = legacy_dir / p.name
@@ -313,8 +297,11 @@ def archive_legacy_graphs() -> None:
 
 
 def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = None,
-           density_filter: list[str] | None = None) -> None:
-    if metric_filter is None and density_filter is None:
+           density_filter: list[str] | None = None, condition: str | None = None) -> None:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    if metric_filter is None and density_filter is None and condition is None:
         archive_legacy_graphs()
     folder = ROOT / "results/graphs"
     folder.mkdir(parents=True, exist_ok=True)
@@ -360,7 +347,7 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                 "configuration": r["configuration"],
                 "mean": r["mean"],
                 "stddev": r["stddev"],
-                "n_scheduled": 30,
+                "n_scheduled": 22 if condition == "normal" else (8 if condition == "controlled_stall" else 30),
                 "n_valid": r["n"],
                 "ci95_lower": r["ci95_lower"],
                 "ci95_upper": r["ci95_upper"],
@@ -368,7 +355,7 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
             })
         
         fig, ax = plt.subplots(figsize=(9.5, 5.2))
-        colors = ["#576b95", "#5c9e73", "#d49748", "#8f6bb1", "#b85450"][:len(rows)]
+        colors = [CONFIG_COLORS[str(row["configuration"])] for row in rows]
         bars = ax.bar(names, means, color=colors, yerr=errors, capsize=5, edgecolor="#333333", linewidth=0.8, error_kw={"elinewidth": 1.2, "capthick": 1.2})
         
         # Annotate mean values above upper error bar endpoint to avoid overlapping error bars
@@ -389,30 +376,64 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                         textcoords="offset points",
                         ha='center', va='bottom', fontsize=9.0, fontweight='bold')
 
-        ax.set_title(f"{title} — {density.capitalize()} Traffic ({n_label})\n[95% CI]", fontsize=12, fontweight="bold", pad=12)
+        cohort_label = {"normal": "Normal seeds", "controlled_stall": "Controlled stall seeds"}.get(condition, "All normal and stall seeds")
+        ax.set_title(f"{title} — {density.capitalize()} Traffic ({n_label})\n{cohort_label} [95% CI]", fontsize=12, fontweight="bold", pad=12)
         ax.set_ylabel(f"{title} ({unit})" if unit != "ratio" else title, fontsize=10.5)
         if key in ("pdr", "fallback_triggered"):
-            ax.set_ylim(0.0, 1.05)
+            ax.set_ylim(0.0, 1.12)
         elif key in NONNEGATIVE_METRICS:
             uppers = [float(r["ci95_upper"]) for r in rows if r.get("ci95_upper") is not None]
+            lowers = [float(r["ci95_lower"]) for r in rows if r.get("ci95_lower") is not None]
             max_peak = max(uppers) if uppers and max(uppers) > 0 else 1.0
-            ax.set_ylim(bottom=0.0, top=max(1.0, max_peak * 1.18))
+            ax.set_ylim(bottom=min(0.0, min(lowers) if lowers else 0.0), top=max(1.0, max_peak * 1.18))
 
         ax.tick_params(axis="x", rotation=16, labelsize=9.5)
         ax.tick_params(axis="y", labelsize=9.5)
         ax.grid(axis="y", alpha=0.25, linestyle="--")
         fig.tight_layout()
-        fig.savefig(folder / f"{key}-{density}.png", dpi=180)
+        suffix = f"-{condition}" if condition else ""
+        fig.savefig(folder / f"{key}{suffix}-{density}.png", dpi=180)
         plt.close(fig)
 
     # Export sidecar table only if full plot suite rendered
-    if metric_filter is None and density_filter is None and plot_data_records:
-        sidecar_path = ROOT / "results/processed/graph_plot_data.csv"
+    if (metric_filter is None and density_filter is None or condition) and plot_data_records:
+        suffix = f"-{condition}" if condition else ""
+        sidecar_path = ROOT / f"results/processed/graph_plot_data{suffix}.csv"
         sidecar_path.parent.mkdir(parents=True, exist_ok=True)
         with sidecar_path.open("w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=plot_data_records[0].keys())
             writer.writeheader()
             writer.writerows(plot_data_records)
+
+
+def comparison_graphs(cohorts: list[dict[str, object]], paired: list[dict[str, object]]) -> None:
+    import matplotlib.pyplot as plt
+    for condition in ("normal", "controlled_stall"):
+        graphs([row for row in cohorts if row["scenario_condition"] == condition],
+               metric_filter=["route_decision_ms", "ev_response_s"], condition=condition)
+    records = []
+    short = {"FogCloudAStar": "Fog/Cloud", "MistAStar": "Mist", "MistDynamicAStar": "Dynamic Mist", "MistDynamicFogFallback": "Mist + Fog"}
+    for density, key in itertools.product(("low", "medium", "high"), ("ev_response_s", "route_decision_ms")):
+        rows = [r for r in paired if r["density"] == density and r["metric"] == key and int(r["n_pairs"]) > 1]
+        if not rows:
+            continue
+        means = [float(r["mean_paired_diff"]) for r in rows]
+        errors = [[max(0.0, mean - float(r["ci95_lower"])) for mean, r in zip(means, rows)],
+                  [max(0.0, float(r["ci95_upper"]) - mean) for mean, r in zip(means, rows)]]
+        fig, ax = plt.subplots(figsize=(9.5, 5.2))
+        labels = [f"{short[r['config_A']]}\nminus {short[r['config_B']]}" for r in rows]
+        ax.bar(labels, means, color=[CONFIG_COLORS[r["config_A"]] for r in rows], yerr=errors, capsize=5)
+        ax.axhline(0, color="#333333", linewidth=1)
+        title, unit = METRICS[key]
+        ax.set_title(f"Matched seed difference in {title.lower()}\n{density.capitalize()} traffic [95% CI]", fontsize=12)
+        ax.set_ylabel(f"Difference ({unit}); below zero means A is faster")
+        ax.grid(axis="y", alpha=0.25, linestyle="--")
+        ax.tick_params(axis="x", labelsize=9)
+        fig.tight_layout()
+        fig.savefig(ROOT / f"results/graphs/paired_{key}-{density}.png", dpi=180)
+        plt.close(fig)
+        records.extend(rows)
+    write_csv(ROOT / "results/processed/paired_graph_plot_data.csv", records)
 
 
 
@@ -434,6 +455,9 @@ def main() -> None:
         with summary_path.open("r", encoding="utf-8") as f:
             summary_rows = list(csv.DictReader(f))
         graphs(summary_rows, metric_filter=args.metrics, density_filter=args.densities)
+        if not args.metrics and not args.densities:
+            comparison_graphs(events(ROOT / "results/processed/summary-cohorts.csv"),
+                              events(ROOT / "results/processed/paired_comparisons.csv"))
         print(f"Rendered graphs for metric(s): {args.metrics or 'all'}, densities: {args.densities or 'all'}")
         return
 
@@ -484,6 +508,8 @@ def main() -> None:
         write_csv(output_root / "results/processed/summary-cohorts.csv", cohorts)
     if not args.no_graphs:
         graphs(summary)
+        if args.batch:
+            comparison_graphs(cohorts, paired)
     print(f"Processed {len(rows)} genuine simulation runs; generated {len(METRICS)} graph types")
 
 

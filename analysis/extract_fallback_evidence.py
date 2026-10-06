@@ -49,6 +49,7 @@ def main() -> None:
                 "fog_request_time_s": float(fb["fogRequestTime"]) if fb else "",
                 "fog_computation_s": first("fogProcessingDelay"),
                 "communication_delay_s": first("routeCommunicationDelay"),
+                "wait_before_fog_s": first("routeWaitBeforeFog"),
                 "final_decision_time_s": final,
                 "final_decision_latency_s": latency,
                 "final_decision_latency_ms": latency * 1000 if latency != "" else "",

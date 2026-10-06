@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 
 namespace emergencynavigation {
 
@@ -69,6 +70,7 @@ void EmergencyRelayApp::logEmergency(const char* action, const EmergencyMessage&
 {
     const bool newFile = !std::filesystem::exists(eventLogPath);
     std::ofstream out(eventLogPath, std::ios::app);
+    out << std::setprecision(15);
     if (!out) throw omnetpp::cRuntimeError("Cannot open emergency event log: %s", eventLogPath.c_str());
     if (newFile) {
         out << "action,eventId,messageId,senderId,receiverId,nodeRole,generationTime,eventTime,remainingHops,hopCount,packetBytes,duplicateDiscarded,ttlExpired\n";
@@ -85,6 +87,7 @@ void EmergencyRelayApp::logEvent(const char* action, const std::string& eventId,
 {
     const bool newFile = !std::filesystem::exists(eventLogPath);
     std::ofstream out(eventLogPath, std::ios::app);
+    out << std::setprecision(15);
     if (!out) throw omnetpp::cRuntimeError("Cannot open emergency event log: %s", eventLogPath.c_str());
     if (newFile) {
         out << "action,eventId,messageId,senderId,receiverId,nodeRole,generationTime,eventTime,remainingHops,hopCount,packetBytes,duplicateDiscarded,ttlExpired\n";

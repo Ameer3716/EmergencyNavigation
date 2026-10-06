@@ -101,6 +101,25 @@ def graph_blocks(summary: dict[tuple[str, str, str], dict[str, str]]) -> list[tu
             caption = (f"{density.capitalize()} traffic ({VEHICLES[density]} background vehicles): "
                        + "; ".join(values) + ". Bars show means and 95% confidence intervals.")
             blocks.append((key, label, explanation, path, caption))
+    cohorts = read(ROOT / 'results/processed/summary-cohorts.csv')
+    pairs = read(ROOT / 'results/processed/paired_comparisons.csv')
+    for condition, condition_label in (("normal", "Normal operation"), ("controlled_stall", "Controlled Mist stalls")):
+        for metric, label, unit in (("route_decision_ms", "Route decision latency", "ms"), ("ev_response_s", "EV response time", "s")):
+            for density in DENSITIES:
+                rows = [r for r in cohorts if r['scenario_condition'] == condition and r['density'] == density and r['metric'] == metric]
+                caption = f"{density.capitalize()} traffic, {condition_label.lower()}: " + "; ".join(
+                    f"{SHORT[CONFIGS.index(r['configuration'])]} {float(r['mean']):.2f} {unit} (n={r['n']})" for r in rows) + ". Error bars show 95% confidence intervals."
+                blocks.append((f"{metric}_{condition}", f"{condition_label} {label.lower()}",
+                               "These figures separate seeds without a stall from seeds assigned the controlled 900 ms Mist stall. Fog/Cloud is unaffected by that local stall.",
+                               ROOT / f"results/graphs/{metric}-{condition}-{density}.png", caption))
+    for metric, label, unit in (("ev_response_s", "EV response time", "s"), ("route_decision_ms", "Route decision latency", "ms")):
+        for density in DENSITIES:
+            rows = [r for r in pairs if r['density'] == density and r['metric'] == metric]
+            caption = f"{density.capitalize()} traffic: " + "; ".join(
+                f"{SHORT[CONFIGS.index(r['config_A'])]} minus {SHORT[CONFIGS.index(r['config_B'])]} {float(r['mean_paired_diff']):.2f} {unit}, 95% CI [{float(r['ci95_lower']):.2f}, {float(r['ci95_upper']):.2f}], n={r['n_pairs']}" for r in rows) + "."
+            blocks.append((f"paired_{metric}", f"Matched seed differences in {label.lower()}",
+                           "Each bar subtracts configuration B from A for the same delivered seeds. Below zero means A is faster. An interval crossing zero does not establish a difference; these comparisons are exploratory and not adjusted for multiple testing.",
+                           ROOT / f"results/graphs/paired_{metric}-{density}.png", caption))
     if {b[3].name for b in blocks} != {p.name for p in (ROOT / "results/graphs").glob("*.png")}:
         raise SystemExit("The report gallery must include every current graph exactly once")
     return blocks
@@ -174,13 +193,14 @@ def table(doc: Document, headers: tuple[str, ...], body: list[tuple[str, ...]]) 
 
 
 def heading(doc: Document, title: str, level: int = 1) -> None:
-    doc.add_heading(title, level=level)
+    doc.add_heading(title.replace('-', ' '), level=level)
 
 
 def main() -> None:
     summary_rows = read(ROOT / "results/processed/summary-batch.csv")
     individual = read(ROOT / "results/processed/individual_runs-batch.csv")
     fallback = read(ROOT / "results/processed/fallback_validation.csv")
+    paired = read(ROOT / "results/processed/paired_comparisons.csv")
     if len(individual) != 450:
         raise SystemExit("The 360 primary runs and 90 waiting controls are required")
     summary = {(r["configuration"], r["density"], r["metric"]): r for r in summary_rows}
@@ -357,7 +377,7 @@ def main() -> None:
         "Mist A* and Dynamic Mist can have the same initial decision latency because both "
         "use the same Mist A* calculation. Dynamic Mist then reviews live road costs every "
         "five seconds; the logs show applied route changes in the table. The response-time "
-        "means differ, but their confidence intervals overlap in several comparisons, so "
+        "means differ, but the matched-seed difference intervals include zero in several comparisons, so "
         "small mean differences alone do not establish that one approach is generally faster."
     )
     for density in DENSITIES:
@@ -365,6 +385,16 @@ def main() -> None:
         doc.add_paragraph(f"In {density} traffic, the four average EV response times range from "
                           f"{min(response):.2f} to {max(response):.2f} seconds. Read the intervals "
                           "alongside these averages; a small difference alone does not prove a general advantage.")
+        for a, b in (("MistDynamicAStar", "MistAStar"), ("MistDynamicFogFallback", "MistDynamicAStar")):
+            p = next(r for r in paired if r['density'] == density and r['config_A'] == a and r['config_B'] == b and r['metric'] == 'ev_response_s')
+            other = {r['seed']: r['ev_response_s'] for r in individual if r['configuration'] == b and r['density'] == density and r['ev_response_s']}
+            identical = sum(r['ev_response_s'] == other.get(r['seed']) for r in individual
+                            if r['configuration'] == a and r['density'] == density and r['ev_response_s'])
+            doc.add_paragraph(f"For matched {density} seeds, {SHORT[CONFIGS.index(a)]} minus {SHORT[CONFIGS.index(b)]} "
+                              f"averages {float(p['mean_paired_diff']):.2f} s, with a 95% interval of "
+                              f"{float(p['ci95_lower']):.2f} to {float(p['ci95_upper']):.2f} s. "
+                              f"{identical} of {p['n_pairs']} matched response times are identical. "
+                              "The paired difference graphs show the uncertainty in these exploratory comparisons.")
 
     heading(doc, "Normal operation and controlled stalls")
     doc.add_paragraph(
@@ -373,6 +403,23 @@ def main() -> None:
         "their initial decision times. All Mist approaches face the same injected stall in the "
         "selected seeds. The experiment does not estimate how often such a fault occurs on real hardware."
     )
+    initial_nodes, all_nodes = [], []
+    for run in individual:
+        if not run['configuration'].startswith('Mist'):
+            continue
+        path = ROOT / f"artifacts/logs/batch/routing-{run['configuration']}-{run['density']}-seed{run['seed']}.csv"
+        for event in read(path) if path.exists() else []:
+            if event['action'] in ('computed', 'evaluated'):
+                all_nodes.append(int(event['expandedNodes']))
+            if event['action'] == 'computed' and event['reason'] == 'initial':
+                initial_nodes.append(int(event['expandedNodes']))
+    initial_range = str(min(initial_nodes)) if min(initial_nodes) == max(initial_nodes) else f"{min(initial_nodes)} to {max(initial_nodes)}"
+    doc.add_paragraph(f"The initial calculations expanded {initial_range} A* nodes. "
+                      f"The maximum across initial calculations and later reviews was {max(all_nodes)} nodes. "
+                      f"The model assigns 300 ms plus 2 ms per node, giving {300+2*max(all_nodes)} ms at that maximum, "
+                      f"which leaves {500-(300+2*max(all_nodes))} ms before the watchdog. "
+                      "Matching expansion counts can give matching normal decision times across traffic levels. "
+                      "Pooled means also depend on which normal and controlled-stall runs received the alert.")
     for density in DENSITIES:
         heading(doc, density.capitalize() + " traffic decision time", 2)
         body = []
@@ -385,7 +432,7 @@ def main() -> None:
     doc.add_paragraph(
         "The no-preemption control uses Fog/Cloud routing with priority disabled. It appears "
         "only in this waiting comparison and the three waiting graphs. The priority controller "
-        "preserves a minimum current green and safe clearance before serving the EV. Some "
+        "rechecks the active phase, preserves its minimum green, and uses clearance before serving the EV. Some "
         "requests can finish before arrival; others require the EV to wait. Waiting is measured "
         "from movement rather than added artificially."
     )
@@ -416,6 +463,10 @@ def main() -> None:
         f"{example['density']} traffic seed {example['seed']}, Fog applied the route "
         f"after {float(example['final_decision_latency_ms']):.2f} ms."
     )
+    doc.add_paragraph(f"That example separates {float(example['wait_before_fog_s'])*1000:.2f} ms of watchdog waiting, "
+                      f"{float(example['fog_computation_s'])*1000:.2f} ms of Fog computation, and "
+                      f"{float(example['communication_delay_s'])*1000:.3f} ms of network communication. "
+                      "Watchdog waiting is not counted as communication delay.")
     doc.add_paragraph(
         "The table counts actual route changes separately from five-second reviews. A "
         "review that finds no sufficiently better route keeps the existing route. The "

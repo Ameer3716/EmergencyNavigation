@@ -114,7 +114,8 @@ protected:
         recordScalar("routeDecisionLatency", simTime().dbl() - decisionStart);
         recordScalar("fogProcessingDelay", reply.getProcessingDelay());
         recordScalar("cloudBackhaulDelay", reply.getBackhaulDelay());
-        recordScalar("routeCommunicationDelay", simTime().dbl() - decisionStart - reply.getProcessingDelay() - reply.getBackhaulDelay());
+        recordScalar("routeWaitBeforeFog", fogRequestStart - decisionStart);
+        recordScalar("routeCommunicationDelay", simTime().dbl() - fogRequestStart - reply.getProcessingDelay() - reply.getBackhaulDelay());
         if (par("dynamicRouting").boolValue() && !dynamicTimer->isScheduled())
             scheduleAt(simTime() + par("dynamicUpdateInterval"), dynamicTimer);
     }
@@ -167,6 +168,7 @@ private:
     RouteResult pending;
     std::vector<std::string> selected;
     double decisionStart = 0;
+    double fogRequestStart = 0;
     bool navigationStarted = false;
     bool navigationHeld = false;
     std::string requestId;
@@ -215,11 +217,14 @@ private:
         const std::string path = par("fallbackLogPath").stdstringValue();
         const bool first = !std::filesystem::exists(path);
         std::ofstream out(path, std::ios::app);
+        out << std::setprecision(15);
         if (first) out << "time,mistStart,watchdogThreshold,fallbackReason,fogRequestTime\n";
         out << simTime().dbl() << ',' << decisionStart << ',' << par("watchdogThreshold").doubleValue()
             << ',' << reason << ',' << simTime().dbl() << '\n';
     }
     void sendFogRequest(bool useCloud, const char*) {
+        fogRequestStart = simTime().dbl();
+        recordScalar("routeFogRequestTime", fogRequestStart);
         auto* request = new RouteRequest("RouteRequest");
         populateWSM(request);
         requestId = std::string("route-") + nodeId() + "-" + std::to_string(decisionStart);

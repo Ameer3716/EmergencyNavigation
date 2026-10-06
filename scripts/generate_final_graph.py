@@ -5,6 +5,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from sys import path as import_path
+import_path.insert(0, str(Path(__file__).resolve().parents[1] / 'analysis'))
+from process_results import CONFIG_COLORS
 
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY = ROOT / "results/processed/summary-batch.csv"
@@ -12,7 +15,7 @@ OUTPUT = ROOT / "artifacts/screenshots/final-ev-response-graph.png"
 
 CONFIG_NAMES = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback")
 CONFIG_LABELS = ("FogCloud", "Mist", "MistDyn.", "MistDyn+Fog")
-COLORS = ["#4e6d9b", "#439775", "#d98a3e", "#8c62a8"]
+COLORS = [CONFIG_COLORS[c] for c in CONFIG_NAMES]
 
 def main():
     if not SUMMARY.exists():
@@ -46,10 +49,10 @@ def main():
         bars = ax.bar(CONFIG_LABELS, means, yerr=errors, capsize=4.5, color=COLORS, width=0.68, edgecolor="#222222", linewidth=0.8)
         
         # Add value labels on top of bars
-        for bar, mean in zip(bars, means):
+        for bar, mean, error in zip(bars, means, errors):
             if mean > 0:
                 ax.annotate(f"{mean:.1f}s",
-                            xy=(bar.get_x() + bar.get_width() / 2, mean),
+                            xy=(bar.get_x() + bar.get_width() / 2, mean + error),
                             xytext=(0, 5),
                             textcoords="offset points",
                             ha='center', va='bottom', fontsize=8.5, fontweight='bold')

@@ -32,6 +32,16 @@ def main():
         raise SystemExit("Expected 360 primary runs and 90 waiting-time control runs")
     current = {(r['configuration'], r['density'], r['metric']): r for r in summary}
     cohort_map = {(r['scenario_condition'], r['configuration'], r['density'], r['metric']): r for r in cohorts}
+    initial_nodes, all_nodes = [], []
+    for run in individual:
+        if not run['configuration'].startswith('Mist'):
+            continue
+        path = ROOT / f"artifacts/logs/batch/routing-{run['configuration']}-{run['density']}-seed{run['seed']}.csv"
+        for event in rows(path) if path.exists() else []:
+            if event['action'] in ('computed', 'evaluated'):
+                all_nodes.append(int(event['expandedNodes']))
+            if event['action'] == 'computed' and event['reason'] == 'initial':
+                initial_nodes.append(int(event['expandedNodes']))
     counts = {d: len(ET.parse(ROOT / f"simulations/batch/{d}-seed1/normal-{d}-seed1.rou.xml").getroot().findall("vehicle")) for d in DENSITIES}
     docs = ROOT / "docs"
     methodology = '''# Methodology
@@ -52,7 +62,7 @@ Dynamic A* reads received vehicle beacons and RSU edge reports, requires at leas
 
 The EV is held until its first route is ready. Release uses SUMO automatic speed control, a 13.9 m/s maximum speed, and speed mode 31 so car following, acceleration, junction priority, and red-light safety checks apply. No blue-light device is used to ignore red signals.
 
-The EV sends a priority request within 100 m or an estimated eight seconds of the next signal. If its approach already has a compatible green, that phase is extended. Otherwise the controller first preserves at least ten seconds of the current green, then uses 150 ms processing, two seconds of yellow, and one second of all-red clearance. Priority is released after the EV passes the junction or a 25-second maximum hold, followed by yellow and all-red before restoring the normal program. These are scenario timing assumptions, not a claim of compliance with a local traffic standard. They allow some requests to finish before EV arrival and others to cause waiting; no artificial waiting is added to the measurements.
+The EV sends a priority request within 100 m or an estimated eight seconds of the next signal. If its approach already has a compatible green, that phase is extended. Otherwise the controller uses 150 ms processing and checks the active green again before clearance. If SUMO started a new green during processing, that phase receives its full ten-second minimum before two seconds of yellow and one second of all-red clearance. Priority green also lasts at least ten seconds. Priority is released after the EV passes the junction or a 25-second maximum hold, followed by yellow and all-red before restoring the normal program. These are scenario timing assumptions, not a claim of compliance with a local traffic standard. They allow some requests to finish before EV arrival and others to cause waiting; no artificial waiting is added to the measurements.
 
 The collector accumulates and logs at 100 ms. SUMO and the Veins manager still update motion every 500 ms; intervening polls reuse the last SUMO state. The finer accumulator does not claim 100 ms underlying motion accuracy. Traffic-light waiting is EV speed below 0.1 m/s within 20 m of the next signal after alert reception; it includes queue waiting near that stop line.
 
@@ -60,9 +70,9 @@ The collector accumulates and logs at 100 ms. SUMO and the Veins manager still u
 
 PDR is delivered unique EMs divided by generated unique EMs. NRL is control plus EM transmissions divided by delivered EMs. EM throughput is delivered useful payload bits divided by a fixed 900-second window. The payload is 256 bytes: a successful run contributes 2048/900 = 2.27556 bit/s, and a nondelivery contributes zero. This is EM delivery throughput, not total network capacity. PDR and EM delay occur before route computation, so equal values across routing approaches can be correct.
 
-EM end-to-end delay is generation to reception. Initial route decision latency is reception to route application. Both, and fallback decision latency, are displayed in milliseconds with raw precision preserved. EV response time is generation to arrival; EV travel and signal waiting remain in seconds. Response and decision measures require EM delivery, and NRL is undefined without a delivery. Corridor delay is travel time minus route distance/13.9 m/s, bounded at zero; it includes acceleration, turning, queuing, and signal effects.
+EM end-to-end delay is generation to reception. Initial route decision latency is reception to route application. Both, and fallback decision latency, are displayed in milliseconds using high-precision raw scalars. Event, mobility, fallback and signal logs use 15 significant digits. Fog communication delay starts at the Fog request; routeWaitBeforeFog records watchdog waiting separately. For routes supplied by Fog, total initial latency equals waiting before Fog plus Fog processing, cloud backhaul and communication. EV response time is generation to arrival; EV travel and signal waiting remain in seconds. Response and decision measures require EM delivery, and NRL is undefined without a delivery. Corridor delay is travel time minus route distance/13.9 m/s, bounded at zero; it includes acceleration, turning, queuing, and signal effects.
 
-PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor delay use percentile bootstrap intervals with 10,000 resamples and fixed seed 42. Other continuous metrics use Student-t 95% intervals. Graphs show a generic [95% CI] label. Full mixed-cohort means and separate normal/stall means are both exported. Paired comparisons use matching seeds and preserve a constant nonzero difference even when its sample variance is zero.
+PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor delay use percentile bootstrap intervals with 10,000 resamples and fixed seed 42. Other continuous metrics use Student-t 95% intervals. Graphs show a generic [95% CI] label. Full mixed-cohort means and separate normal/stall means are both exported and plotted. Configuration colours are constant across figures. Matched-seed difference graphs show paired intervals; comparisons are exploratory and unadjusted for multiple testing. Paired comparisons use matching seeds and preserve a constant nonzero difference even when its sample variance is zero.
 '''
     (docs / "METHODOLOGY.md").write_text(methodology, encoding="utf-8")
     lines = ["# Verification", "", "The experiment contains 360 primary runs plus 90 waiting-time control runs. Values below are calculated from unmodified simulation outputs.", ""]
@@ -119,38 +129,61 @@ PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor
             float(current['MistAStar', density, 'ev_response_s']['mean']),
             float(current['MistDynamicAStar', density, 'ev_response_s']['mean']),
             sum(int(float(r['route_changes'])) for r in dynamic_runs)))
-    lines += ["", "Density changes are present: PDR, throughput, and live vehicle counts rise with demand. Dynamic Mist is also active: it reviews live costs and applies route changes. PDR and throughput are expected to remain equal between route tiers when their common alert-delivery stage produces the same deliveries. Response means can differ after routing, but overlapping confidence intervals limit claims about small differences.", "",
+    lines += ["", "Density changes are present: PDR, throughput, and live vehicle counts rise with demand. Dynamic Mist is also active: it reviews live costs and applies route changes. PDR and throughput are expected to remain equal between route tiers when their common alert-delivery stage produces the same deliveries. Response means can differ after routing. Paired difference intervals, rather than overlap between independent mean intervals, determine whether matching seeds establish a difference.", "",
               "## Interpretation", "", "The confidence intervals determine whether measured response differences are convincing. Controlled stalls demonstrate recovery from a defined fault; they do not establish the fault rate in real deployment.", ""]
+    lines += ["## Observed computation and watchdog margin", "",
+              f"Initial A* expansions range from {min(initial_nodes)} to {max(initial_nodes)} nodes; the maximum across initial calculations and periodic reviews is {max(all_nodes)}. At 300 ms plus 2 ms per node, the latter represents {300+2*max(all_nodes)} ms of modeled processing, leaving {500-(300+2*max(all_nodes))} ms before the 500 ms watchdog. The selected 900 ms stalls are controlled fault tests, not organic overload evidence.", "",
+              "Similar initial expansion counts can produce identical normal decision times across densities. Pooled latency means also depend on the delivered normal and controlled-stall samples; they should not be read as evidence that heavier traffic makes the processor faster.", ""]
+    lines += ["## Matched seed differences", "", "A minus B is computed within each delivered matching seed. Negative values favour A. An interval including zero does not establish a difference. These are exploratory comparisons without multiple-testing adjustment.", "",
+              "| Density | A minus B | Metric | Pairs | Mean difference | 95% CI | p value |",
+              "| --- | --- | --- | ---: | ---: | --- | ---: |"]
+    for r in rows(ROOT / 'results/processed/paired_comparisons.csv'):
+        if r['metric'] in ('ev_response_s', 'route_decision_ms'):
+            unit = 's' if r['metric'] == 'ev_response_s' else 'ms'
+            lines.append(f"| {r['density']} | {r['config_A']} minus {r['config_B']} | {r['metric']} ({unit}) | {r['n_pairs']} | {float(r['mean_paired_diff']):.3f} | [{float(r['ci95_lower']):.3f}, {float(r['ci95_upper']):.3f}] | {r['p_value']} |")
+    lines += ["", "The normal and controlled-stall plots and matched-seed difference plots accompany the pooled figures. Faster modeled route decisions do not automatically produce an equally large change in SUMO vehicle arrival time.", ""]
     (docs / "VERIFICATION.md").write_text("\n".join(lines), encoding="utf-8")
-    # Retain the measured historical comparison in a sidecar, outside the plain-English report.
-    historical = rows(ROOT / "archive_20261005_400m_telemetry20/results/processed/summary-batch.csv")
-    old = {(r['configuration'],r['density'],r['metric']):r for r in historical}
+    # Named historical versions prevent attributing several model changes to telemetry alone.
     comparison = []
-    for cfg in CONFIGS:
-        for density in DENSITIES:
-            for metric,label,unit in PRIMARY:
-                a, b = old[cfg,density,metric], current[cfg,density,metric]
-                comparison.append(dict(configuration=cfg,density=density,metric=label,unit=unit,
-                                       before_20ms_mean=a['mean'],after_0ms_mean=b['mean'],
-                                       change=float(b['mean'])-float(a['mean']),before_n=a['n'],after_n=b['n']))
-    with (ROOT / 'results/processed/before_after_headline.csv').open('w',newline='',encoding='utf-8') as handle:
-        writer=csv.DictWriter(handle,comparison[0].keys()); writer.writeheader(); writer.writerows(comparison)
+    sources = (("before_audit_fixes", "archive_20261005_before_audit_fixes/results/processed/summary-batch.csv"),
+               ("400m_telemetry20", "archive_20261005_400m_telemetry20/results/processed/summary-batch.csv"),
+               ("archived_650m", "archive_raw_20261001_650m/summary-batch-650m.csv"))
+    for version, source in sources:
+        old = {(r['configuration'], r['density'], r['metric']): r for r in rows(ROOT / source)}
+        for cfg in CONFIGS:
+            for density in DENSITIES:
+                for metric, label, unit in PRIMARY:
+                    old_metric = metric
+                    if (cfg, density, metric) not in old and metric in ('e2e_delay_ms', 'route_decision_ms'):
+                        old_metric = {'e2e_delay_ms': 'e2e_delay_s', 'route_decision_ms': 'route_decision_s'}[metric]
+                    a, b = old[cfg, density, old_metric], current[cfg, density, metric]
+                    before = float(a['mean']) * (1000 if old_metric.endswith('_s') and metric.endswith('_ms') else 1)
+                    comparison.append(dict(comparison_version=version, historical_source=source,
+                                           configuration=cfg, density=density, metric=label, unit=unit,
+                                           before_mean=before, current_mean=b['mean'],
+                                           change=float(b['mean'])-before, before_n=a['n'], current_n=b['n']))
+    for filename, records in (("historical_headline_comparisons.csv", comparison),
+                              ("before_after_headline.csv", [r for r in comparison if r['comparison_version'] == 'before_audit_fixes'])):
+        with (ROOT / 'results/processed' / filename).open('w', newline='', encoding='utf-8') as handle:
+            writer = csv.DictWriter(handle, records[0].keys()); writer.writeheader(); writer.writerows(records)
     (docs / "EXPERIMENTS.md").write_text("# Experiments\n\n" + methodology.split("## Routing and controlled fallback tests")[0].split("## Experiment design\n\n")[1] + "\nThe eight controlled stall seeds and all timing assumptions are specified in METHODOLOGY.md. Normal and stall results are in summary-cohorts.csv. NoPreemptionBaseline appears only in waiting-time summaries and graphs.\n",encoding='utf-8')
-    (docs / 'PROGRESS.md').write_text('# Progress\n\nCompleted 360 primary matched runs and 90 no-preemption waiting-time controls. See VERIFICATION.md for measured counts and intervals, and METHODOLOGY.md for controlled fault labels and signal safety timing. Previous outputs are preserved in archive_20261005_400m_telemetry20/.\n',encoding='utf-8')
+    (docs / 'PROGRESS.md').write_text('# Progress\n\nCompleted 360 primary matched runs and 90 no-preemption waiting-time controls. See VERIFICATION.md for measured counts and intervals, and METHODOLOGY.md for controlled fault labels and signal safety timing. Pre-fix outputs are preserved in archive_20261005_before_audit_fixes/. Separate named comparisons retain the 400m telemetry20 and archived 650m versions; they change multiple model settings and do not isolate a telemetry effect.\n',encoding='utf-8')
     (docs / 'INSTALLATION.md').write_text('''# Installation and reproduction
 
 The installed stack is opp_env WSL, SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. Run from the project directory in PowerShell:
 
 ```powershell
 wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/build.sh
-wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --force
+wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --force --jobs 4
 python analysis/process_results.py --batch --require-all
 python analysis/extract_fallback_evidence.py
 python scripts/verify_response_times.py
 python scripts/generate_final_graph.py
 python scripts/write_final_reports.py
-python scripts/audit_batch.py
+python scripts/validate_timing_evidence.py
 python scripts/generate_reviewed_submission.py
+python scripts/audit_batch.py
+python -m unittest discover -s tests
 python scripts/package_reviewed_submission.py --refresh
 ```
 
@@ -169,7 +202,7 @@ The watchdog is 500 ms and the telemetry delay is 0 ms. Eight of 30 seeds are ex
 
 The project uses SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. The main comparison is four configurations times three densities times 30 seeds (360 runs), plus 90 NoPreemptionBaseline runs shown only for traffic-light waiting. The current parameters are 400 m radio range, 0 ms telemetry delay, 500 ms watchdog, and 100 ms metric accumulation with 500 ms underlying SUMO updates. Eight fixed independently sampled seeds receive 900 ms controlled initial Mist stalls in all Mist configurations. Never describe these as organic fallback or measured OBU performance.
 
-Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with analysis/process_results.py --batch --require-all, extract fallback evidence, then generate reports and audit. Previous evidence is in archive_20261005_400m_telemetry20/ and archive_raw_20261001_650m/. Do not manually edit raw logs, result CSVs, or graphs. Regenerate them from the source pipeline. Keep the no-preemption control out of every summary and plot except traffic-light waiting.
+Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with analysis/process_results.py --batch --require-all, extract fallback evidence, then generate reports and audit. Previous evidence is in archive_20261005_before_audit_fixes/, archive_20261005_400m_telemetry20/ and archive_raw_20261001_650m/. Do not manually edit raw logs, result CSVs, or graphs. Regenerate them from the source pipeline. Keep the no-preemption control out of every summary and plot except traffic-light waiting.
 ''',encoding='utf-8')
     print(f"Wrote reports from {len(individual)} measured runs")
 

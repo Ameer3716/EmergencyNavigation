@@ -6,6 +6,7 @@
 #include <cmath>
 #include <filesystem>
 #include <tuple>
+#include <iomanip>
 
 namespace emergencynavigation {
 
@@ -16,6 +17,7 @@ void MetricsCollector::initialize()
     const std::string path = par("mobilityLogPath").stdstringValue();
     const bool first = !std::filesystem::exists(path);
     trace.open(path, std::ios::app);
+    trace << std::setprecision(15);
     if (!trace) throw omnetpp::cRuntimeError("Cannot open mobility log");
     if (first) trace << "time,vehicleId,edge,lanePosition,speed,distance,stopDuration,event,trafficLightWaiting,activeBackgroundVehicles\n";
     scheduleAt(simTime() + par("pollInterval"), pollTimer);

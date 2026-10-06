@@ -1,0 +1,253 @@
+comparison_version,historical_source,configuration,density,metric,unit,before_mean,current_mean,change,before_n,current_n
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,NRL,packets/delivery,22039.416666666668,22030.625,-8.79166666666788,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,Route decision latency,ms,626.5385801005825,626.5385801005825,0.0,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,EV response time,s,153.29166666666666,153.3125,0.020833333333342807,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,low,EV traffic-light waiting time,s,1.5416666666666667,1.5625,0.02083333333333326,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,NRL,packets/delivery,39771.48275862069,39768.44827586207,-3.0344827586159226,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,Route decision latency,ms,626.5427008316537,626.5427008316537,0.0,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,EV response time,s,154.60344827586206,154.51724137931035,-0.08620689655171532,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,medium,EV traffic-light waiting time,s,0.9482758620689655,0.8448275862068966,-0.10344827586206895,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,NRL,packets/delivery,54379.166666666664,54429.8,50.63333333333867,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,Route decision latency,ms,626.539460082334,626.539460082334,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,EV response time,s,156.31666666666666,156.2,-0.11666666666667425,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,FogCloudAStar,high,EV traffic-light waiting time,s,0.6666666666666666,0.6666666666666666,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,NRL,packets/delivery,22045.666666666668,22029.75,-15.91666666666788,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,Route decision latency,ms,588.499999999998,588.499999999998,0.0,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,EV response time,s,153.0625,153.5,0.4375,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,low,EV traffic-light waiting time,s,1.5833333333333333,1.8333333333333333,0.25,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,NRL,packets/delivery,39738.93103448276,39779.0,40.06896551723912,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,Route decision latency,ms,574.2758620689631,574.2758620689631,0.0,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,EV response time,s,155.48275862068965,154.72413793103448,-0.7586206896551744,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,medium,EV traffic-light waiting time,s,1.6206896551724137,0.9137931034482759,-0.7068965517241378,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,NRL,packets/delivery,54257.13333333333,54290.1,32.96666666666715,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,Route decision latency,ms,566.0000000000014,566.0000000000014,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,EV response time,s,156.98333333333332,156.88333333333333,-0.09999999999999432,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistAStar,high,EV traffic-light waiting time,s,0.6166666666666667,0.7166666666666667,0.09999999999999998,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,NRL,packets/delivery,22037.791666666668,22019.541666666668,-18.25,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,Route decision latency,ms,588.499999999998,588.499999999998,0.0,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,EV response time,s,152.52083333333334,153.02083333333334,0.5,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,low,EV traffic-light waiting time,s,1.9583333333333333,2.2083333333333335,0.2500000000000002,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,NRL,packets/delivery,39766.06896551724,39805.96551724138,39.89655172413768,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,Route decision latency,ms,574.2758620689631,574.2758620689631,0.0,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,EV response time,s,154.39655172413794,154.1206896551724,-0.2758620689655231,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,medium,EV traffic-light waiting time,s,1.706896551724138,1.1206896551724137,-0.5862068965517242,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,NRL,packets/delivery,54210.63333333333,54333.23333333333,122.59999999999854,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,Route decision latency,ms,566.0000000000014,566.0000000000014,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,EV response time,s,154.38333333333333,154.93333333333334,0.5500000000000114,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicAStar,high,EV traffic-light waiting time,s,0.65,0.8166666666666667,0.16666666666666663,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,PDR,ratio,0.8,0.8,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,NRL,packets/delivery,22033.041666666668,22027.458333333332,-5.583333333335759,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,Route decision latency,ms,471.99064945553914,471.99064945553914,0.0,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EV response time,s,152.54166666666666,152.97916666666666,0.4375,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EV traffic-light waiting time,s,2.0208333333333335,2.25,0.22916666666666652,24,24
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,NRL,packets/delivery,39738.275862068964,39788.10344827586,49.82758620689856,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,Route decision latency,ms,464.09588362017104,464.09588362017104,0.0,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EV response time,s,154.13793103448276,153.89655172413794,-0.24137931034482563,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EV traffic-light waiting time,s,1.7413793103448276,1.1551724137931034,-0.5862068965517242,29,29
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,PDR,ratio,1.0,1.0,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,NRL,packets/delivery,54257.26666666667,54276.46666666667,19.19999999999709,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,Route decision latency,ms,459.5012558552,459.5012558552,0.0,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EV response time,s,154.35,154.91666666666666,0.5666666666666629,30,30
+before_audit_fixes,archive_20261005_before_audit_fixes/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EV traffic-light waiting time,s,0.6,0.7666666666666667,0.16666666666666674,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,NRL,packets/delivery,22035.125,22030.625,-4.5,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,Route decision latency,ms,626.5385801005825,626.5385801005825,0.0,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,EV response time,s,141.66666666666666,153.3125,11.645833333333343,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,low,EV traffic-light waiting time,s,0.0,1.5625,1.5625,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,NRL,packets/delivery,39859.68965517241,39768.44827586207,-91.24137931034056,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,Route decision latency,ms,626.5427008316537,626.5427008316537,0.0,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,EV response time,s,141.51724137931035,154.51724137931035,13.0,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,medium,EV traffic-light waiting time,s,0.0,0.8448275862068966,0.8448275862068966,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,NRL,packets/delivery,54479.03333333333,54429.8,-49.23333333332994,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,Route decision latency,ms,626.539460082334,626.539460082334,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,EV response time,s,142.51666666666668,156.2,13.683333333333309,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,FogCloudAStar,high,EV traffic-light waiting time,s,0.0,0.6666666666666666,0.6666666666666666,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,NRL,packets/delivery,22025.166666666668,22029.75,4.583333333332121,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,Route decision latency,ms,625.166666666665,588.499999999998,-36.66666666666708,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,EV response time,s,141.60416666666666,153.5,11.895833333333343,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,low,EV traffic-light waiting time,s,0.0,1.8333333333333333,1.8333333333333333,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,NRL,packets/delivery,39897.65517241379,39779.0,-118.65517241378984,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,Route decision latency,ms,844.6206896551707,574.2758620689631,-270.34482758620766,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,EV response time,s,141.6551724137931,154.72413793103448,13.068965517241367,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,medium,EV traffic-light waiting time,s,0.0,0.9137931034482759,0.9137931034482759,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,NRL,packets/delivery,54432.5,54290.1,-142.40000000000146,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,Route decision latency,ms,1075.333333333333,566.0000000000014,-509.33333333333167,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,EV response time,s,142.73333333333332,156.88333333333333,14.150000000000006,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistAStar,high,EV traffic-light waiting time,s,0.0,0.7166666666666667,0.7166666666666667,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,PDR,ratio,0.8,0.8,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,NRL,packets/delivery,22051.25,22019.541666666668,-31.70833333333212,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,Route decision latency,ms,625.166666666665,588.499999999998,-36.66666666666708,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,EV response time,s,141.66666666666666,153.02083333333334,11.354166666666686,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,low,EV traffic-light waiting time,s,0.0,2.2083333333333335,2.2083333333333335,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,NRL,packets/delivery,39898.58620689655,39805.96551724138,-92.62068965517392,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,Route decision latency,ms,844.6206896551707,574.2758620689631,-270.34482758620766,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,EV response time,s,141.72413793103448,154.1206896551724,12.396551724137936,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,medium,EV traffic-light waiting time,s,0.0,1.1206896551724137,1.1206896551724137,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,PDR,ratio,1.0,1.0,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,NRL,packets/delivery,54453.433333333334,54333.23333333333,-120.20000000000437,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,Route decision latency,ms,1075.333333333333,566.0000000000014,-509.33333333333167,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,EV response time,s,142.7,154.93333333333334,12.233333333333348,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicAStar,high,EV traffic-light waiting time,s,0.13333333333333333,0.8166666666666667,0.6833333333333333,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,PDR,ratio,0.8,0.8,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,NRL,packets/delivery,22051.25,22027.458333333332,-23.79166666666788,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EM throughput,bit/s,1.8204444444444445,1.8204444444444445,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EM end-to-end delay,ms,44.36250000000008,44.36618120891646,0.003681208916376022,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,Route decision latency,ms,625.166666666665,471.99064945553914,-153.1760172111259,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EV response time,s,141.66666666666666,152.97916666666666,11.3125,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,low,EV traffic-light waiting time,s,0.0,2.25,2.25,24,24
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,NRL,packets/delivery,39918.24137931035,39788.10344827586,-130.13793103448552,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EM end-to-end delay,ms,37.124137931035925,37.12327117951748,-0.0008667515184441754,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,Route decision latency,ms,946.3780053527241,464.09588362017104,-482.2821217325531,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EV response time,s,141.8793103448276,153.89655172413794,12.017241379310349,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,medium,EV traffic-light waiting time,s,0.0,1.1551724137931034,1.1551724137931034,29,29
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,PDR,ratio,1.0,1.0,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,NRL,packets/delivery,54462.63333333333,54276.46666666667,-186.16666666666424,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EM throughput,bit/s,2.2755555555555556,2.2755555555555556,0.0,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EM end-to-end delay,ms,32.16666666666678,32.1712761943649,0.004609527698121951,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,Route decision latency,ms,1087.2367571633333,459.5012558552,-627.7355013081333,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EV response time,s,142.8,154.91666666666666,12.116666666666646,30,30
+400m_telemetry20,archive_20261005_400m_telemetry20/results/processed/summary-batch.csv,MistDynamicFogFallback,high,EV traffic-light waiting time,s,0.13333333333333333,0.7666666666666667,0.6333333333333334,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,PDR,ratio,0.9333333333333333,0.8,-0.1333333333333333,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,NRL,packets/delivery,26991.75,22030.625,-4961.125,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,EM throughput,bit/s,2.123851851851852,1.8204444444444445,-0.30340740740740735,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,EM end-to-end delay,ms,30.842857142856822,44.36618120891646,13.523324066059637,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,Route decision latency,ms,626.5392335643231,626.5385801005825,-0.0006534637406048205,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,EV response time,s,141.64285714285714,153.3125,11.669642857142861,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,low,EV traffic-light waiting time,s,0.0,1.5625,1.5625,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,NRL,packets/delivery,48001.41379310345,39768.44827586207,-8232.965517241377,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,EM end-to-end delay,ms,25.00689655172368,37.12327117951748,12.1163746277938,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,Route decision latency,ms,626.5534572197901,626.5427008316537,-0.010756388136314854,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,EV response time,s,142.29310344827587,154.51724137931035,12.224137931034477,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,medium,EV traffic-light waiting time,s,0.5862068965517241,0.8448275862068966,0.2586206896551725,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,PDR,ratio,0.9333333333333333,1.0,0.06666666666666665,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,NRL,packets/delivery,64489.78571428572,54429.8,-10059.985714285714,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,EM throughput,bit/s,2.123851851851852,2.2755555555555556,0.15170370370370367,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,EM end-to-end delay,ms,23.682142857143365,32.1712761943649,8.489133337221535,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,Route decision latency,ms,626.5394654276082,626.539460082334,-5.345274189494376e-06,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,EV response time,s,142.58928571428572,156.2,13.610714285714266,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,FogCloudAStar,high,EV traffic-light waiting time,s,0.0,0.6666666666666666,0.6666666666666666,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,PDR,ratio,0.9333333333333333,0.8,-0.1333333333333333,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,NRL,packets/delivery,26971.428571428572,22029.75,-4941.6785714285725,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,EM throughput,bit/s,2.123851851851852,1.8204444444444445,-0.30340740740740735,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,EM end-to-end delay,ms,30.842857142856822,44.36618120891646,13.523324066059637,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,Route decision latency,ms,326.00000000000074,588.499999999998,262.4999999999972,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,EV response time,s,141.17857142857142,153.5,12.321428571428584,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,low,EV traffic-light waiting time,s,0.0,1.8333333333333333,1.8333333333333333,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,NRL,packets/delivery,47966.34482758621,39779.0,-8187.34482758621,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,EM end-to-end delay,ms,25.00689655172368,37.12327117951748,12.1163746277938,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,Route decision latency,ms,325.9999999999983,574.2758620689631,248.27586206896478,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,EV response time,s,141.0344827586207,154.72413793103448,13.68965517241378,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,medium,EV traffic-light waiting time,s,0.0,0.9137931034482759,0.9137931034482759,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,PDR,ratio,0.9333333333333333,1.0,0.06666666666666665,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,NRL,packets/delivery,64583.07142857143,54290.1,-10292.971428571429,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,EM throughput,bit/s,2.123851851851852,2.2755555555555556,0.15170370370370367,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,EM end-to-end delay,ms,23.682142857143365,32.1712761943649,8.489133337221535,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,Route decision latency,ms,325.9999999999986,566.0000000000014,240.00000000000279,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,EV response time,s,142.17857142857142,156.88333333333333,14.70476190476191,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistAStar,high,EV traffic-light waiting time,s,0.0,0.7166666666666667,0.7166666666666667,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,PDR,ratio,0.9333333333333333,0.8,-0.1333333333333333,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,NRL,packets/delivery,26980.714285714286,22019.541666666668,-4961.172619047618,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,EM throughput,bit/s,2.123851851851852,1.8204444444444445,-0.30340740740740735,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,EM end-to-end delay,ms,30.842857142856822,44.36618120891646,13.523324066059637,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,Route decision latency,ms,326.00000000000074,588.499999999998,262.4999999999972,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,EV response time,s,141.23214285714286,153.02083333333334,11.788690476190482,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,low,EV traffic-light waiting time,s,0.0,2.2083333333333335,2.2083333333333335,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,NRL,packets/delivery,47980.206896551725,39805.96551724138,-8174.241379310348,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,EM end-to-end delay,ms,25.00689655172368,37.12327117951748,12.1163746277938,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,Route decision latency,ms,325.9999999999983,574.2758620689631,248.27586206896478,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,EV response time,s,140.89655172413794,154.1206896551724,13.224137931034477,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,medium,EV traffic-light waiting time,s,0.0,1.1206896551724137,1.1206896551724137,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,PDR,ratio,0.9333333333333333,1.0,0.06666666666666665,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,NRL,packets/delivery,64500.5,54333.23333333333,-10167.26666666667,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,EM throughput,bit/s,2.123851851851852,2.2755555555555556,0.15170370370370367,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,EM end-to-end delay,ms,23.682142857143365,32.1712761943649,8.489133337221535,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,Route decision latency,ms,325.9999999999986,566.0000000000014,240.00000000000279,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,EV response time,s,142.85714285714286,154.93333333333334,12.076190476190476,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicAStar,high,EV traffic-light waiting time,s,0.0,0.8166666666666667,0.8166666666666667,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,PDR,ratio,0.9333333333333333,0.8,-0.1333333333333333,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,NRL,packets/delivery,26980.714285714286,22027.458333333332,-4953.255952380954,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,EM throughput,bit/s,2.123851851851852,1.8204444444444445,-0.30340740740740735,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,EM end-to-end delay,ms,30.842857142856822,44.36618120891646,13.523324066059637,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,Route decision latency,ms,326.00000000000074,471.99064945553914,145.9906494555384,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,EV response time,s,141.23214285714286,152.97916666666666,11.747023809523796,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,low,EV traffic-light waiting time,s,0.0,2.25,2.25,28,24
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,PDR,ratio,0.9666666666666667,0.9666666666666667,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,NRL,packets/delivery,47980.206896551725,39788.10344827586,-8192.103448275862,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,EM throughput,bit/s,2.1997037037037037,2.1997037037037037,0.0,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,EM end-to-end delay,ms,25.00689655172368,37.12327117951748,12.1163746277938,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,Route decision latency,ms,325.9999999999983,464.09588362017104,138.09588362017274,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,EV response time,s,140.89655172413794,153.89655172413794,13.0,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,medium,EV traffic-light waiting time,s,0.0,1.1551724137931034,1.1551724137931034,29,29
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,PDR,ratio,0.9333333333333333,1.0,0.06666666666666665,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,NRL,packets/delivery,64500.5,54276.46666666667,-10224.033333333333,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,EM throughput,bit/s,2.123851851851852,2.2755555555555556,0.15170370370370367,30,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,EM end-to-end delay,ms,23.682142857143365,32.1712761943649,8.489133337221535,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,Route decision latency,ms,325.9999999999986,459.5012558552,133.5012558552014,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,EV response time,s,142.85714285714286,154.91666666666666,12.059523809523796,28,30
+archived_650m,archive_raw_20261001_650m/summary-batch-650m.csv,MistDynamicFogFallback,high,EV traffic-light waiting time,s,0.0,0.7666666666666667,0.7666666666666667,28,30

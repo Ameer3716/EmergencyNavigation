@@ -6,12 +6,12 @@
   "seed1_mist_response_s": [
     152.5,
     154.0,
-    155.0
+    155.5
   ],
   "evidence": {
     "low": {
       "priority_wait_s": [
-        2.5,
+        2.0,
         1.5
       ],
       "control_wait_s": [
@@ -22,14 +22,14 @@
       "stall_mist_decision_ms": 1226.0,
       "stall_fog_decision_ms": 826.534071677,
       "peak_background": [
-        30.0,
+        31.0,
         32.0
       ]
     },
     "medium": {
       "priority_wait_s": [
         0.0,
-        1.0
+        0.5
       ],
       "control_wait_s": [
         100.5,
@@ -39,7 +39,7 @@
       "stall_mist_decision_ms": 1226.0,
       "stall_fog_decision_ms": 826.64019102701,
       "peak_background": [
-        60.0,
+        61.0,
         70.0
       ]
     },
@@ -56,7 +56,7 @@
       "stall_mist_decision_ms": 1226.0,
       "stall_fog_decision_ms": 826.646178404,
       "peak_background": [
-        87.0,
+        88.0,
         100.0
       ]
     }

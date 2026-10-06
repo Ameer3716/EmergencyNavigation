@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+import hashlib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -74,10 +75,17 @@ def main() -> None:
             binary_hashes.add(m['binary_sha256'])
             if m['controlled_mist_stall_ms'] != stall:
                 manifest_errors.append(stem)
+            ini = ROOT / f"simulations/batch/{density}-seed{seed}/{cfg}/omnetpp.ini"
+            if not ini.exists() or hashlib.sha256(ini.read_bytes()).hexdigest() != m['ini_sha256']:
+                manifest_errors.append(stem + ': run input hash')
     add(checks, "raw triplets", not missing_files, missing_files[:10], "no missing .sca/.vec/.vci")
     add(checks, "new parameters in every scalar", not stale_parameters, stale_parameters[:10], "400m, 0ms, 500ms, 100ms, 10s minimum green, matched stall assignment")
     add(checks, "uniform binary and fault provenance", not manifest_errors and len(binary_hashes) == 1,
         {"errors": manifest_errors[:10], "binary_count": len(binary_hashes)}, "one binary and correct per-run manifests")
+    library = ROOT / 'src/out/clang-release/libsrc.so'
+    add(checks, "current rebuilt binary", library.exists() and
+        binary_hashes == {hashlib.sha256(library.read_bytes()).hexdigest()},
+        sorted(binary_hashes), "every run used the current binary")
 
     individual = read_csv(processed / "individual_runs-batch.csv")
     observed = {(r["configuration"], r["density"], int(r["seed"])) for r in individual}
@@ -144,7 +152,7 @@ def main() -> None:
     lookup = {(r['configuration'],r['density'],r['metric']):float(r['mean']) for r in summary}
     waiting = {d: {c:lookup[c,d,'traffic_light_wait_s'] for c in ALL_CONFIGS} for d in DENSITIES}
     add(checks, "priority reduces measured waiting without forcing zero",
-        all(0 < waiting[d]['FogCloudAStar'] < waiting[d]['NoPreemptionBaseline'] for d in DENSITIES),
+        all(0 < waiting[d][cfg] < waiting[d]['NoPreemptionBaseline'] for d in DENSITIES for cfg in CONFIGS),
         waiting, "positive average priority waiting, lower than matched no-priority control")
 
     graph_dir = ROOT / "results/graphs"
@@ -153,6 +161,17 @@ def main() -> None:
                       if any(key[1] == density and key[2] == metric for key in summary_keys)
                       and not (graph_dir / f"{metric}-{density}.png").exists()]
     add(checks, "primary and supplemental graphs", not missing_graphs, missing_graphs, "all applicable graphs")
+    from validate_timing_evidence import audit
+    timing = audit(ROOT)
+    add(checks, "minimum green clearance and timing decomposition", timing['passed'], timing,
+        "no shortened green or timing/precision mismatch")
+    extra_graphs = [f"{metric}-{condition}-{density}.png"
+                    for metric in ('route_decision_ms', 'ev_response_s')
+                    for condition in ('normal', 'controlled_stall') for density in DENSITIES]
+    extra_graphs += [f"paired_{metric}-{density}.png"
+                     for metric in ('route_decision_ms', 'ev_response_s') for density in DENSITIES]
+    add(checks, "cohort and paired difference graphs", all((graph_dir / name).exists() for name in extra_graphs),
+        extra_graphs, "12 cohort and six paired difference graphs")
 
     report = {"batch": "400m, 360 primary runs plus 90 waiting controls, 22 normal and 8 controlled stall seeds",
               "passed": all(r["status"] == "PASS" for r in checks), "checks": checks}

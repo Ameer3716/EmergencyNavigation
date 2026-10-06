@@ -30,6 +30,14 @@
       "expected": "one binary and correct per-run manifests"
     },
     {
+      "check": "current rebuilt binary",
+      "status": "PASS",
+      "observed": [
+        "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+      ],
+      "expected": "every run used the current binary"
+    },
+    {
       "check": "processed matched matrix",
       "status": "PASS",
       "observed": 450,
@@ -123,9 +131,9 @@
       "check": "different actual live traffic by density",
       "status": "PASS",
       "observed": {
-        "low": 33.166666666666664,
-        "medium": 66.36666666666666,
-        "high": 93.1
+        "low": 33.2,
+        "medium": 66.2,
+        "high": 93.66666666666667
       },
       "expected": "increasing peak live background counts"
     },
@@ -134,24 +142,24 @@
       "status": "PASS",
       "observed": {
         "low": {
-          "FogCloudAStar": 1.5416666666666667,
-          "MistAStar": 1.5833333333333333,
-          "MistDynamicAStar": 1.9583333333333333,
-          "MistDynamicFogFallback": 2.0208333333333335,
+          "FogCloudAStar": 1.5625,
+          "MistAStar": 1.8333333333333333,
+          "MistDynamicAStar": 2.2083333333333335,
+          "MistDynamicFogFallback": 2.25,
           "NoPreemptionBaseline": 26.291666666666668
         },
         "medium": {
-          "FogCloudAStar": 0.9482758620689655,
-          "MistAStar": 1.6206896551724137,
-          "MistDynamicAStar": 1.706896551724138,
-          "MistDynamicFogFallback": 1.7413793103448276,
+          "FogCloudAStar": 0.8448275862068966,
+          "MistAStar": 0.9137931034482759,
+          "MistDynamicAStar": 1.1206896551724137,
+          "MistDynamicFogFallback": 1.1551724137931034,
           "NoPreemptionBaseline": 27.34482758620686
         },
         "high": {
           "FogCloudAStar": 0.6666666666666666,
-          "MistAStar": 0.6166666666666667,
-          "MistDynamicAStar": 0.65,
-          "MistDynamicFogFallback": 0.6,
+          "MistAStar": 0.7166666666666667,
+          "MistDynamicAStar": 0.8166666666666667,
+          "MistDynamicFogFallback": 0.7666666666666667,
           "NoPreemptionBaseline": 22.716666666666665
         }
       },
@@ -162,6 +170,48 @@
       "status": "PASS",
       "observed": [],
       "expected": "all applicable graphs"
+    },
+    {
+      "check": "minimum green clearance and timing decomposition",
+      "status": "PASS",
+      "observed": {
+        "passed": true,
+        "runs": 450,
+        "green_transitions": 3049,
+        "phase_rechecks": 9,
+        "fog_timing_balances": 189,
+        "em_precision_checks": 415,
+        "binary_sha256": [
+          "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+        ],
+        "failures": []
+      },
+      "expected": "no shortened green or timing/precision mismatch"
+    },
+    {
+      "check": "cohort and paired difference graphs",
+      "status": "PASS",
+      "observed": [
+        "route_decision_ms-normal-low.png",
+        "route_decision_ms-normal-medium.png",
+        "route_decision_ms-normal-high.png",
+        "route_decision_ms-controlled_stall-low.png",
+        "route_decision_ms-controlled_stall-medium.png",
+        "route_decision_ms-controlled_stall-high.png",
+        "ev_response_s-normal-low.png",
+        "ev_response_s-normal-medium.png",
+        "ev_response_s-normal-high.png",
+        "ev_response_s-controlled_stall-low.png",
+        "ev_response_s-controlled_stall-medium.png",
+        "ev_response_s-controlled_stall-high.png",
+        "paired_route_decision_ms-low.png",
+        "paired_route_decision_ms-medium.png",
+        "paired_route_decision_ms-high.png",
+        "paired_ev_response_s-low.png",
+        "paired_ev_response_s-medium.png",
+        "paired_ev_response_s-high.png"
+      ],
+      "expected": "12 cohort and six paired difference graphs"
     }
   ]
 }

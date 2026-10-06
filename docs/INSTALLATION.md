@@ -4,14 +4,16 @@ The installed stack is opp_env WSL, SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1.
 
 ```powershell
 wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/build.sh
-wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --force
+wsl -d opp_env -- bash /mnt/d/Codex/EmergencyNavigation/scripts/run_batch_env.sh --force --jobs 4
 python analysis/process_results.py --batch --require-all
 python analysis/extract_fallback_evidence.py
 python scripts/verify_response_times.py
 python scripts/generate_final_graph.py
 python scripts/write_final_reports.py
-python scripts/audit_batch.py
+python scripts/validate_timing_evidence.py
 python scripts/generate_reviewed_submission.py
+python scripts/audit_batch.py
+python -m unittest discover -s tests
 python scripts/package_reviewed_submission.py --refresh
 ```
 
