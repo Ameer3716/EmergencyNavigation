@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewsettings>
+    <scheme name="real world">
+        <opengl antialiase="2"/>
+        <background backgroundColor="white" showGrid="0"/>
+        <edges laneEdgeMode="0" laneShowBorders="1" showLinkDecals="1" showRails="0"/>
+        <vehicles vehicleMode="0" vehicleQuality="2" vehicle_minSize="15.0" vehicle_exaggeration="10.0" minVehicleSize="15.0" vehicleExaggeration="10.0" showBlinker="1"/>
+        <pois show="1" poi_minSize="20.0" poi_exaggeration="8.0" minPOISize="20.0" poiExaggeration="8.0"/>
+        <junctions draw="1"/>
+    </scheme>
+    <viewport zoom="130" x="450" y="450"/>
+</viewsettings>

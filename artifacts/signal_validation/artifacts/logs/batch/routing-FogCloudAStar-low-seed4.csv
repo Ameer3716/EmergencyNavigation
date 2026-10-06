@@ -1,0 +1,2 @@
+action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges,belowThresholdEdges,currentRemainingCost,observedEdges,controlledMistStallDelay
+applied,FogCloudAStar,astar,cloud,66.679794959933,66.053254550383,0,13,103.095752339813,cloud,A0A1,A0A1|A1B1|B1C1|C1C2|C2D2|D2D3,A0A1|A1B1|B1C1|C1C2|C2D2|D2D3,,0,0,0

@@ -18,3 +18,14 @@ python scripts/package_reviewed_submission.py --refresh
 ```
 
 The default runner creates 450 simulations: 360 primary comparisons and 90 waiting controls. To inspect a small isolated sample, add `--seeds 1 4 --artifact-root /mnt/d/Codex/EmergencyNavigation/scratch/sample` to the runner, then process with `--batch --no-graphs --artifact-root scratch/sample`. A fresh run must not be mixed with old parameter outputs. Raw files are in results/raw, event logs and binary provenance manifests are in artifacts/logs/batch, and processed results are in results/processed.
+
+## Reproduce the isolated red signal validation
+
+Use a fresh workspace so the main batch stays unchanged. Inside the configured WSL environment:
+
+```bash
+bash scripts/run_batch_env.sh --signal-validation --workspace /home/opp_env/signal_validation_new
+python analysis/supplemental_validation.py --signal-root /home/opp_env/signal_validation_new
+```
+
+The runner uses the existing binary and matched seed trips. Retain the complete workspace and copy it to artifacts/signal_validation before packaging. Route byte throughput is not inferred from absent packet logs.

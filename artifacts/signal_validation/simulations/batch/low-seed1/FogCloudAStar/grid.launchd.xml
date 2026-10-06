@@ -1,0 +1,3 @@
+<?xml version="1.0"?><launch><copy file="grid.net.xml"/>
+<copy file="normal-low-seed1.rou.xml"/><copy file="special.rou.xml"/>
+<copy file="grid.sumocfg" type="config"/></launch>

@@ -204,6 +204,29 @@ The project uses SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. The main compariso
 
 Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with analysis/process_results.py --batch --require-all, extract fallback evidence, then generate reports and audit. Previous evidence is in archive_20261005_before_audit_fixes/, archive_20261005_400m_telemetry20/ and archive_raw_20261001_650m/. Do not manually edit raw logs, result CSVs, or graphs. Regenerate them from the source pipeline. Keep the no-preemption control out of every summary and plot except traffic-light waiting.
 ''',encoding='utf-8')
+    if (ROOT / 'results/supplemental/validation_report.json').exists():
+        for name in ('METHODOLOGY.md', 'VERIFICATION.md', 'PROGRESS.md', 'EXPERIMENTS.md'):
+            path = ROOT / 'docs' / name
+            with path.open('a', encoding='utf-8') as handle:
+                handle.write('\n## Supplementary route communication and signal validation\n\n'
+                             'The seven headline metrics and the 450-run main matrix are unchanged. '
+                             'Separate route-transaction metrics are derived from original raw scalars, and 18 isolated '
+                             'short-notice red-signal runs validate positive waiting and safe priority transitions. '
+                             'Definitions, confidence intervals, measured tables, and limitations are in '
+                             '[SUPPLEMENTAL_VALIDATION.md](SUPPLEMENTAL_VALIDATION.md).\n')
+        with (ROOT / 'README.md').open('a', encoding='utf-8') as handle:
+            handle.write('\nSee [supplementary route communication and red-signal validation](docs/SUPPLEMENTAL_VALIDATION.md).\n')
+        with (ROOT / 'AGENTS.md').open('a', encoding='utf-8') as handle:
+            handle.write('\nSupplementary route transactions are derived from raw scalars by analysis/supplemental_validation.py. '
+                         'The separate 18-run red-signal stress suite uses scripts/run_signal_validation.py; '
+                         'its protected red phase and deliberately late priority requests must not be mixed into the main batch.\n')
+        with (ROOT / 'docs/INSTALLATION.md').open('a', encoding='utf-8') as handle:
+            handle.write('\n## Reproduce the isolated red signal validation\n\n'
+                         'Use a fresh workspace so the main batch stays unchanged. Inside the configured WSL environment:\n\n'
+                         '```bash\nbash scripts/run_batch_env.sh --signal-validation --workspace /home/opp_env/signal_validation_new\n'
+                         'python analysis/supplemental_validation.py --signal-root /home/opp_env/signal_validation_new\n```\n\n'
+                         'The runner uses the existing binary and matched seed trips. Retain the complete workspace and '
+                         'copy it to artifacts/signal_validation before packaging. Route byte throughput is not inferred from absent packet logs.\n')
     print(f"Wrote reports from {len(individual)} measured runs")
 
 

@@ -1,0 +1,9 @@
+{
+  "configuration": "FogCloudAStar",
+  "density": "high",
+  "seed": 1,
+  "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+  "scenario_condition": "normal",
+  "controlled_mist_stall_ms": 0,
+  "ini_sha256": "0a276dc24916f35106dac6ca6f85432c884a362a5565173e689c61c7a3529393"
+}

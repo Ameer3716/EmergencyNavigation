@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="emergency" vClass="emergency" color="1,0,0" accel="3.0" decel="5.0" maxSpeed="20"/>
+    <vType id="accidentType" vClass="passenger" color="1,0.6,0"/>
+    <route id="ambulanceInitial" edges="A0A1 A1B1 B1C1 C1D1 D1D2 D2D3"/>
+    <route id="accidentRoute" edges="D3C3"/>
+    <vehicle id="ambulance" type="emergency" route="ambulanceInitial" depart="0" departPos="0" departSpeed="0">
+        <stop lane="A0A1_0" endPos="30" until="65"/>
+    </vehicle>
+    <vehicle id="accident" type="accidentType" route="accidentRoute" depart="57.5" departPos="20" departSpeed="0">
+        <stop lane="D3C3_0" endPos="30" duration="3600" parking="true"/>
+    </vehicle>
+</routes>

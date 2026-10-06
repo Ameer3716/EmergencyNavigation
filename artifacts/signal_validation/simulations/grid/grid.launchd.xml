@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <copy file="grid.net.xml"/>
+    <copy file="normal-medium-seed1.rou.xml"/>
+    <copy file="special.rou.xml"/>
+    <copy file="grid.sumocfg" type="config"/>
+</launch>

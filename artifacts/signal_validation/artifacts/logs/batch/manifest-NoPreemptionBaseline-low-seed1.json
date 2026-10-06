@@ -1,0 +1,9 @@
+{
+  "configuration": "NoPreemptionBaseline",
+  "density": "low",
+  "seed": 1,
+  "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+  "scenario_condition": "normal",
+  "controlled_mist_stall_ms": 0,
+  "ini_sha256": "b9456af1dec66be6e97f9a53c51ac87a819ff8fd594bb7f3808e392dc38b6d25"
+}

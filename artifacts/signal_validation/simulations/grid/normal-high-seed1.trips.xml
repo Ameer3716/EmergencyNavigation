@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-09-20 18:03:07.224228 by randomTrips.py UNKNOWN
+<configuration>
+    <net-file value="/mnt/d/codex/EmergencyNavigation/simulations/grid/grid.net.xml"/>
+    <output-trip-file value="/mnt/d/codex/EmergencyNavigation/simulations/grid/normal-high-seed1.trips.xml"/>
+    <route-file value="/mnt/d/codex/EmergencyNavigation/simulations/grid/normal-high-seed1.rou.xml"/>
+    <prefix value="normal"/>
+    <seed value="1"/>
+    <validate value="True"/>
+    <end value="360.0"/>
+    <period value="1.8"/>
+</configuration>
+-->
+
+<!-- generated on 2026-09-20 18:03:06 by Eclipse SUMO duarouter Version 1.18.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/duarouterConfiguration.xsd">
+
+    <input>
+        <net-file value="/mnt/d/codex/EmergencyNavigation/simulations/grid/grid.net.xml"/>
+        <route-files value="/mnt/d/codex/EmergencyNavigation/simulations/grid/normal-high-seed1.trips.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/mnt/d/codex/EmergencyNavigation/simulations/grid/normal-high-seed1.trips.xml.tmp"/>
+        <alternatives-output value="NUL"/>
+        <write-trips value="true"/>
+    </output>
+
+    <time>
+        <begin value="0.0"/>
+        <end value="360.0"/>
+    </time>
+
+    <report>
+        <no-warnings value="true"/>
+        <ignore-errors value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <trip id="normal0" depart="0.00" from="A2A3" to="D1C1"/>
+    <trip id="normal1" depart="1.80" from="C3C2" to="B0C0"/>
+    <trip id="normal2" depart="3.60" from="B3C3" to="B3A3"/>
+    <trip id="normal3" depart="5.40" from="C2B2" to="C3D3"/>
+    <trip id="normal4" depart="7.20" from="A1B1" to="A0B0"/>
+    <trip id="normal5" depart="9.00" from="D1C1" to="B2C2"/>
+    <trip id="normal6" depart="10.80" from="C3C2" to="A0A1"/>
+    <trip id="normal7" depart="12.60" from="B3A3" to="C2D2"/>
+    <trip id="normal8" depart="14.40" from="B0A0" to="D2D3"/>
+    <trip id="normal9" depart="16.20" from="D2C2" to="A0B0"/>
+    <trip id="normal10" depart="18.00" from="A0B0" to="C0C1"/>
+    <trip id="normal11" depart="19.80" from="D2D3" to="B2B1"/>
+    <trip id="normal12" depart="21.60" from="B0A0" to="B2C2"/>
+    <trip id="normal13" depart="23.40" from="A0B0" to="B0A0"/>
+    <trip id="normal14" depart="25.20" from="B3A3" to="B3C3"/>
+    <trip id="normal15" depart="27.00" from="B0B1" to="B0B1"/>
+    <trip id="normal16" depart="28.80" from="B0A0" to="B3B2"/>
+    <trip id="normal17" depart="30.60" from="B1A1" to="A0B0"/>
+    <trip id="normal18" depart="32.40" from="D1C1" to="C0D0"/>
+    <trip id="normal19" depart="34.20" from="C1D1" to="A3A2"/>
+    <trip id="normal20" depart="36.00" from="D3D2" to="D1D0"/>
+    <trip id="normal21" depart="37.80" from="A2A1" to="B1B2"/>
+    <trip id="normal22" depart="39.60" from="C2D2" to="C2D2"/>
+    <trip id="normal23" depart="41.40" from="D2D1" to="B2C2"/>
+    <trip id="normal24" depart="43.20" from="D0D1" to="C2C1"/>
+    <trip id="normal25" depart="45.00" from="B1B0" to="C1C0"/>
+    <trip id="normal26" depart="46.80" from="D1D2" to="D1C1"/>
+    <trip id="normal27" depart="48.60" from="C0B0" to="C1C0"/>
+    <trip id="normal28" depart="50.40" from="A0B0" to="B0B1"/>
+    <trip id="normal29" depart="52.20" from="D0C0" to="B2B3"/>
+    <trip id="normal30" depart="54.00" from="A3A2" to="C0D0"/>
+    <trip id="normal31" depart="55.80" from="C2C3" to="C2C1"/>
+    <trip id="normal32" depart="57.60" from="B2A2" to="B3A3"/>
+    <trip id="normal33" depart="59.40" from="C0B0" to="C3D3"/>
+    <trip id="normal34" depart="61.20" from="C0C1" to="B2B1"/>
+    <trip id="normal35" depart="63.00" from="B3C3" to="A0B0"/>
+    <trip id="normal36" depart="64.80" from="A1A0" to="C2C3"/>
+    <trip id="normal37" depart="66.60" from="D3D2" to="C1C0"/>
+    <trip id="normal38" depart="68.40" from="B2B1" to="A3A2"/>
+    <trip id="normal39" depart="70.20" from="C0B0" to="D3D2"/>
+    <trip id="normal40" depart="72.00" from="C3C2" to="C0C1"/>
+    <trip id="normal41" depart="73.80" from="D1D0" to="B0B1"/>
+    <trip id="normal42" depart="75.60" from="C0B0" to="D2D3"/>
+    <trip id="normal43" depart="77.40" from="C1B1" to="B3B2"/>
+    <trip id="normal44" depart="79.20" from="B0C0" to="C0D0"/>
+    <trip id="normal45" depart="81.00" from="D2D3" to="A0A1"/>
+    <trip id="normal46" depart="82.80" from="C3D3" to="D0D1"/>
+    <trip id="normal47" depart="84.60" from="D1D2" to="C3B3"/>
+    <trip id="normal48" depart="86.40" from="D0C0" to="C0B0"/>
+    <trip id="normal49" depart="88.20" from="C0D0" to="B2C2"/>
+    <trip id="normal50" depart="90.00" from="A1A0" to="D1D0"/>
+    <trip id="normal51" depart="91.80" from="C1B1" to="A3B3"/>
+    <trip id="normal52" depart="93.60" from="C0B0" to="B3C3"/>
+    <trip id="normal53" depart="95.40" from="B2A2" to="B1C1"/>
+    <trip id="normal54" depart="97.20" from="C0C1" to="C1C2"/>
+    <trip id="normal55" depart="99.00" from="C1C2" to="B3A3"/>
+    <trip id="normal56" depart="100.80" from="A0B0" to="B0B1"/>
+    <trip id="normal57" depart="102.60" from="A3A2" to="C1C0"/>
+    <trip id="normal58" depart="104.40" from="D1D0" to="D0C0"/>
+    <trip id="normal59" depart="106.20" from="D0C0" to="D0D1"/>
+    <trip id="normal60" depart="108.00" from="B0C0" to="D1C1"/>
+    <trip id="normal61" depart="109.80" from="C2C1" to="A1A2"/>
+    <trip id="normal62" depart="111.60" from="A0A1" to="A0A1"/>
+    <trip id="normal63" depart="113.40" from="C3C2" to="B0B1"/>
+    <trip id="normal64" depart="115.20" from="A2A1" to="C1C2"/>
+    <trip id="normal65" depart="117.00" from="B1C1" to="A1A2"/>
+    <trip id="normal66" depart="118.80" from="A2B2" to="C0C1"/>
+    <trip id="normal67" depart="120.60" from="A3A2" to="B1A1"/>
+    <trip id="normal68" depart="122.40" from="C2D2" to="B3A3"/>
+    <trip id="normal69" depart="124.20" from="B1B2" to="B3B2"/>
+    <trip id="normal70" depart="126.00" from="A0B0" to="B2B1"/>
+    <trip id="normal71" depart="127.80" from="B2C2" to="A3B3"/>
+    <trip id="normal72" depart="129.60" from="A2A1" to="D2C2"/>
+    <trip id="normal73" depart="131.40" from="C0B0" to="B0A0"/>
+    <trip id="normal74" depart="133.20" from="C1C2" to="D0D1"/>
+    <trip id="normal75" depart="135.00" from="A0A1" to="A0A1"/>
+    <trip id="normal76" depart="136.80" from="A2B2" to="C2D2"/>
+    <trip id="normal77" depart="138.60" from="A2B2" to="C2C3"/>
+    <trip id="normal78" depart="140.40" from="C2C1" to="C0D0"/>
+    <trip id="normal79" depart="142.20" from="B0A0" to="D3C3"/>
+    <trip id="normal80" depart="144.00" from="D0C0" to="C0B0"/>
+    <trip id="normal81" depart="145.80" from="B0A0" to="C2B2"/>
+    <trip id="normal82" depart="147.60" from="B2B1" to="C1B1"/>
+    <trip id="normal83" depart="149.40" from="B1B2" to="C1D1"/>
+    <trip id="normal84" depart="151.20" from="A1A0" to="B1B0"/>
+    <trip id="normal85" depart="153.00" from="D3C3" to="D1D2"/>
+    <trip id="normal86" depart="154.80" from="B1B0" to="D1D0"/>
+    <trip id="normal87" depart="156.60" from="B1B0" to="D2D3"/>
+    <trip id="normal88" depart="158.40" from="C3B3" to="B2B3"/>
+    <trip id="normal89" depart="160.20" from="B0C0" to="A0A1"/>
+    <trip id="normal90" depart="162.00" from="D1D2" to="A0B0"/>
+    <trip id="normal91" depart="163.80" from="D0D1" to="D3C3"/>
+    <trip id="normal92" depart="165.60" from="C1B1" to="A3A2"/>
+    <trip id="normal93" depart="167.40" from="D1D0" to="D3C3"/>
+    <trip id="normal94" depart="169.20" from="C2C3" to="C0B0"/>
+    <trip id="normal95" depart="171.00" from="B2B1" to="B1C1"/>
+    <trip id="normal96" depart="172.80" from="A3B3" to="C2C1"/>
+    <trip id="normal97" depart="174.60" from="B2C2" to="A3B3"/>
+    <trip id="normal98" depart="176.40" from="A2A1" to="C2B2"/>
+    <trip id="normal99" depart="178.20" from="B1B0" to="B3C3"/>
+    <trip id="normal100" depart="180.00" from="B1B2" to="D1D0"/>
+    <trip id="normal101" depart="181.80" from="D2C2" to="A0A1"/>
+    <trip id="normal102" depart="183.60" from="A3B3" to="B1B2"/>
+    <trip id="normal103" depart="185.40" from="D3D2" to="C3D3"/>
+    <trip id="normal104" depart="187.20" from="B1C1" to="B0A0"/>
+    <trip id="normal105" depart="189.00" from="C2C1" to="D1C1"/>
+    <trip id="normal106" depart="190.80" from="D2D1" to="B1C1"/>
+    <trip id="normal107" depart="192.60" from="D1D2" to="C2C1"/>
+    <trip id="normal108" depart="194.40" from="B3C3" to="D3D2"/>
+    <trip id="normal109" depart="196.20" from="B0B1" to="C2D2"/>
+    <trip id="normal110" depart="198.00" from="A1B1" to="A3A2"/>
+    <trip id="normal111" depart="199.80" from="D2C2" to="B0A0"/>
+    <trip id="normal112" depart="201.60" from="C3C2" to="C1C0"/>
+    <trip id="normal113" depart="203.40" from="D1C1" to="B2A2"/>
+    <trip id="normal114" depart="205.20" from="B1C1" to="B1A1"/>
+    <trip id="normal115" depart="207.00" from="D1D0" to="C1C0"/>
+    <trip id="normal116" depart="208.80" from="D2D3" to="D1D2"/>
+    <trip id="normal117" depart="210.60" from="A2A3" to="C0D0"/>
+    <trip id="normal118" depart="212.40" from="A2A1" to="A0B0"/>
+    <trip id="normal119" depart="214.20" from="A1A2" to="D1D0"/>
+    <trip id="normal120" depart="216.00" from="C3D3" to="D0D1"/>
+    <trip id="normal121" depart="217.80" from="B1C1" to="C1C2"/>
+    <trip id="normal122" depart="219.60" from="C3D3" to="B2B1"/>
+    <trip id="normal123" depart="221.40" from="C1B1" to="B0A0"/>
+    <trip id="normal124" depart="223.20" from="A1A2" to="B0C0"/>
+    <trip id="normal125" depart="225.00" from="D1D2" to="C1B1"/>
+    <trip id="normal126" depart="226.80" from="D2D1" to="B3A3"/>
+    <trip id="normal127" depart="228.60" from="B1A1" to="C3D3"/>
+    <trip id="normal128" depart="230.40" from="D0D1" to="A0A1"/>
+    <trip id="normal129" depart="232.20" from="C2C1" to="A1B1"/>
+    <trip id="normal130" depart="234.00" from="A2A1" to="D1D2"/>
+    <trip id="normal131" depart="235.80" from="A0B0" to="B0B1"/>
+    <trip id="normal132" depart="237.60" from="D3D2" to="B2C2"/>
+    <trip id="normal133" depart="239.40" from="A2A1" to="A3A2"/>
+    <trip id="normal134" depart="241.20" from="B0B1" to="C3B3"/>
+    <trip id="normal135" depart="243.00" from="A1B1" to="D2C2"/>
+    <trip id="normal136" depart="244.80" from="B2B1" to="D3C3"/>
+    <trip id="normal137" depart="246.60" from="D2C2" to="B1B0"/>
+    <trip id="normal138" depart="248.40" from="B0C0" to="B3B2"/>
+    <trip id="normal139" depart="250.20" from="A1B1" to="C2B2"/>
+    <trip id="normal140" depart="252.00" from="A0B0" to="A0A1"/>
+    <trip id="normal141" depart="253.80" from="D3D2" to="B1B0"/>
+    <trip id="normal142" depart="255.60" from="C1C0" to="B3A3"/>
+    <trip id="normal143" depart="257.40" from="B1B2" to="A1A2"/>
+    <trip id="normal144" depart="259.20" from="D2C2" to="D3C3"/>
+    <trip id="normal145" depart="261.00" from="D3C3" to="A2A1"/>
+    <trip id="normal146" depart="262.80" from="B0A0" to="C1C2"/>
+    <trip id="normal147" depart="264.60" from="D3D2" to="C0D0"/>
+    <trip id="normal148" depart="266.40" from="C2C3" to="C2B2"/>
+    <trip id="normal149" depart="268.20" from="B0C0" to="C0C1"/>
+    <trip id="normal150" depart="270.00" from="B1B0" to="B0B1"/>
+    <trip id="normal151" depart="271.80" from="A1A2" to="B1A1"/>
+    <trip id="normal152" depart="273.60" from="D3D2" to="B3A3"/>
+    <trip id="normal153" depart="275.40" from="C2B2" to="C1D1"/>
+    <trip id="normal154" depart="277.20" from="D2D3" to="B2B1"/>
+    <trip id="normal155" depart="279.00" from="B1B0" to="B1B2"/>
+    <trip id="normal156" depart="280.80" from="B1B2" to="D1C1"/>
+    <trip id="normal157" depart="282.60" from="D1D2" to="B1B0"/>
+    <trip id="normal158" depart="284.40" from="B1C1" to="C0D0"/>
+    <trip id="normal159" depart="286.20" from="C1B1" to="C1C0"/>
+    <trip id="normal160" depart="288.00" from="B0B1" to="A0A1"/>
+    <trip id="normal161" depart="289.80" from="B0B1" to="A1A2"/>
+    <trip id="normal162" depart="291.60" from="C0D0" to="A1A2"/>
+    <trip id="normal163" depart="293.40" from="A1A2" to="C1D1"/>
+    <trip id="normal164" depart="295.20" from="B1A1" to="D0C0"/>
+    <trip id="normal165" depart="297.00" from="B3C3" to="D1D0"/>
+    <trip id="normal166" depart="298.80" from="A2B2" to="C0B0"/>
+    <trip id="normal167" depart="300.60" from="D0C0" to="A1A2"/>
+    <trip id="normal168" depart="302.40" from="D2D3" to="A3A2"/>
+    <trip id="normal169" depart="304.20" from="C3D3" to="D3D2"/>
+    <trip id="normal170" depart="306.00" from="D0D1" to="B1B2"/>
+    <trip id="normal171" depart="307.80" from="A2A1" to="C0B0"/>
+    <trip id="normal172" depart="309.60" from="D2D1" to="B1B0"/>
+    <trip id="normal173" depart="311.40" from="D1D2" to="A2A3"/>
+    <trip id="normal174" depart="313.20" from="D2C2" to="A0B0"/>
+    <trip id="normal175" depart="315.00" from="B1B2" to="D2C2"/>
+    <trip id="normal176" depart="316.80" from="D0C0" to="D2C2"/>
+    <trip id="normal177" depart="318.60" from="D1C1" to="C3B3"/>
+    <trip id="normal178" depart="320.40" from="C2C3" to="A3A2"/>
+    <trip id="normal179" depart="322.20" from="B2C2" to="A2B2"/>
+    <trip id="normal180" depart="324.00" from="C2D2" to="C2C1"/>
+    <trip id="normal181" depart="325.80" from="B0C0" to="A1A2"/>
+    <trip id="normal182" depart="327.60" from="D3C3" to="D0C0"/>
+    <trip id="normal183" depart="329.40" from="C0D0" to="C0C1"/>
+    <trip id="normal184" depart="331.20" from="D1C1" to="B3A3"/>
+    <trip id="normal185" depart="333.00" from="B2B1" to="B1C1"/>
+    <trip id="normal186" depart="334.80" from="B0C0" to="A0B0"/>
+    <trip id="normal187" depart="336.60" from="C2B2" to="B2C2"/>
+    <trip id="normal188" depart="338.40" from="C1B1" to="A1A0"/>
+    <trip id="normal189" depart="340.20" from="B2A2" to="A2A3"/>
+    <trip id="normal190" depart="342.00" from="A2A3" to="B0C0"/>
+    <trip id="normal191" depart="343.80" from="D0D1" to="B2B3"/>
+    <trip id="normal192" depart="345.60" from="B2B3" to="C1C2"/>
+    <trip id="normal193" depart="347.40" from="B0B1" to="A0A1"/>
+    <trip id="normal194" depart="349.20" from="C0C1" to="C0B0"/>
+    <trip id="normal195" depart="351.00" from="C2B2" to="B3A3"/>
+    <trip id="normal196" depart="352.80" from="C2C1" to="C3B3"/>
+    <trip id="normal197" depart="354.60" from="B0B1" to="B3C3"/>
+    <trip id="normal198" depart="356.40" from="B3B2" to="B0A0"/>
+    <trip id="normal199" depart="358.20" from="B2B3" to="C0D0"/>
+</routes>

@@ -1,0 +1,10 @@
+configuration,density,metric,n,mean,ci95_lower,ci95_upper
+FogCloudAStar,low,red_signal_wait_s,2,10.5,-72.0903307851355,93.0903307851355
+FogCloudAStar,medium,red_signal_wait_s,2,12.0,-76.94343315322286,100.94343315322286
+FogCloudAStar,high,red_signal_wait_s,2,5.0,-1.353102368087347,11.353102368087347
+MistDynamicFogFallback,low,red_signal_wait_s,2,11.5,-71.0903307851355,94.0903307851355
+MistDynamicFogFallback,medium,red_signal_wait_s,2,12.75,-60.31067723300448,85.81067723300448
+MistDynamicFogFallback,high,red_signal_wait_s,2,6.25,-3.2796535521310197,15.77965355213102
+NoPreemptionBaseline,low,red_signal_wait_s,2,111.75,38.68932276699552,184.81067723300447
+NoPreemptionBaseline,medium,red_signal_wait_s,2,110.5,85.0875905276506,135.9124094723494
+NoPreemptionBaseline,high,red_signal_wait_s,2,97.2499999999995,5.130015662726663,189.36998433727234

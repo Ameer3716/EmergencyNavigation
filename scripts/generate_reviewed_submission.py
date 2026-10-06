@@ -122,6 +122,21 @@ def graph_blocks(summary: dict[tuple[str, str, str], dict[str, str]]) -> list[tu
                            ROOT / f"results/graphs/paired_{metric}-{density}.png", caption))
     if {b[3].name for b in blocks} != {p.name for p in (ROOT / "results/graphs").glob("*.png")}:
         raise SystemExit("The report gallery must include every current graph exactly once")
+    supplemental = ROOT / 'results/supplemental'
+    if (supplemental / 'validation_report.json').exists():
+        rows = read(supplemental / 'route_transaction_summary.csv') + read(supplemental / 'red_signal_summary.csv')
+        extras = (
+            ('route_requests_per_run', 'Fog route requests', 'Mean wireless Fog route requests per scheduled run. Local Mist needs no Fog request. These counts are separate from the emergency alert.', 'requests/run'),
+            ('route_transaction_ms', 'Fog route transaction turnaround', 'Time from sending a Fog request to accepting its route reply. Processing and Cloud backhaul are included; watchdog waiting is excluded. Local-only Mist has no wireless transaction.', 'ms'),
+            ('route_network_roundtrip_ms', 'Fog route network round trip', 'Request and reply network time after subtracting processing and Cloud backhaul. The 500 ms watchdog wait is also excluded.', 'ms'),
+            ('red_signal_wait_s', 'Short notice red signal validation', 'Isolated red-signal scenarios use two matched seeds per density. Priority is deliberately requested late, within 10 metres or half a second. These stress tests are separate from the main comparison.', 's'),
+        )
+        for metric, label, explanation, unit in extras:
+            for density in DENSITIES:
+                values = [r for r in rows if r['metric'] == metric and r['density'] == density and r['mean']]
+                caption = f'{density.capitalize()} traffic: ' + '; '.join(
+                    f"{('No preemption' if r['configuration'] == 'NoPreemptionBaseline' else SHORT[CONFIGS.index(r['configuration'])])} {float(r['mean']):.3f} {unit} (n={r['n']})" for r in values) + '. Error bars show 95% confidence intervals.'
+                blocks.append((metric, label, explanation, supplemental / f'graphs/{metric}-{density}.png', caption))
     return blocks
 
 
@@ -139,7 +154,7 @@ def write_graph_guide(blocks: list[tuple[str, str, str, Path, str]]) -> None:
         if key != previous:
             lines += [f"### {label}", "", explanation, ""]
             previous = key
-        lines += [f"![{label} for {path.stem.rsplit('-', 1)[1]} traffic](../results/graphs/{path.name})", "",
+        lines += [f"![{label} for {path.stem.rsplit('-', 1)[1]} traffic](../{path.relative_to(ROOT).as_posix()})", "",
                   caption, ""]
     lines += ["The complete numeric means, valid sample sizes, standard deviations, and intervals are in `../results/processed/summary-batch.csv`. The seven main measures are also tabulated in `VERIFICATION.md`.", ""]
     (ROOT / "docs/PROCESS_AND_GRAPHS.md").write_text("\n".join(lines), encoding="utf-8")
@@ -246,6 +261,8 @@ def main() -> None:
     cover_details.add_run("SUMO + OMNeT++ + Veins\n")
     cover_details.add_run("4 routing configurations  |  3 traffic levels  |  30 seeds\n")
     cover_details.add_run(f"360 primary runs + 90 waiting controls  |  {len(blocks)} result graphs\n")
+    if (ROOT / 'results/supplemental/validation_report.json').exists():
+        cover_details.add_run('18 separate red signal validation runs\n')
     cover_details.add_run("October 2026")
     doc.add_page_break()
 
@@ -490,6 +507,25 @@ def main() -> None:
         "the four routing approaches have similar throughput because they delivered the "
         "same number of alerts."
     )
+
+    supplemental = ROOT / 'results/supplemental'
+    if (supplemental / 'validation_report.json').exists():
+        heading(doc, 'Supplementary communication and red signal checks')
+        doc.add_paragraph('The seven headline measures keep their original definitions. The additional route transaction measures count Fog requests and accepted replies after the emergency alert. Local Mist uses no wireless Fog transaction, so its wireless transaction delay and completion rate are not applicable. Equal alert delivery results can coexist with different route communication needs.')
+        doc.add_paragraph('Route transaction turnaround includes processing and Cloud backhaul. The network round trip subtracts those components and excludes watchdog waiting. These values come from the original raw batch, without inventing unrecorded route-packet byte counts.')
+        rows = read(supplemental / 'route_transaction_summary.csv')
+        lookup = {(r['configuration'], r['density'], r['metric']): r for r in rows}
+        body = []
+        for density in DENSITIES:
+            for cfg in ('FogCloudAStar', 'MistDynamicFogFallback'):
+                r = lookup[cfg, density, 'route_completion_rate']
+                body.append((density.capitalize(), SHORT[CONFIGS.index(cfg)], r['requests_sent'], r['replies_accepted'], f"{float(r['mean'])*100:.1f}%"))
+        table(doc, ('Traffic', 'Approach', 'Requests', 'Accepted replies', 'Completion'), body)
+        doc.add_paragraph('Completion is conditional on sending a Fog request; it is not EM PDR and does not mean every scheduled run received the emergency alert.')
+        doc.add_paragraph('Eighteen separate signal tests reuse the existing binary and matched trips. Junction A1 starts with a protected conflicting phase for 150 seconds. Its permissive green is removed in the validation input, keeping both ambulance movements from A0A1 red. Priority requests are deliberately late, within 10 metres or half a second. Fog/Cloud, Mist with Fog, and no-preemption are compared at all three densities with seeds 1 and 4 over 400 seconds. These controlled cases test a short-notice boundary condition; they are not the default priority algorithm and are not added to the main comparison.')
+        signals = read(supplemental / 'red_signal_summary.csv')
+        table(doc, ('Traffic', 'Approach', 'Runs', 'Mean waiting s'), [(r['density'].capitalize(), 'No preemption' if r['configuration'] == 'NoPreemptionBaseline' else SHORT[CONFIGS.index(r['configuration'])], r['n'], f"{float(r['mean']):.3f}") for r in signals])
+        doc.add_paragraph('Every tested priority case has an observed red approach, positive measured waiting, confirmed arrival, and less waiting than its matched no-preemption case. Yellow, all-red, and minimum-green timing are checked from the event logs. Two seeds per density are mechanism validation; wide confidence intervals are retained. Ordinary green-arrival cases may still have zero waiting.')
 
     heading(doc, "Conclusion and limits")
     doc.add_paragraph(

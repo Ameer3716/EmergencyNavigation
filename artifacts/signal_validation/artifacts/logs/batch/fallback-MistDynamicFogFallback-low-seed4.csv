@@ -1,0 +1,2 @@
+time,mistStart,watchdogThreshold,fallbackReason,fogRequestTime
+66.553254550383,66.053254550383,0.5,controlled_stall_timeout,66.553254550383

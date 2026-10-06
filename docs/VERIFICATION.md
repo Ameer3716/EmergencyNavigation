@@ -150,3 +150,7 @@ A minus B is computed within each delivered matching seed. Negative values favou
 | high | MistDynamicFogFallback minus MistDynamicAStar | route_decision_ms (ms) | 30 | -106.499 | [-173.573, -39.425] | 0.002939291312809749 |
 
 The normal and controlled-stall plots and matched-seed difference plots accompany the pooled figures. Faster modeled route decisions do not automatically produce an equally large change in SUMO vehicle arrival time.
+
+## Supplementary route communication and signal validation
+
+The seven headline metrics and the 450-run main matrix are unchanged. Separate route-transaction metrics are derived from original raw scalars, and 18 isolated short-notice red-signal runs validate positive waiting and safe priority transitions. Definitions, confidence intervals, measured tables, and limitations are in [SUPPLEMENTAL_VALIDATION.md](SUPPLEMENTAL_VALIDATION.md).

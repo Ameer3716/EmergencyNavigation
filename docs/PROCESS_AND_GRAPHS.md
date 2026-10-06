@@ -1,6 +1,6 @@
 # Emergency vehicle navigation: project and graph guide
 
-This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same 66 graphs.
+This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same 78 graphs.
 
 ## How the system works
 
@@ -24,7 +24,7 @@ This project studies how an emergency vehicle receives an accident alert and cho
 
 Each bar is a density and configuration mean. Error bars show 95% confidence intervals; the exact methods are in [METHODOLOGY.md](METHODOLOGY.md). Metrics requiring EM delivery use only valid delivered runs. PDR, EM throughput, and fallback activation use all 30 scheduled runs where applicable. Fallback latency uses only runs where the watchdog actually activated.
 
-## All 66 graphs
+## All 78 graphs
 
 ### Packet delivery ratio
 
@@ -377,5 +377,69 @@ Medium traffic: Mist minus Fog/Cloud -52.27 ms, 95% CI [-207.98, 103.45], n=29; 
 ![Matched seed differences in route decision latency for high traffic](../results/graphs/paired_route_decision_ms-high.png)
 
 High traffic: Mist minus Fog/Cloud -60.54 ms, 95% CI [-211.69, 90.61], n=30; Mist + Fog minus Mist Dynamic -106.50 ms, 95% CI [-173.57, -39.42], n=30.
+
+### Fog route requests
+
+Mean wireless Fog route requests per scheduled run. Local Mist needs no Fog request. These counts are separate from the emergency alert.
+
+![Fog route requests for low traffic](../results/supplemental/graphs/route_requests_per_run-low.png)
+
+Low traffic: Fog/Cloud 0.800 requests/run (n=30); Mist 0.000 requests/run (n=30); Mist Dynamic 0.000 requests/run (n=30); Mist + Fog 0.233 requests/run (n=30). Error bars show 95% confidence intervals.
+
+![Fog route requests for medium traffic](../results/supplemental/graphs/route_requests_per_run-medium.png)
+
+Medium traffic: Fog/Cloud 0.967 requests/run (n=30); Mist 0.000 requests/run (n=30); Mist Dynamic 0.000 requests/run (n=30); Mist + Fog 0.267 requests/run (n=30). Error bars show 95% confidence intervals.
+
+![Fog route requests for high traffic](../results/supplemental/graphs/route_requests_per_run-high.png)
+
+High traffic: Fog/Cloud 1.000 requests/run (n=30); Mist 0.000 requests/run (n=30); Mist Dynamic 0.000 requests/run (n=30); Mist + Fog 0.267 requests/run (n=30). Error bars show 95% confidence intervals.
+
+### Fog route transaction turnaround
+
+Time from sending a Fog request to accepting its route reply. Processing and Cloud backhaul are included; watchdog waiting is excluded. Local-only Mist has no wireless transaction.
+
+![Fog route transaction turnaround for low traffic](../results/supplemental/graphs/route_transaction_ms-low.png)
+
+Low traffic: Fog/Cloud 626.539 ms (n=24); Mist + Fog 326.539 ms (n=7). Error bars show 95% confidence intervals.
+
+![Fog route transaction turnaround for medium traffic](../results/supplemental/graphs/route_transaction_ms-medium.png)
+
+Medium traffic: Fog/Cloud 626.543 ms (n=29); Mist + Fog 326.598 ms (n=8). Error bars show 95% confidence intervals.
+
+![Fog route transaction turnaround for high traffic](../results/supplemental/graphs/route_transaction_ms-high.png)
+
+High traffic: Fog/Cloud 626.539 ms (n=30); Mist + Fog 326.630 ms (n=8). Error bars show 95% confidence intervals.
+
+### Fog route network round trip
+
+Request and reply network time after subtracting processing and Cloud backhaul. The 500 ms watchdog wait is also excluded.
+
+![Fog route network round trip for low traffic](../results/supplemental/graphs/route_network_roundtrip_ms-low.png)
+
+Low traffic: Fog/Cloud 0.539 ms (n=24); Mist + Fog 0.539 ms (n=7). Error bars show 95% confidence intervals.
+
+![Fog route network round trip for medium traffic](../results/supplemental/graphs/route_network_roundtrip_ms-medium.png)
+
+Medium traffic: Fog/Cloud 0.543 ms (n=29); Mist + Fog 0.598 ms (n=8). Error bars show 95% confidence intervals.
+
+![Fog route network round trip for high traffic](../results/supplemental/graphs/route_network_roundtrip_ms-high.png)
+
+High traffic: Fog/Cloud 0.539 ms (n=30); Mist + Fog 0.630 ms (n=8). Error bars show 95% confidence intervals.
+
+### Short notice red signal validation
+
+Isolated red-signal scenarios use two matched seeds per density. Priority is deliberately requested late, within 10 metres or half a second. These stress tests are separate from the main comparison.
+
+![Short notice red signal validation for low traffic](../results/supplemental/graphs/red_signal_wait_s-low.png)
+
+Low traffic: Fog/Cloud 10.500 s (n=2); Mist + Fog 11.500 s (n=2); No preemption 111.750 s (n=2). Error bars show 95% confidence intervals.
+
+![Short notice red signal validation for medium traffic](../results/supplemental/graphs/red_signal_wait_s-medium.png)
+
+Medium traffic: Fog/Cloud 12.000 s (n=2); Mist + Fog 12.750 s (n=2); No preemption 110.500 s (n=2). Error bars show 95% confidence intervals.
+
+![Short notice red signal validation for high traffic](../results/supplemental/graphs/red_signal_wait_s-high.png)
+
+High traffic: Fog/Cloud 5.000 s (n=2); Mist + Fog 6.250 s (n=2); No preemption 97.250 s (n=2). Error bars show 95% confidence intervals.
 
 The complete numeric means, valid sample sizes, standard deviations, and intervals are in `../results/processed/summary-batch.csv`. The seven main measures are also tabulated in `VERIFICATION.md`.

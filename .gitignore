@@ -84,3 +84,7 @@ Thumbs.db
 
 # ─── Kiro IDE internal files ──────────────────────────────────────────────────
 .kiro/
+
+# Supplementary validation vectors are retained locally, not in Git.
+artifacts/signal_validation/**/*.vec
+artifacts/signal_validation/**/*.vci

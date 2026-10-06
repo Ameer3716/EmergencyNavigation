@@ -52,6 +52,16 @@ def main() -> None:
          OUT / "artifacts/sample_validation.json")
     copy(ROOT / "artifacts/timing_validation.json", OUT / "artifacts/timing_validation.json")
     copy(ROOT / "artifacts/final_binary_sample_validation.json", OUT / "artifacts/final_binary_sample_validation.json")
+    if (ROOT / 'results/supplemental/validation_report.json').exists():
+        copy(ROOT / 'docs/SUPPLEMENTAL_VALIDATION.md', OUT / 'docs/SUPPLEMENTAL_VALIDATION.md')
+        for path in (ROOT / 'results/supplemental').rglob('*'):
+            if path.is_file():
+                copy(path, OUT / path.relative_to(ROOT))
+        # Include the validation scalars, logs, inputs and provenance; large
+        # vector files remain local just like the main batch vectors.
+        for path in (ROOT / 'artifacts/signal_validation').rglob('*'):
+            if path.is_file() and path.suffix in ('.sca', '.csv', '.json', '.txt', '.xml', '.ini'):
+                copy(path, OUT / path.relative_to(ROOT))
     for folder in ("failed_startup_attempts_168", "failed_startup_attempts_207", "logs/startup_failures"):
         for path in (ROOT / "artifacts" / folder).glob("*.txt"):
             copy(path, OUT / "artifacts" / folder / path.name)
@@ -62,7 +72,7 @@ def main() -> None:
     for name in ("build.sh", "run_batch_env.sh", "run_batch.py", "generate_demand.py",
                  "audit_batch.py", "verify_response_times.py", "generate_final_graph.py",
                  "write_final_reports.py", "generate_reviewed_submission.py",
-                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py"):
+                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py", "run_signal_validation.py"):
         copy(ROOT / "scripts" / name, OUT / "scripts" / name)
     for path in (ROOT / "tests").glob("*.py"):
         copy(path, OUT / "tests" / path.name)
