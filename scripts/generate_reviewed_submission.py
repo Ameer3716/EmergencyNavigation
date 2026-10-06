@@ -29,10 +29,10 @@ PRIMARY = (
     ("traffic_light_wait_s", "EV traffic-light waiting time", "s"),
 )
 GRAPH_INFO = (
-    ("pdr", "Packet delivery ratio", "The share of generated emergency messages that reached the EV. Higher is better."),
+    ("pdr", "Packet delivery ratio", "The share of generated emergency messages that reached the EV. All four approaches share this alert service before route computation; equal bars can be correct."),
     ("nrl", "Normalized routing load", "Control and EM transmissions per delivered emergency message. Lower means less communication overhead."),
-    ("throughput_bps", "EM throughput", "Delivered EM payload bits divided by the fixed 900 second observation window. One delivery contributes 2.27556 bit/s."),
-    ("e2e_delay_ms", "EM end-to-end delay", "Time from RSU message generation to EV reception, in milliseconds. Lower is faster."),
+    ("throughput_bps", "EM throughput", "Delivered EM payload bits divided by the fixed 900 second observation window. One delivery contributes 2.27556 bit/s. This measures the shared alert service."),
+    ("e2e_delay_ms", "EM end-to-end delay", "Time from RSU message generation to EV reception, in milliseconds. It measures the shared alert service before any route computation."),
     ("route_decision_ms", "Route decision latency", "Time from EV message reception to the initial route being applied, in milliseconds."),
     ("ev_response_s", "EV response time", "Time from emergency message generation until the EV reaches the accident, in seconds."),
     ("traffic_light_wait_s", "EV traffic-light waiting time", "EV standstill near a signal stop line, in seconds. A value of zero means no measured wait."),
@@ -70,6 +70,8 @@ def fmt(value: float, key: str) -> str:
         return f"{value:,.0f}"
     if key == "throughput_bps":
         return f"{value:.3f}"
+    if key in ("ev_response_s", "traffic_light_wait_s"):
+        return f"{value:.3f}"
     return f"{value:.1f}"
 
 
@@ -80,6 +82,8 @@ def graph_value(value: float, key: str) -> str:
         return f"{value:.2f}"
     if key in ("nrl", "control_transmissions", "control_bytes"):
         return f"{value:,.0f}"
+    if key in ("ev_response_s", "ev_travel_s", "traffic_light_wait_s", "ev_delay_vs_freeflow_s"):
+        return f"{value:.3f}"
     return f"{value:.1f}"
 
 
@@ -137,11 +141,31 @@ def graph_blocks(summary: dict[tuple[str, str, str], dict[str, str]]) -> list[tu
                 caption = f'{density.capitalize()} traffic: ' + '; '.join(
                     f"{('No preemption' if r['configuration'] == 'NoPreemptionBaseline' else SHORT[CONFIGS.index(r['configuration'])])} {float(r['mean']):.3f} {unit} (n={r['n']})" for r in values) + '. Error bars show 95% confidence intervals.'
                 blocks.append((metric, label, explanation, supplemental / f'graphs/{metric}-{density}.png', caption))
+    incident = ROOT / 'results/congestion_validation'
+    if (incident / 'validation_report.json').exists():
+        rows = read(incident / 'summary.csv') + read(incident / 'fault_recovery_summary.csv')
+        for metric, label, explanation, unit in (
+            ('ev_response_s', 'Controlled incident response', 'A separate matched experiment adds the same stopped queue after the initial route decision. These values measure response under that incident, not ordinary traffic.', 's'),
+            ('route_changes', 'Controlled incident route changes', 'Actual route replacements based on received traffic reports in the incident experiment. No routing costs or route choices are hardcoded.', 'changes/run'),
+            ('recovery_saved_ms', 'Controlled fault route decision time saved', 'Matched time saved by Fog fallback against Dynamic Mist under the same controlled 900 ms stall in the original batch. This is route readiness, not journey time.', 'ms')):
+            for density in DENSITIES:
+                values = [r for r in rows if r['metric'] == metric and r['density'] == density]
+                caption = f'{density.capitalize()} traffic: ' + '; '.join(
+                    f"{SHORT[CONFIGS.index(r['configuration'])]} {float(r['mean']):.3f} {unit} (n={r['n']})" for r in values) + '. Error bars show 95% confidence intervals.'
+                blocks.append((f'incident_{metric}', label, explanation, incident / f'graphs/{metric}-{density}.png', caption))
+        pairs = read(incident / 'paired_comparisons.csv')
+        for density in DENSITIES:
+            values = [r for r in pairs if r['metric'] == 'ev_response_s' and r['density'] == density]
+            caption = f'{density.capitalize()} traffic: ' + '; '.join(
+                f"{SHORT[CONFIGS.index(r['config_A'])]} minus {SHORT[CONFIGS.index(r['config_B'])]} {float(r['mean_paired_diff']):.3f} s, 95% CI [{float(r['ci95_lower']):.3f}, {float(r['ci95_upper']):.3f}], n={r['n_pairs']}" for r in values) + '.'
+            blocks.append(('incident_paired_response', 'Controlled incident matched response differences',
+                           'Negative means the first algorithm is faster. The paired interval quantifies uncertainty. A controlled obstacle does not establish the same benefit in ordinary traffic.',
+                           incident / f'graphs/incident_paired_response_s-{density}.png', caption))
     return blocks
 
 
 def write_graph_guide(blocks: list[tuple[str, str, str, Path, str]]) -> None:
-    lines = ["# Emergency vehicle navigation: project and graph guide", "",
+    lines = ["# Emergency vehicle navigation project and graph guide", "",
              f"This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same {len(blocks)} graphs.", "",
              "## How the system works", ""]
     for index, step in enumerate(PROCESS_STEPS, 1):
@@ -196,7 +220,7 @@ def table(doc: Document, headers: tuple[str, ...], body: list[tuple[str, ...]]) 
         row = t.add_row()
         for i, value in enumerate(values):
             cell = row.cells[i]
-            cell.text = value
+            cell.text = str(value)
             cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
             if index % 2:
                 shade(cell, "F2F6FA")
@@ -263,6 +287,8 @@ def main() -> None:
     cover_details.add_run(f"360 primary runs + 90 waiting controls  |  {len(blocks)} result graphs\n")
     if (ROOT / 'results/supplemental/validation_report.json').exists():
         cover_details.add_run('18 separate red signal validation runs\n')
+    if (ROOT / 'results/congestion_validation/validation_report.json').exists():
+        cover_details.add_run('360 separate controlled incident runs\n')
     cover_details.add_run("October 2026")
     doc.add_page_break()
 
@@ -273,9 +299,11 @@ def main() -> None:
         "tests four ways to make that route decision in a simulated vehicular network."
     )
     doc.add_paragraph(
-        "The central question is how the location of route computation, live traffic updates, "
-        "and a Fog backup affect message delivery, routing work, and the emergency vehicle's "
-        "journey. All four approaches use traffic-light priority for the emergency vehicle."
+        "The project measures alert delivery, routing work, and the emergency vehicle's journey. "
+        "The routing comparison tests the location of route computation, live traffic updates, "
+        "and Fog recovery. All four approaches share the alert delivery mechanism and traffic-light "
+        "priority. The alert arrives before route computation, so its delivery ratio, throughput "
+        "and delay can legitimately be equal across routing approaches."
     )
 
     heading(doc, "The simulated road and communication system")
@@ -287,12 +315,14 @@ def main() -> None:
         "start the response."
     )
     doc.add_paragraph(
-        "Normal traffic comes in three levels: 72 vehicles in low traffic, 144 in medium traffic, "
-        "and 200 in high traffic. Thirty random seeds create different trips at each level. The "
-        "same seed and traffic are used for each routing approach so the comparisons are fair."
+        "Normal traffic comes in three levels: 72 generated trips in low traffic, 144 in medium "
+        "traffic, and 200 in high traffic, spread over 360 seconds. These are total demand counts; "
+        "fewer vehicles may be on the road at any one time. Thirty demand seeds create different "
+        "routes and entry edges. The same demand and OMNeT++ seed are used for each routing approach. "
+        "Veins launchd holds SUMO driving randomness at seed zero."
     )
 
-    heading(doc, "How the system works, step by step")
+    heading(doc, "How the system works step by step")
     for step in PROCESS_STEPS:
         doc.add_paragraph(step, style="List Number")
 
@@ -448,7 +478,7 @@ def main() -> None:
     heading(doc, "Traffic-light waiting with and without priority")
     doc.add_paragraph(
         "The no-preemption control uses Fog/Cloud routing with priority disabled. It appears "
-        "only in this waiting comparison and the three waiting graphs. The priority controller "
+        "only in waiting comparisons and their graphs. The priority controller "
         "rechecks the active phase, preserves its minimum green, and uses clearance before serving the EV. Some "
         "requests can finish before arrival; others require the EV to wait. Waiting is measured "
         "from movement rather than added artificially."
@@ -527,6 +557,41 @@ def main() -> None:
         table(doc, ('Traffic', 'Approach', 'Runs', 'Mean waiting s'), [(r['density'].capitalize(), 'No preemption' if r['configuration'] == 'NoPreemptionBaseline' else SHORT[CONFIGS.index(r['configuration'])], r['n'], f"{float(r['mean']):.3f}") for r in signals])
         doc.add_paragraph('Every tested priority case has an observed red approach, positive measured waiting, confirmed arrival, and less waiting than its matched no-preemption case. Yellow, all-red, and minimum-green timing are checked from the event logs. Two seeds per density are mechanism validation; wide confidence intervals are retained. Ordinary green-arrival cases may still have zero waiting.')
 
+    incident = ROOT / 'results/congestion_validation'
+    if (incident / 'validation_report.json').exists():
+        heading(doc, 'Routing under a developing queue')
+        doc.add_paragraph('A separate 360-run comparison tests what happens when the chosen road becomes blocked after the first route decision. The input requests three passenger vehicles on C1C2 at 90, 91 and 92 seconds, with stops until 250 seconds. Every algorithm uses the same incident input, background trips, 30 seeds per density, binary, signal rules and controlled stall assignment. SUMO safety checks may delay insertion. These three requested vehicles are additional to ordinary demand. Received beacons and RSU reports provide congestion information; the algorithm receives no privileged incident notification.')
+        doc.add_paragraph('Routing retains its minimum of three observed vehicles for a congestion adjustment; incident and ordinary queued vehicles can supply those observations. FCD verifies at least one stopped blocker through the end of the planned incident in every case. Initial route decisions precede the incident, and every delivered-alert run reaches the destination. A pilot uses seed 1 at each density to check the mechanism before the full matrix. This controlled test does not describe how often incidents occur or guarantee improvements in normal traffic.')
+        rows = read(incident / 'summary.csv')
+        table(doc, ('Traffic', 'Approach', 'Arrived samples', 'Mean response s'),
+              [(r['density'].capitalize(), SHORT[CONFIGS.index(r['configuration'])], r['n'], f"{float(r['mean']):.3f}")
+               for r in sorted((r for r in rows if r['metric'] == 'ev_response_s'),
+                               key=lambda r: (DENSITIES.index(r['density']), CONFIGS.index(r['configuration'])))])
+        incident_runs = read(incident / 'individual_runs.csv')
+        full_queue = sum(int(r['maximum_stopped_incident_vehicles']) == 3 for r in incident_runs)
+        reduced = sorted({(r['density'], int(r['seed']), int(r['maximum_stopped_incident_vehicles'])) for r in incident_runs if int(r['maximum_stopped_incident_vehicles']) < 3})
+        doc.add_paragraph(f'{full_queue} runs have all three incident vehicles stopped during the planned period. '
+                          + '; '.join(f"{density.capitalize()} seed {seed} has {count} stopped incident {'vehicle' if count == 1 else 'vehicles'} in all four algorithms" for density, seed, count in reduced)
+                          + '. Safety checks delayed the remaining requested vehicles beyond 250 seconds. All 360 cases are retained. Realised obstruction counts and late insertion counts match within each density and seed; no scenario input was changed after measuring this variation.')
+        avoided = []
+        for density in DENSITIES:
+            for cfg in CONFIGS[2:]:
+                group = [r for r in incident_runs if r['density'] == density and r['configuration'] == cfg]
+                avoided.append((density.capitalize(), SHORT[CONFIGS.index(cfg)],
+                                sum(int(r['incident_avoided_by_reroute']) for r in group), len(group)))
+        doc.add_paragraph('The following counts use actual applied routes that remove the obstructed edge during the incident. A review without a replacement does not count.')
+        table(doc, ('Traffic', 'Dynamic approach', 'Runs avoiding the queue', 'Scheduled runs'), avoided)
+        pairs = read(incident / 'paired_comparisons.csv')
+        table(doc, ('Traffic', 'Matched comparison', 'Difference s', '95% interval s'),
+              [(r['density'].capitalize(), f"{SHORT[CONFIGS.index(r['config_A'])]} minus {SHORT[CONFIGS.index(r['config_B'])]}",
+                f"{float(r['mean_paired_diff']):.3f}", f"{float(r['ci95_lower']):.3f} to {float(r['ci95_upper']):.3f}")
+               for r in pairs if r['metric'] == 'ev_response_s'])
+        heading(doc, 'What fallback changes under a controlled fault')
+        recovered = read(incident / 'fault_recovery_summary.csv')
+        table(doc, ('Traffic', 'Matched stalled cases', 'Route decision time saved ms'),
+              [(r['density'].capitalize(), r['n'], f"{float(r['mean']):.3f}") for r in recovered])
+        doc.add_paragraph('The fallback savings compare actual initial route application times in the original batch under the same 900 ms Mist stall. This isolates recovery performance from ordinary traffic and does not imply the same saving in total journey time. Shared EM PDR and throughput remain valid alert-delivery measures; they cannot establish differences between routing algorithms. Response labels show three decimals to reveal small numerical differences, while SUMO movement still updates every 500 ms.')
+
     heading(doc, "Conclusion and limits")
     doc.add_paragraph(
         "The experiment compares alert delivery, route computation, and vehicle movement as "
@@ -549,7 +614,8 @@ def main() -> None:
         "PDR and EM throughput include all 30 scheduled runs. Delivery-dependent measures "
         "use only runs with a delivered emergency message. A graph can contain fewer than "
         "four bars when a metric applies only to dynamic routing or fallback. Only the "
-        "waiting graphs add a fifth bar for the no-preemption control."
+        "main waiting graphs add a fifth bar for the no-preemption control. The separate "
+        "red-signal waiting graphs also include that control."
     )
     doc.add_paragraph(
         f"The following gallery contains all {len(blocks)} result graphs."

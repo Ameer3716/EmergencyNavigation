@@ -9,15 +9,18 @@ import subprocess
 import random
 import json
 import hashlib
+import re
 import time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
 
 ROOT = Path(__file__).resolve().parents[1]
 GRID = ROOT / "simulations/grid"
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
 # Fixed independent selection, identical across densities and every Mist approach.
 STALL_SEEDS = frozenset(random.Random(20261005).sample(range(1, 31), 8))
+STARTUP_ATTEMPTS = 10
 SUMO_HOME = Path(os.environ.get("SUMO_HOME", "/home/opp_env/sumo118_pkg/sumo"))
 
 
@@ -89,6 +92,7 @@ def main() -> None:
     logs_dir = artifact_root / "artifacts/logs/batch"
     raw_dir.mkdir(parents=True, exist_ok=True)
     logs_dir.mkdir(parents=True, exist_ok=True)
+    startup_lock = Lock()
     def run_seed(key):
         density, seed = key
         base = ROOT / "simulations/batch" / f"{density}-seed{seed}"
@@ -133,23 +137,51 @@ def main() -> None:
                        "-n", f"{veins_root / 'src/veins'}:{ROOT / 'src'}",
                        "-l", str(veins_root / "src/veins"), "-l", str(library),
                        "-f", "omnetpp.ini"]
-            for attempt in range(1, 4):
+            for attempt in range(1, STARTUP_ATTEMPTS + 1):
+                startup_timed_out = False
                 with output.open("w", encoding="utf-8") as log:
-                    result = subprocess.run(command, cwd=run_dir, stdout=log,
-                                            stderr=subprocess.STDOUT)
-                if result.returncode == 0:
+                    # Serialize only launchd handshakes. Once a simulation
+                    # advances, all workers execute concurrently as before.
+                    with startup_lock:
+                        process = subprocess.Popen(command, cwd=run_dir, stdout=log,
+                                                   stderr=subprocess.STDOUT)
+                        started = time.monotonic()
+                        while process.poll() is None:
+                            text = output.read_text(encoding="utf-8", errors="replace")
+                            if re.search(r"^\*\* Event #[1-9]", text, re.MULTILINE):
+                                break
+                            if time.monotonic() - started > 60:
+                                startup_timed_out = True
+                                process.terminate()
+                                try:
+                                    process.wait(timeout=10)
+                                except subprocess.TimeoutExpired:
+                                    process.kill()
+                                break
+                            time.sleep(1)
+                    result = subprocess.CompletedProcess(command, process.wait())
+                if result.returncode == 0 and not startup_timed_out:
                     break
                 text = output.read_text(encoding="utf-8", errors="replace")
-                startup_disconnect = ("Connection to TraCI server lost." in text
-                                      and "at t=0s, event #1" in text)
+                startup_disconnect = startup_timed_out or (any(error in text for error in (
+                    "Connection to TraCI server lost.", "Attempted to read past end of byte buffer"))
+                    and "at t=0s, event #1" in text)
                 if not startup_disconnect:
                     result.check_returncode()
                 attempts_dir = artifact_root / "artifacts/logs/startup_failures"
                 attempts_dir.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(output, attempts_dir / f"{stem}-{time.time_ns()}.txt")
-                if attempt == 3:
+                attempt_stem = f"{stem}-{time.time_ns()}"
+                shutil.copyfile(output, attempts_dir / f"{attempt_stem}.txt")
+                if startup_timed_out:
+                    (attempts_dir / f"{attempt_stem}.json").write_text(json.dumps({
+                        'reason': 'launchd_startup_no_progress', 'timeout_s': 60,
+                        'simulation_advanced': False, 'returncode': result.returncode
+                    }, indent=2) + '\n')
+                if attempt == STARTUP_ATTEMPTS:
+                    if startup_timed_out:
+                        raise TimeoutError(f'TraCI startup did not advance after {STARTUP_ATTEMPTS} attempts: {stem}')
                     result.check_returncode()
-                print(f"Retry startup connection {stem} (attempt {attempt + 1}/3)", flush=True)
+                print(f"Retry startup connection {stem} (attempt {attempt + 1}/{STARTUP_ATTEMPTS})", flush=True)
                 time.sleep(3 * attempt)
             for extension in ("sca", "vec", "vci"):
                 source = run_dir / "results" / f"Batch-#0.{extension}"

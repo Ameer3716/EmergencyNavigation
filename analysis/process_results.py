@@ -366,6 +366,8 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                 val_text = f"{mean:.2f}"
             elif key in ("e2e_delay_ms", "route_decision_ms", "fallback_decision_ms"):
                 val_text = f"{mean:.1f}"
+            elif key in ("ev_response_s", "ev_travel_s", "traffic_light_wait_s", "ev_delay_vs_freeflow_s"):
+                val_text = f"{mean:.3f}"
             else:
                 val_text = f"{mean:.1f}"
 
@@ -377,6 +379,8 @@ def graphs(summary: list[dict[str, object]], metric_filter: list[str] | None = N
                         ha='center', va='bottom', fontsize=9.0, fontweight='bold')
 
         cohort_label = {"normal": "Normal seeds", "controlled_stall": "Controlled stall seeds"}.get(condition, "All normal and stall seeds")
+        if key in ("pdr", "e2e_delay_ms", "throughput_bps"):
+            cohort_label = "Shared alert delivery before routing"
         ax.set_title(f"{title} — {density.capitalize()} Traffic ({n_label})\n{cohort_label} [95% CI]", fontsize=12, fontweight="bold", pad=12)
         ax.set_ylabel(f"{title} ({unit})" if unit != "ratio" else title, fontsize=10.5)
         if key in ("pdr", "fallback_triggered"):

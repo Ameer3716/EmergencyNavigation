@@ -2,3 +2,5 @@
 *.pdf binary
 artifacts/signal_validation/** -text
 results/supplemental/** -text
+artifacts/congestion_validation/** -text
+results/congestion_validation/** -text

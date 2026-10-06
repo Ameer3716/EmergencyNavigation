@@ -20,7 +20,7 @@ def rows(path):
 
 
 def fmt(value, metric):
-    return f"{float(value):.3f}" if metric in ("pdr", "throughput_bps") else f"{float(value):,.2f}"
+    return f"{float(value):.3f}" if metric in ("pdr", "throughput_bps", "ev_response_s", "traffic_light_wait_s") else f"{float(value):,.2f}"
 
 
 def main():
@@ -50,13 +50,15 @@ def main():
 
 SUMO 1.18.0 moves vehicles on a 4 by 4 signalized grid with 48 directed road links. OMNeT++ 6.3.0 and Veins 5.3.1 simulate wireless communication through TraCI. Three RSUs use a 400 m radio neighborhood. Low, medium, and high demand generates 72, 144, and 200 background trips over 360 seconds. Trip generation count differs from the number simultaneously on the road. The collector records peak active background vehicles and unique background vehicles seen up to EV arrival.
 
+The 30 seed labels vary randomTrips demand generation and OMNeT++ random streams. Veins launchd uses the manager's default seed -1, which selects run number zero; SUMO driving randomness therefore uses seed 0 in these runs, overriding the seed written in grid.sumocfg. Different demand seeds still produce different routes and entry edges. Driving randomness is held common rather than independently varied. Varying the SUMO driving seed would define a different experiment and is not silently applied to existing results.
+
 The main comparison is FogCloudAStar, MistAStar, MistDynamicAStar, and MistDynamicFogFallback at three densities and 30 matched seeds (360 runs). A further 90 NoPreemptionBaseline runs use FogCloudAStar routing with signal priority disabled. This control is displayed only for traffic-light waiting time. Its other collected values remain in the individual-run CSV for transparency.
 
 ## Routing and controlled fallback tests
 
 Mist initial processing is 300 ms plus 2 ms per expanded A* node. Telemetry validation adds 0 ms per received message. The fallback watchdog is 500 ms. Normal operation is reported separately from controlled stalls. A fixed independent random selection with Python seed 20261005 selects eight seeds: 4, 5, 9, 10, 13, 17, 18, and 29. These receive an additional 900 ms initial Mist worker stall in every Mist configuration and at every density. The other 22 seeds have no injected stall. This is an explicit fault-injection experiment; the delay is not measured OBU behavior and the fallback must not be described as organic. Fog/Cloud is unaffected by a local Mist stall. A selected seed that does not receive the EM cannot activate fallback.
 
-Dynamic A* reads received vehicle beacons and RSU edge reports, requires at least three observed vehicles for a congestion adjustment, and reviews the route every five seconds. A replacement needs 10% lower remaining cost, or a confirmed slow edge with 5% improvement. Two slow observations and a 30-second gap help prevent route oscillation. Observed speeds are capped at the road speed limit in the cost estimate, keeping the A* free-flow heuristic admissible. Initial processing delays are modeled; periodic reviews are atomic simulation evaluations. Reviews and applied route changes are separate counts. Routing logs include candidate cost, current remaining cost, observed edge count, and the controlled stall parameter.
+Dynamic A* reads received vehicle beacons and RSU edge reports, requires at least three observed vehicles for a congestion adjustment, and schedules a review every five seconds. A review during an internal junction or without a valid remaining route can skip computation; the review metric counts logged route evaluations, not all timer firings. A replacement needs 10% lower remaining cost, or a confirmed slow edge with 5% improvement. Two slow observations and a 30-second gap help prevent route oscillation. Observed speeds are capped at the road speed limit in the cost estimate, keeping the A* free-flow heuristic admissible. Initial processing delays are modeled; periodic reviews are atomic simulation evaluations. Reviews and applied route changes are separate counts. Routing logs include candidate cost, current remaining cost, observed edge count, and the controlled stall parameter.
 
 ## Vehicle movement and signal priority
 
@@ -227,6 +229,30 @@ Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with ana
                          'python analysis/supplemental_validation.py --signal-root /home/opp_env/signal_validation_new\n```\n\n'
                          'The runner uses the existing binary and matched seed trips. Retain the complete workspace and '
                          'copy it to artifacts/signal_validation before packaging. Route byte throughput is not inferred from absent packet logs.\n')
+    if (ROOT / 'results/congestion_validation/validation_report.json').exists():
+        for name in ('METHODOLOGY.md', 'VERIFICATION.md', 'PROGRESS.md', 'EXPERIMENTS.md'):
+            with (ROOT / 'docs' / name).open('a', encoding='utf-8') as handle:
+                handle.write('\n## Controlled incident and matched recovery evidence\n\n'
+                             'A separate 360-run matrix uses a physical C1C2 stopped queue after initial route selection, '
+                             'with the same incident input and original trips for every algorithm. FCD evidence verifies '
+                             'the incident; all delivered-alert runs must reach the destination. Matched fault recovery '
+                             'is also reported from the original batch. Actual tables, confidence intervals and limits '
+                             'are in [REQUIREMENTS_EVIDENCE.md](REQUIREMENTS_EVIDENCE.md). Shared EM delivery metrics '
+                             'keep their definitions and cannot demonstrate routing superiority. Graph labels retain '
+                             'three decimals for response and waiting; SUMO motion remains sampled every 500 ms.\n')
+        with (ROOT / 'README.md').open('a', encoding='utf-8') as handle:
+            handle.write('\nSee [controlled incident and recovery evidence](docs/REQUIREMENTS_EVIDENCE.md).\n')
+        with (ROOT / 'AGENTS.md').open('a', encoding='utf-8') as handle:
+            handle.write('\nThe separate incident matrix uses scripts/run_congestion_validation.py and '
+                         'analysis/congestion_validation.py. Keep incident and ordinary results separate; never '
+                         'gate data acceptance on effect size or significance. Incident FCD verifies physical queues.\n')
+        with (ROOT / 'docs/INSTALLATION.md').open('a', encoding='utf-8') as handle:
+            handle.write('\n## Reproduce the controlled incident comparison\n\n'
+                         '```bash\nbash scripts/run_batch_env.sh --congestion-validation --workspace /home/opp_env/incident_new --jobs 4\n'
+                         'python analysis/congestion_validation.py --incident-root /home/opp_env/incident_new\n```\n\n'
+                         'First screen seed 1 at all densities in a separate workspace with --seeds 1. '
+                         'Retain the complete final workspace and copy it to artifacts/congestion_validation '
+                         'before packaging. The 360-run final matrix uses all 30 seeds without selection based on outcomes.\n')
     print(f"Wrote reports from {len(individual)} measured runs")
 
 

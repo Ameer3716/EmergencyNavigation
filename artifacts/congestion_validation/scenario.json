@@ -1,0 +1,58 @@
+{
+  "scenario": "post_decision_lane_obstruction",
+  "incident_edge": "C1C2",
+  "incident_vehicle_ids": [
+    "incidentQueue0",
+    "incidentQueue1",
+    "incidentQueue2"
+  ],
+  "requested_departures_s": [
+    90,
+    91,
+    92
+  ],
+  "stop_until_s": 250,
+  "horizon_s": 900,
+  "source_project": "/home/opp_env/emergency_navigation_audit_fix_final",
+  "source_special_sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+  "incident_special_sha256": "3438d39a4ae5a86cb8a742af5d0c0e60998f587dd759d133d073c605df95c689",
+  "interpretation": "Controlled incident experiment, separate from ordinary traffic; no guarantee of improvement.",
+  "executed_densities": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "executed_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "expected_runs": 360
+}

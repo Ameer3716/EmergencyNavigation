@@ -42,6 +42,17 @@ def main() -> None:
         copy(ROOT / name, OUT / name)
     for name in ("METHODOLOGY.md", "VERIFICATION.md", "PROGRESS.md", "EXPERIMENTS.md", "INSTALLATION.md", "PROCESS_AND_GRAPHS.md"):
         copy(ROOT / "docs" / name, OUT / "docs" / name)
+    if (ROOT / 'results/congestion_validation/validation_report.json').exists():
+        incident = json.loads((ROOT / 'results/congestion_validation/validation_report.json').read_text())
+        if not incident.get('passed') or incident.get('runs') != 360:
+            raise SystemExit('Complete and validate the 360-run incident matrix before packaging')
+        copy(ROOT / 'docs/REQUIREMENTS_EVIDENCE.md', OUT / 'docs/REQUIREMENTS_EVIDENCE.md')
+        for path in (ROOT / 'results/congestion_validation').rglob('*'):
+            if path.is_file():
+                copy(path, OUT / path.relative_to(ROOT))
+        for path in (ROOT / 'artifacts/congestion_validation').glob('*'):
+            if path.is_file():
+                copy(path, OUT / path.relative_to(ROOT))
     for name in ("summary-batch.csv", "individual_runs-batch.csv", "paired_comparisons.csv",
                  "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv", "summary-cohorts.csv",
                  "historical_headline_comparisons.csv", "paired_graph_plot_data.csv",
@@ -72,7 +83,7 @@ def main() -> None:
     for name in ("build.sh", "run_batch_env.sh", "run_batch.py", "generate_demand.py",
                  "audit_batch.py", "verify_response_times.py", "generate_final_graph.py",
                  "write_final_reports.py", "generate_reviewed_submission.py",
-                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py", "run_signal_validation.py"):
+                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py", "run_signal_validation.py", "run_congestion_validation.py"):
         copy(ROOT / "scripts" / name, OUT / "scripts" / name)
     for path in (ROOT / "tests").glob("*.py"):
         copy(path, OUT / "tests" / path.name)

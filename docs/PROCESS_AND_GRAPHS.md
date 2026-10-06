@@ -1,6 +1,6 @@
-# Emergency vehicle navigation: project and graph guide
+# Emergency vehicle navigation project and graph guide
 
-This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same 78 graphs.
+This project studies how an emergency vehicle receives an accident alert and chooses a route through traffic. The Word report contains the complete project explanation and the same 90 graphs.
 
 ## How the system works
 
@@ -24,11 +24,11 @@ This project studies how an emergency vehicle receives an accident alert and cho
 
 Each bar is a density and configuration mean. Error bars show 95% confidence intervals; the exact methods are in [METHODOLOGY.md](METHODOLOGY.md). Metrics requiring EM delivery use only valid delivered runs. PDR, EM throughput, and fallback activation use all 30 scheduled runs where applicable. Fallback latency uses only runs where the watchdog actually activated.
 
-## All 78 graphs
+## All 90 graphs
 
 ### Packet delivery ratio
 
-The share of generated emergency messages that reached the EV. Higher is better.
+The share of generated emergency messages that reached the EV. All four approaches share this alert service before route computation; equal bars can be correct.
 
 ![Packet delivery ratio for low traffic](../results/graphs/pdr-low.png)
 
@@ -60,7 +60,7 @@ High traffic (200 background vehicles): Fog/Cloud 54,430; Mist 54,290; Mist Dyna
 
 ### EM throughput
 
-Delivered EM payload bits divided by the fixed 900 second observation window. One delivery contributes 2.27556 bit/s.
+Delivered EM payload bits divided by the fixed 900 second observation window. One delivery contributes 2.27556 bit/s. This measures the shared alert service.
 
 ![EM throughput for low traffic](../results/graphs/throughput_bps-low.png)
 
@@ -76,7 +76,7 @@ High traffic (200 background vehicles): Fog/Cloud 2.276; Mist 2.276; Mist Dynami
 
 ### EM end-to-end delay
 
-Time from RSU message generation to EV reception, in milliseconds. Lower is faster.
+Time from RSU message generation to EV reception, in milliseconds. It measures the shared alert service before any route computation.
 
 ![EM end-to-end delay for low traffic](../results/graphs/e2e_delay_ms-low.png)
 
@@ -112,15 +112,15 @@ Time from emergency message generation until the EV reaches the accident, in sec
 
 ![EV response time for low traffic](../results/graphs/ev_response_s-low.png)
 
-Low traffic (72 background vehicles): Fog/Cloud 153.3; Mist 153.5; Mist Dynamic 153.0; Mist + Fog 153.0. Bars show means and 95% confidence intervals.
+Low traffic (72 background vehicles): Fog/Cloud 153.312; Mist 153.500; Mist Dynamic 153.021; Mist + Fog 152.979. Bars show means and 95% confidence intervals.
 
 ![EV response time for medium traffic](../results/graphs/ev_response_s-medium.png)
 
-Medium traffic (144 background vehicles): Fog/Cloud 154.5; Mist 154.7; Mist Dynamic 154.1; Mist + Fog 153.9. Bars show means and 95% confidence intervals.
+Medium traffic (144 background vehicles): Fog/Cloud 154.517; Mist 154.724; Mist Dynamic 154.121; Mist + Fog 153.897. Bars show means and 95% confidence intervals.
 
 ![EV response time for high traffic](../results/graphs/ev_response_s-high.png)
 
-High traffic (200 background vehicles): Fog/Cloud 156.2; Mist 156.9; Mist Dynamic 154.9; Mist + Fog 154.9. Bars show means and 95% confidence intervals.
+High traffic (200 background vehicles): Fog/Cloud 156.200; Mist 156.883; Mist Dynamic 154.933; Mist + Fog 154.917. Bars show means and 95% confidence intervals.
 
 ### EV traffic-light waiting time
 
@@ -128,15 +128,15 @@ EV standstill near a signal stop line, in seconds. A value of zero means no meas
 
 ![EV traffic-light waiting time for low traffic](../results/graphs/traffic_light_wait_s-low.png)
 
-Low traffic (72 background vehicles): Fog/Cloud 1.6; Mist 1.8; Mist Dynamic 2.2; Mist + Fog 2.2; No preemption 26.3. Bars show means and 95% confidence intervals.
+Low traffic (72 background vehicles): Fog/Cloud 1.562; Mist 1.833; Mist Dynamic 2.208; Mist + Fog 2.250; No preemption 26.292. Bars show means and 95% confidence intervals.
 
 ![EV traffic-light waiting time for medium traffic](../results/graphs/traffic_light_wait_s-medium.png)
 
-Medium traffic (144 background vehicles): Fog/Cloud 0.8; Mist 0.9; Mist Dynamic 1.1; Mist + Fog 1.2; No preemption 27.3. Bars show means and 95% confidence intervals.
+Medium traffic (144 background vehicles): Fog/Cloud 0.845; Mist 0.914; Mist Dynamic 1.121; Mist + Fog 1.155; No preemption 27.345. Bars show means and 95% confidence intervals.
 
 ![EV traffic-light waiting time for high traffic](../results/graphs/traffic_light_wait_s-high.png)
 
-High traffic (200 background vehicles): Fog/Cloud 0.7; Mist 0.7; Mist Dynamic 0.8; Mist + Fog 0.8; No preemption 22.7. Bars show means and 95% confidence intervals.
+High traffic (200 background vehicles): Fog/Cloud 0.667; Mist 0.717; Mist Dynamic 0.817; Mist + Fog 0.767; No preemption 22.717. Bars show means and 95% confidence intervals.
 
 ### Fallback activation rate
 
@@ -240,15 +240,15 @@ Extra travel time relative to the modeled free-flow corridor, in seconds.
 
 ![EV corridor delay versus free flow for low traffic](../results/graphs/ev_delay_vs_freeflow_s-low.png)
 
-Low traffic (72 background vehicles): Fog/Cloud 24.3; Mist 24.7; Mist Dynamic 24.2; Mist + Fog 24.4. Bars show means and 95% confidence intervals.
+Low traffic (72 background vehicles): Fog/Cloud 24.332; Mist 24.733; Mist Dynamic 24.246; Mist + Fog 24.375. Bars show means and 95% confidence intervals.
 
 ![EV corridor delay versus free flow for medium traffic](../results/graphs/ev_delay_vs_freeflow_s-medium.png)
 
-Medium traffic (144 background vehicles): Fog/Cloud 25.5; Mist 26.0; Mist Dynamic 25.3; Mist + Fog 25.2. Bars show means and 95% confidence intervals.
+Medium traffic (144 background vehicles): Fog/Cloud 25.537; Mist 25.962; Mist Dynamic 25.333; Mist + Fog 25.227. Bars show means and 95% confidence intervals.
 
 ![EV corridor delay versus free flow for high traffic](../results/graphs/ev_delay_vs_freeflow_s-high.png)
 
-High traffic (200 background vehicles): Fog/Cloud 27.3; Mist 28.2; Mist Dynamic 26.1; Mist + Fog 26.2. Bars show means and 95% confidence intervals.
+High traffic (200 background vehicles): Fog/Cloud 27.255; Mist 28.153; Mist Dynamic 26.085; Mist + Fog 26.206. Bars show means and 95% confidence intervals.
 
 ### EV route distance
 
@@ -272,15 +272,15 @@ EV movement time from departure to accident arrival, in seconds.
 
 ![EV travel time for low traffic](../results/graphs/ev_travel_s-low.png)
 
-Low traffic (72 background vehicles): Fog/Cloud 152.3; Mist 152.7; Mist Dynamic 152.2; Mist + Fog 152.3. Bars show means and 95% confidence intervals.
+Low traffic (72 background vehicles): Fog/Cloud 152.312; Mist 152.708; Mist Dynamic 152.229; Mist + Fog 152.333. Bars show means and 95% confidence intervals.
 
 ![EV travel time for medium traffic](../results/graphs/ev_travel_s-medium.png)
 
-Medium traffic (144 background vehicles): Fog/Cloud 153.5; Mist 153.9; Mist Dynamic 153.3; Mist + Fog 153.3. Bars show means and 95% confidence intervals.
+Medium traffic (144 background vehicles): Fog/Cloud 153.517; Mist 153.948; Mist Dynamic 153.345; Mist + Fog 153.259. Bars show means and 95% confidence intervals.
 
 ![EV travel time for high traffic](../results/graphs/ev_travel_s-high.png)
 
-High traffic (200 background vehicles): Fog/Cloud 155.2; Mist 156.1; Mist Dynamic 154.2; Mist + Fog 154.3. Bars show means and 95% confidence intervals.
+High traffic (200 background vehicles): Fog/Cloud 155.200; Mist 156.117; Mist Dynamic 154.167; Mist + Fog 154.283. Bars show means and 95% confidence intervals.
 
 ### Normal operation route decision latency
 
@@ -441,5 +441,69 @@ Medium traffic: Fog/Cloud 12.000 s (n=2); Mist + Fog 12.750 s (n=2); No preempti
 ![Short notice red signal validation for high traffic](../results/supplemental/graphs/red_signal_wait_s-high.png)
 
 High traffic: Fog/Cloud 5.000 s (n=2); Mist + Fog 6.250 s (n=2); No preemption 97.250 s (n=2). Error bars show 95% confidence intervals.
+
+### Controlled incident response
+
+A separate matched experiment adds the same stopped queue after the initial route decision. These values measure response under that incident, not ordinary traffic.
+
+![Controlled incident response for low traffic](../results/congestion_validation/graphs/ev_response_s-low.png)
+
+Low traffic: Fog/Cloud 266.292 s (n=24); Mist 266.562 s (n=24); Mist Dynamic 154.812 s (n=24); Mist + Fog 154.792 s (n=24). Error bars show 95% confidence intervals.
+
+![Controlled incident response for medium traffic](../results/congestion_validation/graphs/ev_response_s-medium.png)
+
+Medium traffic: Fog/Cloud 274.448 s (n=29); Mist 274.862 s (n=29); Mist Dynamic 165.862 s (n=29); Mist + Fog 165.931 s (n=29). Error bars show 95% confidence intervals.
+
+![Controlled incident response for high traffic](../results/congestion_validation/graphs/ev_response_s-high.png)
+
+High traffic: Fog/Cloud 286.300 s (n=30); Mist 287.983 s (n=30); Mist Dynamic 185.467 s (n=30); Mist + Fog 183.883 s (n=30). Error bars show 95% confidence intervals.
+
+### Controlled incident route changes
+
+Actual route replacements based on received traffic reports in the incident experiment. No routing costs or route choices are hardcoded.
+
+![Controlled incident route changes for low traffic](../results/congestion_validation/graphs/route_changes-low.png)
+
+Low traffic: Mist Dynamic 0.800 changes/run (n=30); Mist + Fog 0.800 changes/run (n=30). Error bars show 95% confidence intervals.
+
+![Controlled incident route changes for medium traffic](../results/congestion_validation/graphs/route_changes-medium.png)
+
+Medium traffic: Mist Dynamic 1.200 changes/run (n=30); Mist + Fog 1.200 changes/run (n=30). Error bars show 95% confidence intervals.
+
+![Controlled incident route changes for high traffic](../results/congestion_validation/graphs/route_changes-high.png)
+
+High traffic: Mist Dynamic 1.267 changes/run (n=30); Mist + Fog 1.233 changes/run (n=30). Error bars show 95% confidence intervals.
+
+### Controlled fault route decision time saved
+
+Matched time saved by Fog fallback against Dynamic Mist under the same controlled 900 ms stall in the original batch. This is route readiness, not journey time.
+
+![Controlled fault route decision time saved for low traffic](../results/congestion_validation/graphs/recovery_saved_ms-low.png)
+
+Low traffic: Mist + Fog 399.461 ms (n=7). Error bars show 95% confidence intervals.
+
+![Controlled fault route decision time saved for medium traffic](../results/congestion_validation/graphs/recovery_saved_ms-medium.png)
+
+Medium traffic: Mist + Fog 399.402 ms (n=8). Error bars show 95% confidence intervals.
+
+![Controlled fault route decision time saved for high traffic](../results/congestion_validation/graphs/recovery_saved_ms-high.png)
+
+High traffic: Mist + Fog 399.370 ms (n=8). Error bars show 95% confidence intervals.
+
+### Controlled incident matched response differences
+
+Negative means the first algorithm is faster. The paired interval quantifies uncertainty. A controlled obstacle does not establish the same benefit in ordinary traffic.
+
+![Controlled incident matched response differences for low traffic](../results/congestion_validation/graphs/incident_paired_response_s-low.png)
+
+Low traffic: Mist minus Fog/Cloud 0.271 s, 95% CI [0.119, 0.423], n=24; Mist Dynamic minus Mist -111.750 s, 95% CI [-125.061, -98.439], n=24; Mist + Fog minus Mist Dynamic -0.021 s, 95% CI [-0.119, 0.077], n=24.
+
+![Controlled incident matched response differences for medium traffic](../results/congestion_validation/graphs/incident_paired_response_s-medium.png)
+
+Medium traffic: Mist minus Fog/Cloud 0.414 s, 95% CI [-0.077, 0.904], n=29; Mist Dynamic minus Mist -109.000 s, 95% CI [-127.898, -90.102], n=29; Mist + Fog minus Mist Dynamic 0.069 s, 95% CI [-0.105, 0.243], n=29.
+
+![Controlled incident matched response differences for high traffic](../results/congestion_validation/graphs/incident_paired_response_s-high.png)
+
+High traffic: Mist minus Fog/Cloud 1.683 s, 95% CI [-2.085, 5.452], n=30; Mist Dynamic minus Mist -102.517 s, 95% CI [-123.089, -81.944], n=30; Mist + Fog minus Mist Dynamic -1.583 s, 95% CI [-4.683, 1.517], n=30.
 
 The complete numeric means, valid sample sizes, standard deviations, and intervals are in `../results/processed/summary-batch.csv`. The seven main measures are also tabulated in `VERIFICATION.md`.

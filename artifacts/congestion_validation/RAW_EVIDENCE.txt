@@ -1,0 +1,1 @@
+Complete simulation workspace and raw vectors retained at /home/opp_env/congestion_validation_final_20261006. This folder contains exact scalar, log, FCD, tripinfo, and input copies. Per-run duplicate scalars and large vectors remain in the native workspace; raw_evidence_manifest.csv records all raw file sizes and SHA-256 hashes.

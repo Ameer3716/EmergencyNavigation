@@ -1,0 +1,596 @@
+{
+  "passed": true,
+  "runs": 12,
+  "timing": {
+    "passed": true,
+    "runs": 12,
+    "green_transitions": 90,
+    "phase_rechecks": 0,
+    "fog_timing_balances": 3,
+    "em_precision_checks": 12,
+    "binary_sha256": [
+      "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+    ],
+    "failures": []
+  },
+  "records": [
+    {
+      "configuration": "FogCloudAStar",
+      "density": "high",
+      "seed": 1,
+      "ev_response_s": 277.5,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "FogCloudAStar",
+      "density": "low",
+      "seed": 1,
+      "ev_response_s": 263.5,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "FogCloudAStar",
+      "density": "medium",
+      "seed": 1,
+      "ev_response_s": 265.0,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "MistAStar",
+      "density": "high",
+      "seed": 1,
+      "ev_response_s": 279.5,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "MistAStar",
+      "density": "low",
+      "seed": 1,
+      "ev_response_s": 264.0,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "MistAStar",
+      "density": "medium",
+      "seed": 1,
+      "ev_response_s": 265.0,
+      "route_changes": null,
+      "incident_avoided_by_reroute": 0
+    },
+    {
+      "configuration": "MistDynamicAStar",
+      "density": "high",
+      "seed": 1,
+      "ev_response_s": 144.0,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    },
+    {
+      "configuration": "MistDynamicAStar",
+      "density": "low",
+      "seed": 1,
+      "ev_response_s": 145.5,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    },
+    {
+      "configuration": "MistDynamicAStar",
+      "density": "medium",
+      "seed": 1,
+      "ev_response_s": 148.0,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    },
+    {
+      "configuration": "MistDynamicFogFallback",
+      "density": "high",
+      "seed": 1,
+      "ev_response_s": 144.0,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    },
+    {
+      "configuration": "MistDynamicFogFallback",
+      "density": "low",
+      "seed": 1,
+      "ev_response_s": 145.5,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    },
+    {
+      "configuration": "MistDynamicFogFallback",
+      "density": "medium",
+      "seed": 1,
+      "ev_response_s": 148.0,
+      "route_changes": 1,
+      "incident_avoided_by_reroute": 1
+    }
+  ],
+  "incident_evidence": [
+    {
+      "run": "FogCloudAStar-high-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/FogCloudAStar-high-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+      "scalar_sha256": "437fb4e06d3951d34e032d292a18b9946a7b36fcc9a2a57b93d61e9ae58a3b51"
+    },
+    {
+      "run": "FogCloudAStar-low-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/FogCloudAStar-low-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+      "scalar_sha256": "c07496d634b47ffead2f9c49d95c841cbf0cea673809a03edd29eaaa1782124f"
+    },
+    {
+      "run": "FogCloudAStar-medium-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/FogCloudAStar-medium-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 269.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 314,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+      "scalar_sha256": "a11b08e0c3f5f30c9ade2af7b27387163ece8be0a6067d9db9a437eb22016b06"
+    },
+    {
+      "run": "MistAStar-high-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistAStar-high-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+      "scalar_sha256": "3f84fcb344378d87745e4fb4f086e0077cb41bebc8b4f764268a465b285477b5"
+    },
+    {
+      "run": "MistAStar-low-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistAStar-low-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+      "scalar_sha256": "812ef077ceb8a03d42d3a4752f7239853cd32a8657703c32df7bdc23792e8d74"
+    },
+    {
+      "run": "MistAStar-medium-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistAStar-medium-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 316,
+          "first_s": 90.0,
+          "last_s": 269.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 314,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+      "scalar_sha256": "96e5056d04d4a21d38553120e54d658732c8542dcf2d2b5eb41d6f12635fe1c4"
+    },
+    {
+      "run": "MistDynamicAStar-high-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicAStar-high-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+      "scalar_sha256": "d7bfd744b2472b86b5888b8a17b774d6c5af63de5bfbc8d9a876446d23efd165"
+    },
+    {
+      "run": "MistDynamicAStar-low-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicAStar-low-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+      "scalar_sha256": "138faf75ec91bcbac5e4005134fad1ee2f592a67fc256c783ae3c365414007df"
+    },
+    {
+      "run": "MistDynamicAStar-medium-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicAStar-medium-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 314,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 314,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+      "scalar_sha256": "b825f837c6f8ac9c58403b0e6d7e7515e4a33339cb4f61c5c45c892fee1d1cdd"
+    },
+    {
+      "run": "MistDynamicFogFallback-high-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicFogFallback-high-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+      "scalar_sha256": "36948d51ac7dec02af6336b3ae817fceafa8f41044dbe0d96c2bc5ae8ffae4f7"
+    },
+    {
+      "run": "MistDynamicFogFallback-low-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicFogFallback-low-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 315,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 315,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+      "scalar_sha256": "8d3acbc22b0f28833bec4873e933ae4a456370b627d72f57ad58ef7cfac0f6ed"
+    },
+    {
+      "run": "MistDynamicFogFallback-medium-seed1",
+      "source_scalar": "artifacts/congestion_validation/pilot/results/raw/MistDynamicFogFallback-medium-seed1.sca",
+      "incident_observations": {
+        "incidentQueue0": {
+          "samples": 314,
+          "first_s": 90.0,
+          "last_s": 249.5,
+          "requested_departure_s": 90,
+          "first_seen_s": 90.0,
+          "incident_samples": 314,
+          "incident_first_s": 90.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue1": {
+          "samples": 312,
+          "first_s": 91.0,
+          "last_s": 249.5,
+          "requested_departure_s": 91,
+          "first_seen_s": 91.0,
+          "incident_samples": 312,
+          "incident_first_s": 91.0,
+          "incident_last_s": 249.5
+        },
+        "incidentQueue2": {
+          "samples": 311,
+          "first_s": 92.0,
+          "last_s": 249.5,
+          "requested_departure_s": 92,
+          "first_seen_s": 92.0,
+          "incident_samples": 311,
+          "incident_first_s": 92.0,
+          "incident_last_s": 249.5
+        }
+      },
+      "maximum_stopped_incident_vehicles": 3,
+      "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+      "demand_sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+      "scalar_sha256": "db2161d4bf77f0ef7a7d56b93c2af407b57b130f77b1169c43eb2d2244e6acc7"
+    }
+  ]
+}

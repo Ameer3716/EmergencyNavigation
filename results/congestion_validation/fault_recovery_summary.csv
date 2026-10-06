@@ -1,0 +1,4 @@
+configuration,density,metric,n,mean,ci95_lower,ci95_upper
+MistDynamicFogFallback,low,recovery_saved_ms,7,399.4606304381443,399.44729013081155,399.473970745477
+MistDynamicFogFallback,medium,recovery_saved_ms,8,399.40242187687124,399.3689184307546,399.4359253229879
+MistDynamicFogFallback,high,recovery_saved_ms,8,399.370290543005,399.3296159901273,399.4109650958827

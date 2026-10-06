@@ -29,3 +29,12 @@ python analysis/supplemental_validation.py --signal-root /home/opp_env/signal_va
 ```
 
 The runner uses the existing binary and matched seed trips. Retain the complete workspace and copy it to artifacts/signal_validation before packaging. Route byte throughput is not inferred from absent packet logs.
+
+## Reproduce the controlled incident comparison
+
+```bash
+bash scripts/run_batch_env.sh --congestion-validation --workspace /home/opp_env/incident_new --jobs 4
+python analysis/congestion_validation.py --incident-root /home/opp_env/incident_new
+```
+
+First screen seed 1 at all densities in a separate workspace with --seeds 1. Retain the complete final workspace and copy it to artifacts/congestion_validation before packaging. The 360-run final matrix uses all 30 seeds without selection based on outcomes.

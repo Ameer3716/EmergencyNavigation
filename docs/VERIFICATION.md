@@ -23,8 +23,8 @@ Generated background vehicles: 72. SUMO actually inserted 70 to 72 background ve
 | EM throughput (bit/s) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) | 1.820 [1.475, 2.166] (n=30) |
 | EM end-to-end delay (ms) | 44.37 [40.33, 48.40] (n=24) | 44.37 [40.33, 48.40] (n=24) | 44.37 [40.33, 48.40] (n=24) | 44.37 [40.33, 48.40] (n=24) |
 | Route decision latency (ms) | 626.54 [626.54, 626.54] (n=24) | 588.50 [412.05, 764.95] (n=24) | 588.50 [412.05, 764.95] (n=24) | 471.99 [373.86, 570.13] (n=24) |
-| EV response time (s) | 153.31 [152.78, 153.85] (n=24) | 153.50 [152.62, 154.38] (n=24) | 153.02 [152.60, 153.45] (n=24) | 152.98 [152.55, 153.41] (n=24) |
-| EV traffic-light waiting time (s) | 1.56 [1.12, 1.98] (n=24) | 1.83 [1.38, 2.27] (n=24) | 2.21 [1.81, 2.56] (n=24) | 2.25 [1.81, 2.65] (n=24) |
+| EV response time (s) | 153.312 [152.778, 153.847] (n=24) | 153.500 [152.624, 154.376] (n=24) | 153.021 [152.596, 153.445] (n=24) | 152.979 [152.550, 153.408] (n=24) |
+| EV traffic-light waiting time (s) | 1.562 [1.125, 1.979] (n=24) | 1.833 [1.375, 2.271] (n=24) | 2.208 [1.812, 2.562] (n=24) | 2.250 [1.812, 2.646] (n=24) |
 
 No-preemption waiting control: 26.29 s [24.17, 28.15], n=24.
 
@@ -54,8 +54,8 @@ Generated background vehicles: 144. SUMO actually inserted 142 to 144 background
 | EM throughput (bit/s) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) | 2.200 [2.045, 2.355] (n=30) |
 | EM end-to-end delay (ms) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) | 37.12 [33.72, 40.52] (n=29) |
 | Route decision latency (ms) | 626.54 [626.54, 626.55] (n=29) | 574.28 [418.56, 729.99] (n=29) | 574.28 [418.56, 729.99] (n=29) | 464.10 [377.48, 550.71] (n=29) |
-| EV response time (s) | 154.52 [153.18, 155.85] (n=29) | 154.72 [153.52, 155.93] (n=29) | 154.12 [152.60, 155.64] (n=29) | 153.90 [152.28, 155.51] (n=29) |
-| EV traffic-light waiting time (s) | 0.84 [0.47, 1.26] (n=29) | 0.91 [0.50, 1.34] (n=29) | 1.12 [0.69, 1.59] (n=29) | 1.16 [0.72, 1.62] (n=29) |
+| EV response time (s) | 154.517 [153.183, 155.852] (n=29) | 154.724 [153.515, 155.933] (n=29) | 154.121 [152.597, 155.644] (n=29) | 153.897 [152.278, 155.515] (n=29) |
+| EV traffic-light waiting time (s) | 0.845 [0.465, 1.259] (n=29) | 0.914 [0.500, 1.345] (n=29) | 1.121 [0.690, 1.586] (n=29) | 1.155 [0.724, 1.621] (n=29) |
 
 No-preemption waiting control: 27.34 s [21.34, 35.55], n=29.
 
@@ -85,8 +85,8 @@ Generated background vehicles: 200. SUMO actually inserted 200 to 200 background
 | EM throughput (bit/s) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) | 2.276 [2.276, 2.276] (n=30) |
 | EM end-to-end delay (ms) | 32.17 [29.23, 35.12] (n=30) | 32.17 [29.23, 35.12] (n=30) | 32.17 [29.23, 35.12] (n=30) | 32.17 [29.23, 35.12] (n=30) |
 | Route decision latency (ms) | 626.54 [626.54, 626.54] (n=30) | 566.00 [414.85, 717.15] (n=30) | 566.00 [414.85, 717.15] (n=30) | 459.50 [375.42, 543.58] (n=30) |
-| EV response time (s) | 156.20 [154.26, 158.14] (n=30) | 156.88 [154.71, 159.06] (n=30) | 154.93 [152.51, 157.36] (n=30) | 154.92 [152.49, 157.35] (n=30) |
-| EV traffic-light waiting time (s) | 0.67 [0.32, 1.05] (n=30) | 0.72 [0.35, 1.13] (n=30) | 0.82 [0.45, 1.22] (n=30) | 0.77 [0.42, 1.15] (n=30) |
+| EV response time (s) | 156.200 [154.259, 158.141] (n=30) | 156.883 [154.710, 159.057] (n=30) | 154.933 [152.505, 157.362] (n=30) | 154.917 [152.486, 157.348] (n=30) |
+| EV traffic-light waiting time (s) | 0.667 [0.317, 1.050] (n=30) | 0.717 [0.350, 1.133] (n=30) | 0.817 [0.450, 1.217] (n=30) | 0.767 [0.416, 1.150] (n=30) |
 
 No-preemption waiting control: 22.72 s [18.27, 28.27], n=30.
 
@@ -154,3 +154,7 @@ The normal and controlled-stall plots and matched-seed difference plots accompan
 ## Supplementary route communication and signal validation
 
 The seven headline metrics and the 450-run main matrix are unchanged. Separate route-transaction metrics are derived from original raw scalars, and 18 isolated short-notice red-signal runs validate positive waiting and safe priority transitions. Definitions, confidence intervals, measured tables, and limitations are in [SUPPLEMENTAL_VALIDATION.md](SUPPLEMENTAL_VALIDATION.md).
+
+## Controlled incident and matched recovery evidence
+
+A separate 360-run matrix uses a physical C1C2 stopped queue after initial route selection, with the same incident input and original trips for every algorithm. FCD evidence verifies the incident; all delivered-alert runs must reach the destination. Matched fault recovery is also reported from the original batch. Actual tables, confidence intervals and limits are in [REQUIREMENTS_EVIDENCE.md](REQUIREMENTS_EVIDENCE.md). Shared EM delivery metrics keep their definitions and cannot demonstrate routing superiority. Graph labels retain three decimals for response and waiting; SUMO motion remains sampled every 500 ms.
