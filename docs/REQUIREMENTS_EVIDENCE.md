@@ -4,34 +4,34 @@ The ordinary 450-run batch, the 18 signal validation runs, and this separate 360
 
 ## Fixed incident design
 
-All four algorithms use the same 30 seeds at each density, original background trips, frozen binary, preemption rules and stall assignment. The input requests three passenger vehicles on C1C2 at 90, 91 and 92 seconds, with stops until 250 seconds. SUMO safety checks may delay insertion; requested times are not assumed to be actual entry times. There is no injected routing cost or privileged incident notification: ordinary beacons and RSU reports provide observations. FCD verifies the realised obstruction in every run, with at least one incident vehicle still stopped at the end of the planned interval. Initial routes must be applied before the incident. All runs have a 900 second horizon.
+All four algorithms use the same 30 seeds at each density, original background trips, frozen binary, safety controller and stall assignment. Dynamic Mist uses advance signal requests (250 m or 20 s); Fog/Cloud and static Mist use reactive requests (100 m or 8 s). All may retry every five seconds without extending an active hold. The comparison therefore measures routing and signal policy together. The input requests three passenger vehicles on C1C2 at 90, 91 and 92 seconds, with stops until 250 seconds. SUMO safety checks may delay insertion; requested times are not assumed to be actual entry times. There is no injected routing cost or privileged incident notification: ordinary beacons and RSU reports provide observations. FCD verifies the realised obstruction in every run, with at least one incident vehicle still stopped at the end of the planned interval. Initial routes must be applied before the incident. All runs have a 900 second horizon.
 
 Routing retains its existing minimum of three observed vehicles for a congestion adjustment. Incident vehicles and ordinary queued vehicles can provide those observations. The incident vehicles are additional to the 72/144/200 generated background trips. Demand counts are not simultaneous occupancy. Every delivered-alert run must reach the destination. Undelivered alerts remain in the matrix; delivery-dependent means exclude them and report their sample sizes.
 
 The seed labels vary demand generation and OMNeT++ streams. Veins launchd retains the original manager default, using SUMO driving seed 0 for run number zero. Driving randomness is common across cases; route-generation seeds still vary routes and entry edges. This preserves the original experiment and does not claim independently varied SUMO driver seeds. The [retained launchd history](../artifacts/congestion_validation/launchd_history.log) records the effective seed; it includes previous suites and startup attempts as well as this matrix.
 
-The scenario was screened on seed 1 at all densities before running the fixed full matrix. Screening is mechanism validation, not a search over seeds for favourable results. Any pilot revisions are retained separately. Neither effect size nor significance is a pass criterion.
+The advance-priority framework was screened on seeds 1, 4, 22 and 27 at all densities before the fixed full matrix. Screening checks mechanism operation, not an acceptance threshold for favourable results. Previous evidence and pilot workspaces are retained. Neither effect size nor significance is a pass criterion.
 
 ## Measured incident response
 
 | Density | Algorithm | Arrived samples | Mean response s | Mean route changes per scheduled run |
 | --- | --- | ---: | ---: | ---: |
 | low | Fog/Cloud | 24 | 266.292 | N/A |
-| low | Mist | 24 | 266.562 | N/A |
-| low | Dynamic Mist | 24 | 154.812 | 0.800 |
-| low | Mist + Fog | 24 | 154.792 | 0.800 |
-| medium | Fog/Cloud | 29 | 274.448 | N/A |
-| medium | Mist | 29 | 274.862 | N/A |
-| medium | Dynamic Mist | 29 | 165.862 | 1.200 |
-| medium | Mist + Fog | 29 | 165.931 | 1.200 |
-| high | Fog/Cloud | 30 | 286.300 | N/A |
-| high | Mist | 30 | 287.983 | N/A |
-| high | Dynamic Mist | 30 | 185.467 | 1.267 |
-| high | Mist + Fog | 30 | 183.883 | 1.233 |
+| low | Mist | 24 | 266.500 | N/A |
+| low | Dynamic Mist | 24 | 144.521 | 0.800 |
+| low | Mist + Fog | 24 | 144.417 | 0.800 |
+| medium | Fog/Cloud | 29 | 272.259 | N/A |
+| medium | Mist | 29 | 272.586 | N/A |
+| medium | Dynamic Mist | 29 | 158.310 | 1.133 |
+| medium | Mist + Fog | 29 | 158.224 | 1.133 |
+| high | Fog/Cloud | 30 | 278.417 | N/A |
+| high | Mist | 30 | 278.750 | N/A |
+| high | Dynamic Mist | 30 | 160.050 | 1.167 |
+| high | Mist + Fog | 30 | 160.083 | 1.167 |
 
 ## Realised obstruction and insertion delays
 
-FCD measures simultaneous stopped incident vehicles during 90 to 250 seconds. Safety checks delayed some requested vehicles beyond 250 seconds. All cases remain in the matched comparison; no input was retuned after this observation. The realised obstruction count and late insertion count match across all four algorithms within each density and seed. Complete per-vehicle first-seen times and stopped samples are in validation_report.json.
+FCD measures simultaneous stopped incident vehicles during 90 to 250 seconds. All cases remain in the input-matched comparison; no input was retuned after this observation. Realised obstruction and late insertion counts match across algorithms in 90 of 90 density/seed groups. Different routing and signal policies can alter subsequent traffic and insertion states. The effect estimate includes those consequences; it does not condition on identical downstream trajectories. Every case must still realise at least one blocker through the end of the incident. Complete per-vehicle first-seen times and stopped samples are in validation_report.json.
 
 | Density | Algorithm | Runs with 3 stopped vehicles | Runs with 2 | Runs with 1 | Vehicles inserted after 250 s |
 | --- | --- | ---: | ---: | ---: | ---: |
@@ -67,19 +67,19 @@ Differences are algorithm A minus B; negative means A is faster. Intervals are S
 
 | Density | A | B | Paired samples | Difference s | 95% interval s |
 | --- | --- | --- | ---: | ---: | --- |
-| low | Mist | Fog/Cloud | 24 | 0.271 | 0.119 to 0.423 |
-| low | Dynamic Mist | Mist | 24 | -111.750 | -125.061 to -98.439 |
-| low | Mist + Fog | Dynamic Mist | 24 | -0.021 | -0.119 to 0.077 |
-| medium | Mist | Fog/Cloud | 29 | 0.414 | -0.077 to 0.904 |
-| medium | Dynamic Mist | Mist | 29 | -109.000 | -127.898 to -90.102 |
-| medium | Mist + Fog | Dynamic Mist | 29 | 0.069 | -0.105 to 0.243 |
-| high | Mist | Fog/Cloud | 30 | 1.683 | -2.085 to 5.452 |
-| high | Dynamic Mist | Mist | 30 | -102.517 | -123.089 to -81.944 |
-| high | Mist + Fog | Dynamic Mist | 30 | -1.583 | -4.683 to 1.517 |
+| low | Mist | Fog/Cloud | 24 | 0.208 | -0.032 to 0.449 |
+| low | Dynamic Mist | Mist | 24 | -121.979 | -123.468 to -120.491 |
+| low | Mist + Fog | Dynamic Mist | 24 | -0.104 | -0.192 to -0.017 |
+| medium | Mist | Fog/Cloud | 29 | 0.328 | -0.176 to 0.831 |
+| medium | Dynamic Mist | Mist | 29 | -114.276 | -130.017 to -98.535 |
+| medium | Mist + Fog | Dynamic Mist | 29 | -0.086 | -0.189 to 0.016 |
+| high | Mist | Fog/Cloud | 30 | 0.333 | -0.320 to 0.986 |
+| high | Dynamic Mist | Mist | 30 | -118.700 | -138.595 to -98.805 |
+| high | Mist + Fog | Dynamic Mist | 30 | 0.033 | -0.121 to 0.188 |
 
 ## Controlled fallback benefit
 
-These values use the existing ordinary batch, not the new incident matrix. On the 23 delivered matched controlled-stall cases, compare Mist + Fog against Dynamic Mist with the same 900 ms stall. Time saved is the difference between their actual initial route application delays. This measures recovery latency; it is not a claim of a comparable journey-time reduction or organic failure.
+These values use the ordinary batch, not the incident matrix. On the 23 delivered matched controlled-stall cases, compare Mist + Fog against Dynamic Mist with the same 900 ms stall. Time saved is the difference between their actual initial route application delays. This measures recovery latency; it is not a claim of a comparable journey-time reduction or organic failure.
 
 | Density | Matched stalled cases | Mean route decision time saved ms | 95% interval ms |
 | --- | ---: | ---: | --- |

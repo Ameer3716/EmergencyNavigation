@@ -1,0 +1,63 @@
+{
+  "binary_sha256": "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5",
+  "frozen_runner_source": "/home/opp_env/client_source_final_20261010",
+  "ordinary_workspace": "/home/opp_env/client_priority_final_20261010",
+  "incident_workspace": "/home/opp_env/client_incident_final_20261010",
+  "status": "complete: ordinary, controlled obstruction and signal validation suites processed and audited",
+  "model_source_sha256": {
+    "src/apps/CloudService.cc": "3561a60e9a262f47704d9c29548d4b17f072384fcf649991cc46e9343994da8f",
+    "src/apps/CloudService.h": "8b362b310eec8f1f90e8532894a686637a39d206e35cd0bcd07ad3b8e38c2f91",
+    "src/apps/EmergencyRelayApp.cc": "2c5feadd34779fded9b0151328ecb3f73837c8e5b9cfa1ef7e5829728e675d95",
+    "src/apps/EmergencyRelayApp.h": "2723320f139d79fc36b5d8e86abc3012688d86641633cd12ea8eb46424922c54",
+    "src/apps/EmergencyVehicleApp.cc": "7375baac6cba4fb09abd253888916a1ee8fed60cd7c41e558e1bc38b19a5ff9c",
+    "src/apps/FogService.cc": "9f2624b7d05bd895e6ae99a851adeb6bb5e076fccb5ac4b146a7f2383a7b21fe",
+    "src/apps/FogService.h": "8d70f6cc5aca201b0156bbfa84131013dedb8631cf923532b29443402ca11d89",
+    "src/apps/MistRoutingModule.cc": "7fbb60c5f3c4818e4652260d2aaf535fe27c8d47bfb8a1576e5e8e452cb57b86",
+    "src/apps/MistRoutingModule.h": "26e40599b975777d2c0055d4ea77266efc354cc9c6380e5f9d5ebcdce93f8a98",
+    "src/apps/NormalVehicleApp.cc": "d3879d76e7f9ebba062fcd3c2557883508de85ce2af8642a0c772e2af1a92ee3",
+    "src/apps/RsuApp.cc": "27ae7b4ffc9d04aaec220d8a24b73f7494404b850317014066b416a291beb68e",
+    "src/apps/TrafficLightController.cc": "e2ee7d4907e8773f424ffa4f3db1259e7b279e4b3aca12623887c7dedbb1dff0",
+    "src/apps/TrafficLightController.h": "47c1fb393c3b85e424955f16bf9a3ec41693b245ea1dbf0054c222c6eb33f4c9",
+    "src/messages/EmergencyNavigation.msg": "638be6e54f5d282da46334bdaaef3eb0d945060042ec7d11f952b7e33bb0645f",
+    "src/metrics/MetricsCollector.cc": "9783abe14e91508ca1a22ac950fd319668241bd3ac95a50993b6fef831e85d0e",
+    "src/metrics/MetricsCollector.h": "8038dd5cbe970558dd3652d9e7eabdfef6f0abbfc6dab71152293d5006babc8e",
+    "src/routing/AStarRouter.cc": "8a73339bb74b73eca673193681fb104fa68092cd46128f664419ee055662532d",
+    "src/routing/AStarRouter.h": "c156004237f130be37109ee6e72a335e22b95437c85457102d2917605865cd70",
+    "src/routing/RoadGraph.cc": "53e4e110f31ed8db6b3d07aa1787fc79d977517aa4d14243b4b5dd277687ccec",
+    "src/routing/RoadGraph.h": "fd7d1038f20eacd8cc1e515e9fb1a9f51ff7653778724d7e8362b7e5e240e1cf",
+    "src/emergencynavigation/apps/CloudService.ned": "cbf8d55f621f83e87d5f9f476ed1dcef03c4fade9b25f12f2de2cb25c55b738f",
+    "src/emergencynavigation/apps/EmergencyRelayApp.ned": "8a8779719ce05bd81f1d5b9b208eddde1febcb19f99a2664e42bc898d4ca8e67",
+    "src/emergencynavigation/apps/EmergencyVehicleApp.ned": "0b21b453488a6052bcec015f53e2eabe95ec7e129772252513e66d85b8683b5c",
+    "src/emergencynavigation/apps/FogService.ned": "d7a075873e4ee91275c0552f1a172191115ccdb56d94f2842a10b262d71b722a",
+    "src/emergencynavigation/apps/MetricsCollector.ned": "8c8ccdf1a93f7ce353db31bd241c768e9101f1b1383b443a679536f2eeffd08a",
+    "src/emergencynavigation/apps/MistRoutingModule.ned": "83a8d933473ed63895a4d69238a5cdf81e90747cbaedb5369c5a5856dfd201b8",
+    "src/emergencynavigation/apps/NormalVehicleApp.ned": "b4ca9e0323450fd7bd0da3e69f589e0533a78ef8ea1786efbd0c1b49bd8cca2b",
+    "src/emergencynavigation/apps/RsuApp.ned": "d7600161ed64cfaa3b49aedf68dda24b970a8f647d6a99889c691bc0ae0a18b8",
+    "src/emergencynavigation/apps/TrafficLightController.ned": "cc1201ae0759602eed3efff5ef2295fa2f6c256fa86800bafc5e87395c45a363",
+    "src/emergencynavigation/scenario/ControlledTrafficLight.ned": "688064b7da330def03757816ea9fd0c5e7f85bb44bc243d791d9d58b8122e59c",
+    "src/emergencynavigation/scenario/EmergencyCar.ned": "3b8174464ed660bcde56834ac7334e1bc63e6be4af9076d0cca91df1de623bc6",
+    "src/emergencynavigation/scenario/EmergencyGridScenario.ned": "1472954efd2b62fe724eac67534635b6cac930e1db5029a7be2b62e7b297bc49",
+    "src/emergencynavigation/scenario/NormalCar.ned": "ca0122ecda12edb61919056db0bcf3c79fde4935c6ce6117c7f50204e4783d5a",
+    "src/emergencynavigation/scenario/ServiceRSU.ned": "908e525ff82c67ca7e278d58b53c877198156c116159720720e87ea41e592d13",
+    "simulations/grid/omnetpp.ini": "bc72bb051ab18fb63b6bd1088bb92e2c6ac552e1c92dd3c280b5d9d9176cfd07"
+  },
+  "dynamic_priority": {
+    "distance_m": 250,
+    "eta_s": 20
+  },
+  "reactive_priority": {
+    "distance_m": 100,
+    "eta_s": 8
+  },
+  "retry_interval_s": 5,
+  "maximum_hold_s": 25,
+  "minimum_green_s": 10,
+  "yellow_s": 2,
+  "all_red_s": 1,
+  "completed_runs": {
+    "ordinary_including_waiting_only_baseline": 450,
+    "controlled_obstruction": 360,
+    "signal_validation": 18
+  },
+  "interpretation": "Large response benefit demonstrated under controlled obstruction; ordinary traffic retains smaller improvement. The 20 percent threshold was chosen after measurement and is not a universal claim."
+}

@@ -18,7 +18,10 @@ if ! python3 -c 'from pathlib import Path; rows = Path("/proc/net/tcp").read_tex
 fi
 
 cd "$project_dir"
-if [ "${1:-}" = "--congestion-validation" ]; then
+if [ "${1:-}" = "--framework-validation" ]; then
+    shift
+    python3 "$project_dir/scripts/run_framework_validation.py" "$@"
+elif [ "${1:-}" = "--congestion-validation" ]; then
     shift
     python3 "$project_dir/scripts/run_congestion_validation.py" "$@"
 elif [ "${1:-}" = "--signal-validation" ]; then

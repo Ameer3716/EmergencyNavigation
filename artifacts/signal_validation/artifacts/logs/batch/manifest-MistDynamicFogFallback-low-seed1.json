@@ -2,8 +2,8 @@
   "configuration": "MistDynamicFogFallback",
   "density": "low",
   "seed": 1,
-  "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+  "binary_sha256": "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5",
   "scenario_condition": "normal",
   "controlled_mist_stall_ms": 0,
-  "ini_sha256": "49d2cd813191b390ceb89ce955a6944b5ec0e06aa0ccb6a65f6a32ec4f58afff"
+  "ini_sha256": "649e1abda5536c80edaba854b7edf54400a474a2de6bf685fc5cbfb930126b1b"
 }

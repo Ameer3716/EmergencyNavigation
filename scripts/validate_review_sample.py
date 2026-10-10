@@ -17,6 +17,8 @@ def main():
     parser.add_argument('--artifact-root', type=Path, required=True)
     args = parser.parse_args()
     root = args.artifact_root.resolve()
+    import process_results
+    process_results.ROOT = root
     result, checks = [], []
     for density in ('low','medium','high'):
         for seed in (1,4):

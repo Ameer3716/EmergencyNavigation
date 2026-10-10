@@ -13,7 +13,7 @@
   ],
   "stop_until_s": 250,
   "horizon_s": 900,
-  "source_project": "/home/opp_env/emergency_navigation_audit_fix_final",
+  "source_project": "/home/opp_env/client_source_final_20261010",
   "source_special_sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
   "incident_special_sha256": "3438d39a4ae5a86cb8a742af5d0c0e60998f587dd759d133d073c605df95c689",
   "interpretation": "Controlled incident experiment, separate from ordinary traffic; no guarantee of improvement.",

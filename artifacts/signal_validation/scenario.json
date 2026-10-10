@@ -1,6 +1,6 @@
 {
   "scenario": "short_notice_red_signal",
-  "source_project": "/home/opp_env/emergency_navigation_audit_fix_final",
+  "source_project": "/home/opp_env/client_source_final_20261010",
   "first_signal": "A1",
   "first_phase_state": "rrGGrr",
   "first_phase_duration_s": 150,
@@ -19,5 +19,15 @@
   ],
   "source_network_sha256": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
   "validation_network_sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
-  "interpretation": "Controlled signal validation only; not part of the headline matched batch."
+  "interpretation": "Controlled signal validation only; not part of the headline matched batch.",
+  "executed_densities": [
+    "low",
+    "medium",
+    "high"
+  ],
+  "executed_seeds": [
+    1,
+    4
+  ],
+  "expected_runs": 18
 }

@@ -1,0 +1,2711 @@
+[
+  {
+    "file": "results/raw/FogCloudAStar-high-seed1.sca",
+    "sha256": "5e10706aea181a8066e55a40a4a3996c474fa6900f3f75668ffab14f2e6b6d93",
+    "bytes": 2165729,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed1.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-high-seed1.vci",
+    "sha256": "ba63d364e49a013f1402111b0423626fc13491d67303facbcd85765849f50f37",
+    "bytes": 189697,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed1.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-high-seed1.vec",
+    "sha256": "1a1cb71c4b29f389daf74a32a7c0067d6e24935de065d3ecb937d297b7783ba7",
+    "bytes": 8874701,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed1.vec"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-high-seed4.sca",
+    "sha256": "22a4b59eca141b46fd00d59044ae196ae5602866d485437044239b65c8062770",
+    "bytes": 2165966,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed4.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-high-seed4.vci",
+    "sha256": "640677338d2b85b05c747e2f4369ad663e5b1d11e504ab7526c2d5ad6945e03c",
+    "bytes": 189226,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed4.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-high-seed4.vec",
+    "sha256": "a63547da96347144c3a9b2002028c330ad1d2a299673bf9a68dc17ba8876927a",
+    "bytes": 8853402,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-high-seed4.vec"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed1.sca",
+    "sha256": "03d42c405eeacf60907e94ca3e1313171aa8ad1b4355303d1b6b7a8364919478",
+    "bytes": 905189,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed1.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed1.vci",
+    "sha256": "2b1e8db20df15a35233aa384791847daf83387711cd0658eb2d289e932cba2ea",
+    "bytes": 74064,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed1.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed1.vec",
+    "sha256": "0496044c0f40419cdbe4d1e2fcc5ed1ecfde61912b0c89837339922036e32c6e",
+    "bytes": 2980131,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed1.vec"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed4.sca",
+    "sha256": "46ae2946afc2a134f5f014acc45c95b0b87a249807846d8dc11c274bd86d5456",
+    "bytes": 905295,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed4.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed4.vci",
+    "sha256": "040dfab4a2438ec11a9157230c2ed1f60ab6d15a6a30f29f61d5dad914a970ea",
+    "bytes": 74047,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed4.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-low-seed4.vec",
+    "sha256": "a3e1939b2889281bcb20d9b63cdf369fd0cc2ab814a093b0282f44c5c79df155",
+    "bytes": 3089554,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-low-seed4.vec"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed1.sca",
+    "sha256": "61e1433662a3267d50f1416e3f5548db3886ed5a12309575aa2e0962a6217138",
+    "bytes": 1614317,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed1.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed1.vci",
+    "sha256": "21bd23f0ca50879e6153efbcdd6898354ee5bc05e0e2390543ec846506c1dd9f",
+    "bytes": 138438,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed1.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed1.vec",
+    "sha256": "65df3df459851e87060579007e583f0ed169e074531cb83acf3ae2c35aafa673",
+    "bytes": 6024789,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed1.vec"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed4.sca",
+    "sha256": "1a557af8e1e44ea6585a6dc3eb45dd03d77ff204d98dad73876cbb5df176c415",
+    "bytes": 1614564,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed4.sca"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed4.vci",
+    "sha256": "86a4ebe025d2296f1735ce5894474724cc9e5bb20d67940a7d070a100b6b38c2",
+    "bytes": 138568,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed4.vci"
+  },
+  {
+    "file": "results/raw/FogCloudAStar-medium-seed4.vec",
+    "sha256": "e2a65d9552daa58840340d15c37ff12a7911b5b4b9aa39d544c381804d41af31",
+    "bytes": 6219813,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/FogCloudAStar-medium-seed4.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed1.sca",
+    "sha256": "c160de5803e6510242cb8cbca7184ec9bea8e06484c5c5e0875a008324d31ec0",
+    "bytes": 2173808,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed1.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed1.vci",
+    "sha256": "fa01a6e5e2c61d631b78dd9e79f8431790ffa53d0b4e2339724c7a4fe30339d9",
+    "bytes": 189905,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed1.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed1.vec",
+    "sha256": "671c03d5474447df0bd1b82e8d09e277ce6f6855d462e2704e3f0fab90a15fb1",
+    "bytes": 8824125,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed1.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed4.sca",
+    "sha256": "48c5b90f0bb7f39312213f9bf5ddded96de61e167c1d6c317a4cd96f01d0a942",
+    "bytes": 2174267,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed4.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed4.vci",
+    "sha256": "9ec88bcb4e21c0b3012d5df8313e43e1b7c776ece58d120278bd8413756a351c",
+    "bytes": 189760,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed4.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-high-seed4.vec",
+    "sha256": "3ff5c8a97b6d8e5a4b3eb418c2a7e0a28b1b2b090bb0057c751d318b506b7444",
+    "bytes": 8881320,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-high-seed4.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed1.sca",
+    "sha256": "d20ab90afc59af75e59e370a40e29cb42620f03f5f38c6cbb0facfb4797589a4",
+    "bytes": 908558,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed1.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed1.vci",
+    "sha256": "ca910ba7703b8df794703c03e03028f564420fe7640ea37423428db9125dbdfd",
+    "bytes": 74301,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed1.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed1.vec",
+    "sha256": "f831cbeaf2748c66d652fcdffc719fa56a9064786e98096bce3fa42c4d088293",
+    "bytes": 2980219,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed1.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed4.sca",
+    "sha256": "2d4a9f5e8a4999a9d01d7f05c0ec37d8a6f9ba63457bca50f30d72715a4f6094",
+    "bytes": 909108,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed4.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed4.vci",
+    "sha256": "adc0d8538650ac6cd18ce4072cf32aec1aef260939dcb928865c43b75e003318",
+    "bytes": 74235,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed4.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-low-seed4.vec",
+    "sha256": "d2bf450fee2eef6ab74aa17f51eeee60fccfb4b20085d9fa702ce36f67bef909",
+    "bytes": 3089028,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-low-seed4.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed1.sca",
+    "sha256": "56df3cf238d4e5e9f17aacdc37336a924a5e46c26519d5fe8fce2a4cf4fb4799",
+    "bytes": 1620335,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed1.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed1.vci",
+    "sha256": "a1e23c325e30c7beecbde78c7741a6ebccf1b39a3562605596b19b3371216198",
+    "bytes": 138600,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed1.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed1.vec",
+    "sha256": "0dcf8e754f880f2ede010aca12d8bc819b5306c2e2d3facf4552b657f89f771e",
+    "bytes": 5999494,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed1.vec"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed4.sca",
+    "sha256": "f20750f6c2b307eff73cb93c8cc6193b256f44fd1b4c5e4095017d55105e96ec",
+    "bytes": 1620965,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed4.sca"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed4.vci",
+    "sha256": "77b7ff8eae34becbeb435cce3583ea281f8670d390c195a8d145ee0f2b7a2b06",
+    "bytes": 138697,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed4.vci"
+  },
+  {
+    "file": "results/raw/MistDynamicFogFallback-medium-seed4.vec",
+    "sha256": "688779d9247a2503f317f4d3dfe8eec0db2c838ebfd29ce2a6cc86ad14cc02a4",
+    "bytes": 6210571,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/MistDynamicFogFallback-medium-seed4.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed1.sca",
+    "sha256": "f81442f67fa03759626dba3ef1b26541b5852c9f69417e36aa15d8f432a23277",
+    "bytes": 2171599,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed1.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed1.vci",
+    "sha256": "31efa9a7ff6e55b68070686be9e9c33966351f20306129f33fd93fb506799fa0",
+    "bytes": 190021,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed1.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed1.vec",
+    "sha256": "7be859938b9490c5e05fb952bbc76dd8241531226c9ebd288fbbd20ab919e5f4",
+    "bytes": 8911873,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed1.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed4.sca",
+    "sha256": "b63127dcd5ba2f7592b55b3a0fda58064ad165de5479f3610205edfedb0aad0b",
+    "bytes": 2171656,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed4.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed4.vci",
+    "sha256": "1089de3cfb468e4ab91857d17a7035e09742057f62a062cc9f5da71a1da8b63f",
+    "bytes": 189856,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed4.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-high-seed4.vec",
+    "sha256": "522cc38497dcf48427394ece806135fad48c2381d05c6f64bc8dc02efac266e6",
+    "bytes": 8879531,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-high-seed4.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed1.sca",
+    "sha256": "643da6db17db57e09c0b69f676229d5b66be922d5b07ecbb8a110ced90f79212",
+    "bytes": 907495,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed1.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed1.vci",
+    "sha256": "a18037a1d6d6928d76a45c258f7201f4aac8ffac63604ffadd3895825271d53d",
+    "bytes": 74189,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed1.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed1.vec",
+    "sha256": "f4920e5017069c06ac6508c2ff13201ef7c44dbb01a67695377462383a7dab1b",
+    "bytes": 3029396,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed1.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed4.sca",
+    "sha256": "925801849a75865a008aa998460eaabcf6b069e5f9d41b3203d139386658bbbd",
+    "bytes": 907615,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed4.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed4.vci",
+    "sha256": "15efe575e4cd155d3e3f56af35105533a3b53078b07a822b45f196f63dac6cfb",
+    "bytes": 74137,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed4.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-low-seed4.vec",
+    "sha256": "f2a967ba7c0358b4f3363d19951c1d8eec318c4045a245cc323183d6bc83486d",
+    "bytes": 3134562,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-low-seed4.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed1.sca",
+    "sha256": "6f9b89ae3159338565925f5168af4e5127d30c12fe44552e796f7e1d8818a559",
+    "bytes": 1618642,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed1.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed1.vci",
+    "sha256": "9fd4ee4885d5f1727201386e43eb9633f12e9c6d3c48ec097766d2c2361eb07a",
+    "bytes": 138555,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed1.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed1.vec",
+    "sha256": "28e2a487c4a4d3b0db7bb9400ca61b49dd926acce5c26003b3860d8c83fadb53",
+    "bytes": 6021087,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed1.vec"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed4.sca",
+    "sha256": "aa495253ce894e2192669e0eb43198ea3519e53a445d009145609fe1e955f7cc",
+    "bytes": 1618788,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed4.sca"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed4.vci",
+    "sha256": "314b1d8d38040102eaaa13fb61324fc54cad09c39bc9720c9c3156d287f52318",
+    "bytes": 138600,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed4.vci"
+  },
+  {
+    "file": "results/raw/NoPreemptionBaseline-medium-seed4.vec",
+    "sha256": "c74703459cb1382ac679f678550c2088429b8b8025415702b8fe22221f9e1801",
+    "bytes": 6221197,
+    "copied": false,
+    "native_source": "/home/opp_env/client_signal_final_20261010/results/raw/NoPreemptionBaseline-medium-seed4.vec"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-high-seed1-stdout.txt",
+    "sha256": "42ab6057eaca782e80a217aa07a53bfd00d1639dfc1bfddd953b13e1959cd107",
+    "bytes": 22832,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-high-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-high-seed4-stdout.txt",
+    "sha256": "279d852250d41c65dddd6704a0a4c8f5f4d94e1686d3fdb27ee4952998eba9dc",
+    "bytes": 23225,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-high-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-low-seed1-stdout.txt",
+    "sha256": "a1fa361506d4804693bad6064d6f2bd009b6a7b4b0479178ee2d42f2d2bc086c",
+    "bytes": 14623,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-low-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-low-seed4-stdout.txt",
+    "sha256": "857ef2fbe7ab14ba084b4fa6ccf99bb65eff34b537488f8aee1791d4545234d8",
+    "bytes": 16132,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-low-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-medium-seed1-stdout.txt",
+    "sha256": "9504e9c1a142dcb085dac67de5546eca218eb66ab56f7876bccc854fee3e5ea8",
+    "bytes": 18616,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-medium-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/FogCloudAStar-medium-seed4-stdout.txt",
+    "sha256": "652f793b739e0e788995af8592ef98612159d2a1de412553fe028adeceabde44",
+    "bytes": 19037,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/FogCloudAStar-medium-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-high-seed1-stdout.txt",
+    "sha256": "e69596785c595033719821dd2aee8650e4caea470a88f17e19ee60134f479b49",
+    "bytes": 24813,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-high-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-high-seed4-stdout.txt",
+    "sha256": "dd831bf3c531adb12b43539a26916c0191356945b98c980718f55109bbbcd7cd",
+    "bytes": 24477,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-high-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-low-seed1-stdout.txt",
+    "sha256": "926d4897ee1d8ddb83148ef9621914d6ca814782537b6d55320d31d6b659913d",
+    "bytes": 12560,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-low-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-low-seed4-stdout.txt",
+    "sha256": "9c762b19f1ad07554b2741fea1814b528c6f6152b9bbe556071fb83b9e6953df",
+    "bytes": 15506,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-low-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-medium-seed1-stdout.txt",
+    "sha256": "3ff70c17216f7aacaa4e414874f2092490ec62ce29df0abf3ffc8bf87a92b544",
+    "bytes": 18774,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-medium-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/MistDynamicFogFallback-medium-seed4-stdout.txt",
+    "sha256": "14a5528f3f4450bf4e8093527093cb2c00a7166a619df33a273cd3949a1c9a44",
+    "bytes": 21073,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/MistDynamicFogFallback-medium-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-high-seed1-stdout.txt",
+    "sha256": "c30a91522c9bcb471ef4e599ff4d6c8966c81a7bdffd69e56625a1fc9131d3bf",
+    "bytes": 19116,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-high-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-high-seed4-stdout.txt",
+    "sha256": "0e626bf3021d7adc5828aa405ae0c551822f5b38ff01b6ad6ec20ec19567615e",
+    "bytes": 17722,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-high-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-low-seed1-stdout.txt",
+    "sha256": "033f94505838e50caa3bf27fb197ecbe598332d463ffbe757a324e876ea399bc",
+    "bytes": 16586,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-low-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-low-seed4-stdout.txt",
+    "sha256": "0e418278b75f7efae71a93944742509d69aa687872f106be5b1e9aac82a63358",
+    "bytes": 15194,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-low-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-medium-seed1-stdout.txt",
+    "sha256": "9efb6dcebb6ae17a85e20f0e455c1235094cf325b2b7893e9e4c44f7b5f88385",
+    "bytes": 17464,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-medium-seed1-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/NoPreemptionBaseline-medium-seed4-stdout.txt",
+    "sha256": "7d388b3c15ce4a2c8349324449ab7dc22cc853e7e09768adb9f7b42697a01c8f",
+    "bytes": 16763,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/NoPreemptionBaseline-medium-seed4-stdout.txt"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-high-seed1.csv",
+    "sha256": "32fbaa626d2e25308c946267c9f787d69f9a2d0c25bfddc825d5b5ae0dd58fba",
+    "bytes": 45491,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-high-seed4.csv",
+    "sha256": "3704a8aa73f432b15f1a1e287424bf3138af059f559be83ab854191e29138312",
+    "bytes": 49345,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-low-seed1.csv",
+    "sha256": "f3f5f19e98f58f6aea135546a0dea092877806a706f62a66854e3c4781eed317",
+    "bytes": 13310,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-low-seed4.csv",
+    "sha256": "5efba62d07fa53edd77d3e7f42b5cee17dac3cea9a3473d7bb6255dbfc8b252f",
+    "bytes": 10165,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-medium-seed1.csv",
+    "sha256": "807613d75804a719c3d45316608fcffa70d75fb47e26bbc6c4ecc2955a1cdd84",
+    "bytes": 27431,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-FogCloudAStar-medium-seed4.csv",
+    "sha256": "c190060eb7e461e8f58a3dbb14c427eb5b72aa6783ce3ba0438d3d2ecbc7b3f3",
+    "bytes": 30301,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-FogCloudAStar-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-high-seed1.csv",
+    "sha256": "c0cdf6d23e49fa37b0cdcfdac9f1c694b2e81def3565b5dee2d9c914ea99f68b",
+    "bytes": 44982,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-high-seed4.csv",
+    "sha256": "30cb1ba40907c70ce413830e2b034a482976a52cee1477251c0482f045f19dd3",
+    "bytes": 49225,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-low-seed1.csv",
+    "sha256": "58ab207cce641cddd84ef523422ab9a60cce80b6a0229eeaa185491828aa6ad6",
+    "bytes": 13310,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-low-seed4.csv",
+    "sha256": "8c06e50441cbc81fb295e15054ec714bee732c22a36548020f44493b09bf4a11",
+    "bytes": 10164,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-medium-seed1.csv",
+    "sha256": "f31473be4e2ac2e76e4387da9bfc66401942efde0f2cf1a488bad671f7b7b80f",
+    "bytes": 27526,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-MistDynamicFogFallback-medium-seed4.csv",
+    "sha256": "c190060eb7e461e8f58a3dbb14c427eb5b72aa6783ce3ba0438d3d2ecbc7b3f3",
+    "bytes": 30301,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-MistDynamicFogFallback-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-high-seed1.csv",
+    "sha256": "32fbaa626d2e25308c946267c9f787d69f9a2d0c25bfddc825d5b5ae0dd58fba",
+    "bytes": 45491,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-high-seed4.csv",
+    "sha256": "3704a8aa73f432b15f1a1e287424bf3138af059f559be83ab854191e29138312",
+    "bytes": 49345,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-low-seed1.csv",
+    "sha256": "f3f5f19e98f58f6aea135546a0dea092877806a706f62a66854e3c4781eed317",
+    "bytes": 13310,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-low-seed4.csv",
+    "sha256": "5efba62d07fa53edd77d3e7f42b5cee17dac3cea9a3473d7bb6255dbfc8b252f",
+    "bytes": 10165,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-medium-seed1.csv",
+    "sha256": "807613d75804a719c3d45316608fcffa70d75fb47e26bbc6c4ecc2955a1cdd84",
+    "bytes": 27431,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/emergency-NoPreemptionBaseline-medium-seed4.csv",
+    "sha256": "c190060eb7e461e8f58a3dbb14c427eb5b72aa6783ce3ba0438d3d2ecbc7b3f3",
+    "bytes": 30301,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/emergency-NoPreemptionBaseline-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/fallback-MistDynamicFogFallback-high-seed4.csv",
+    "sha256": "fc1efca6865141cc72847c91ca9a4c0024d956fcc82ef15829944319ddb14ef7",
+    "bytes": 140,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/fallback-MistDynamicFogFallback-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/fallback-MistDynamicFogFallback-low-seed4.csv",
+    "sha256": "9a7e5bf21c9a279bb9b5ba5bc8e341badc12216e285fc88fc4f29f9b38081b1b",
+    "bytes": 140,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/fallback-MistDynamicFogFallback-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/fallback-MistDynamicFogFallback-medium-seed4.csv",
+    "sha256": "fcd6939a04d4b1b34897c451b8d2e8265dbc29f01f50cf16f6af9659abfdbebd",
+    "bytes": 137,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/fallback-MistDynamicFogFallback-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-high-seed1.json",
+    "sha256": "e5b36e5a15df26e0be1b7f0d33e4bb5dea7ee48df6dae2c8883ee8d4a15d9791",
+    "bytes": 311,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-high-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-high-seed4.json",
+    "sha256": "07535f9fb6c476256bfdc8da4c9c32a4bbf9d7f459ebb8b644ddaeee4d252a45",
+    "bytes": 321,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-high-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-low-seed1.json",
+    "sha256": "579155300b2d5ec7e6230bd73026b11fc0d8a2c938ab6c875ad153343d5d2c24",
+    "bytes": 310,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-low-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-low-seed4.json",
+    "sha256": "d8c4f4d1b6f2fe25c09094a91de6e307afa33bdc31ffad0532cf919ec7e7f0e7",
+    "bytes": 320,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-low-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-medium-seed1.json",
+    "sha256": "86457ce2d930e73cf92c0c182ea61e01b8eb050850912c951c5a55510f42c5e0",
+    "bytes": 313,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-medium-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-FogCloudAStar-medium-seed4.json",
+    "sha256": "d419f63a5e8f8f13ace4a6bc6fdf4a402c4de0486ff44afb4c57300e3007f8f3",
+    "bytes": 323,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-FogCloudAStar-medium-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-high-seed1.json",
+    "sha256": "812ab823da114fb08c8b4e8a60ad5650a63f919fb1a59703dd6c36ebfb83e19d",
+    "bytes": 320,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-high-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-high-seed4.json",
+    "sha256": "031317aa3de39c5b6d68f3d06d9ccb5f60373cfb80bb7ed2e469915b2259095b",
+    "bytes": 332,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-high-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-low-seed1.json",
+    "sha256": "bd008e9251f5f266565e1b030b16e219ead3f6b947f85151fd7b6c754071f7a8",
+    "bytes": 319,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-low-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-low-seed4.json",
+    "sha256": "d65f9c150f6c3750d2ca9212ed36d30b576db15d2c62889a5ecfa876f263ac9f",
+    "bytes": 331,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-low-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-medium-seed1.json",
+    "sha256": "01421d45d8cd86ef0d63250d2e0ac3046e86c65bded5f5b9eda8cda654683b06",
+    "bytes": 322,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-medium-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-MistDynamicFogFallback-medium-seed4.json",
+    "sha256": "a28dce8303860bf3f073d6843ba813ad6f0e3cdad2e1ebe564ee23e7978f6102",
+    "bytes": 334,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-MistDynamicFogFallback-medium-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-high-seed1.json",
+    "sha256": "ac18f4855834983eea2ccdb8785e082de23af0a77443796870de22f9523dc898",
+    "bytes": 318,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-high-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-high-seed4.json",
+    "sha256": "7d663f89c17b8a3d406768248db7017674f3eb0ba6b915a2b48eef20d407d366",
+    "bytes": 328,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-high-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-low-seed1.json",
+    "sha256": "da58021de68d804237b84879194a99a314a57dca100a240990116b2ff93b519b",
+    "bytes": 317,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-low-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-low-seed4.json",
+    "sha256": "e50fca587c2321b2fc1b6fa15707aaab896aa14d507afa96c74d25925f8f8f8a",
+    "bytes": 327,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-low-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-medium-seed1.json",
+    "sha256": "052256567ea1846df9bcfc2b234cd80af92e4d9d381e20cf5ab445a25d1a8606",
+    "bytes": 320,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-medium-seed1.json"
+  },
+  {
+    "file": "artifacts/logs/batch/manifest-NoPreemptionBaseline-medium-seed4.json",
+    "sha256": "ef4c755e57a1990b4c8f05c68f6cbfaaa29c36bf5d8685f587a72880800c11dc",
+    "bytes": 330,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/manifest-NoPreemptionBaseline-medium-seed4.json"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-high-seed1.csv",
+    "sha256": "0d7295b7814389ec04bc7212954629378d06f0fc38e2a5e8d99cd0cc40eec0d4",
+    "bytes": 211505,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-high-seed4.csv",
+    "sha256": "2a6231b938bc2592819c7bdf350613cefce894c51492a9ec91f40086521fd6a5",
+    "bytes": 214175,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-low-seed1.csv",
+    "sha256": "37d5578f0c8e090a305eb4fa1b97e2ba310356c4d1faa3194edb12e052f23124",
+    "bytes": 201776,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-low-seed4.csv",
+    "sha256": "f38d8a468f5da440ecd231fcf0843641c697633b72b9cd4317a847ee9fbd99e0",
+    "bytes": 229172,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-medium-seed1.csv",
+    "sha256": "8fa6da462ba47a4a953f249b6c9eb2c33094f20ed7b3c9160783cfd52c257c86",
+    "bytes": 213887,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-FogCloudAStar-medium-seed4.csv",
+    "sha256": "cc7dc0d37d481d931fbe6f0ced22dc0304a15195b046aed9235176dafbb03779",
+    "bytes": 230043,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-FogCloudAStar-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-high-seed1.csv",
+    "sha256": "b7e5744f21447b43abbdbaa9f7b5c61fb7f4b0be6ea766919db9e2a0b4cdd231",
+    "bytes": 216584,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-high-seed4.csv",
+    "sha256": "58f26f22dcc92a89a40bf22f80a7db6064744e8fd4bd92ae692ee274b0b69187",
+    "bytes": 213198,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-low-seed1.csv",
+    "sha256": "00271ddf37d75e4f7e2f08d62efc59406376a2d1e151caeb6499061149d404ee",
+    "bytes": 204262,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-low-seed4.csv",
+    "sha256": "fbed65ae1faf6f3f0286c780a56b3488464448abe53e4c9166318f917a9dc037",
+    "bytes": 228235,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-medium-seed1.csv",
+    "sha256": "eabddb984a4b97745a36b2ee92df71f395ce4536e0ba53f4ceea8468b25a684c",
+    "bytes": 214124,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-MistDynamicFogFallback-medium-seed4.csv",
+    "sha256": "4e5f6771ad7045ed80f9479fc2bea39e89d0e74cabbd3fb64492dde5c7f659b1",
+    "bytes": 230227,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-MistDynamicFogFallback-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-high-seed1.csv",
+    "sha256": "6d85823a136c26f039608a44fbd103a084035901ea2a0fe6962ccd8fdcf40e81",
+    "bytes": 344391,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-high-seed4.csv",
+    "sha256": "a5d565759cc3abfa2fd81a913a956f9b70ec17c5a06f744f304b1fb2a3681393",
+    "bytes": 343519,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-low-seed1.csv",
+    "sha256": "8208c09fffc0101f57e63a5b70a209c060de84960534880401103e8cf95ddf2a",
+    "bytes": 332630,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-low-seed4.csv",
+    "sha256": "a0a635f83963f3451ad92da8dd55fa3b0d8959589b66d88590b4794d0260f532",
+    "bytes": 342350,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-medium-seed1.csv",
+    "sha256": "6b5f083624376ca5aca329fe5c5570837dde56ab4f22a77df9ef15c6c5490755",
+    "bytes": 334080,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/mobility-NoPreemptionBaseline-medium-seed4.csv",
+    "sha256": "f1fcd3060fe8d215d5204c0cdf850d9f02d452b781544425670b1b0800ade3b0",
+    "bytes": 337231,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/mobility-NoPreemptionBaseline-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-high-seed1.csv",
+    "sha256": "0f521d3c376ff458f0ee85612bafe4141fee945c18b28b28c2244d059b8f14cd",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-high-seed4.csv",
+    "sha256": "f0e05f4f292b83e39d625487bf05f5e4208bbd809e4f307b2ad38c11babd8c7e",
+    "bytes": 395,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-low-seed1.csv",
+    "sha256": "9d1ef808cbd19723bb8ca8d4955971d1dd27aed03cb13724f81c489ef88174a4",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-low-seed4.csv",
+    "sha256": "74bc20668e9e8a67ebb4d0a2ab63f59317b8aa790e62d044a9cbdd8187f11026",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-medium-seed1.csv",
+    "sha256": "08c110c1747cf5089858fcf2e402d24924772710d755bd0b2aceb7a025481c7b",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-FogCloudAStar-medium-seed4.csv",
+    "sha256": "b03e0b339c64a05bdc7bb9adba5dbd32641fe00fba937699c0e7b527c4b327c9",
+    "bytes": 397,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-FogCloudAStar-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-high-seed1.csv",
+    "sha256": "b8fd462cd7b7a728036cf4bb659d9a75aa8dd944321dfbafbd1ded375423a1bc",
+    "bytes": 6745,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-high-seed4.csv",
+    "sha256": "a63b62288c1cf15c2c9156ff2306471f17b192f74c54ed74446f2ee1a412014d",
+    "bytes": 6966,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-low-seed1.csv",
+    "sha256": "636a357aa52307eb3eba56da4cddb08bf277c2199dba9b60a876ae7310e16caf",
+    "bytes": 5976,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-low-seed4.csv",
+    "sha256": "166d2104f5cbae22e537907b1e157aba09ec12f09572b685d2ed13c3945aa7ec",
+    "bytes": 7120,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-medium-seed1.csv",
+    "sha256": "cff9361cb41d9937b69548408b4eceb8644eb320a0bd8eca70fb82cd5052a4f4",
+    "bytes": 6741,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-MistDynamicFogFallback-medium-seed4.csv",
+    "sha256": "569e72dff9a9dfd6342b125e11c2f7608c1f49c38801fa6d46dbcb1fdf8855c8",
+    "bytes": 7124,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-MistDynamicFogFallback-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-high-seed1.csv",
+    "sha256": "0f521d3c376ff458f0ee85612bafe4141fee945c18b28b28c2244d059b8f14cd",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-high-seed4.csv",
+    "sha256": "f0e05f4f292b83e39d625487bf05f5e4208bbd809e4f307b2ad38c11babd8c7e",
+    "bytes": 395,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-low-seed1.csv",
+    "sha256": "9d1ef808cbd19723bb8ca8d4955971d1dd27aed03cb13724f81c489ef88174a4",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-low-seed4.csv",
+    "sha256": "74bc20668e9e8a67ebb4d0a2ab63f59317b8aa790e62d044a9cbdd8187f11026",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-medium-seed1.csv",
+    "sha256": "08c110c1747cf5089858fcf2e402d24924772710d755bd0b2aceb7a025481c7b",
+    "bytes": 398,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/routing-NoPreemptionBaseline-medium-seed4.csv",
+    "sha256": "b03e0b339c64a05bdc7bb9adba5dbd32641fe00fba937699c0e7b527c4b327c9",
+    "bytes": 397,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/routing-NoPreemptionBaseline-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-high-seed1.xml",
+    "sha256": "7c9769e84278b6c72de4b8786bd4a5241e9a531e90ca29abaac7b4a4975571db",
+    "bytes": 206910,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-high-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-high-seed4.xml",
+    "sha256": "53096f649e73febc3ee6accc6780693f9b2af1bf5f0a2dffbf6d546e99e4390e",
+    "bytes": 206979,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-high-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-low-seed1.xml",
+    "sha256": "df7385dd83a1721d3b6323a4b68ecf292eedc4b1ca6a1f6c2fe21d527737db9b",
+    "bytes": 204767,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-low-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-low-seed4.xml",
+    "sha256": "f666632f2c704efcbbb94f0b3a79825ae74e2ecb084c8dea245b38a1fe579dca",
+    "bytes": 204794,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-low-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-medium-seed1.xml",
+    "sha256": "377060d8bb363ed89cc6d46c7b345eef9336dd988ecfc5caeaf84ad86e2cc017",
+    "bytes": 205836,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-medium-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-FogCloudAStar-medium-seed4.xml",
+    "sha256": "bd7e18ff21efb8a3f1dabf5ce2beb15fa15dcfa744dd721c2f6acb573fb5a04d",
+    "bytes": 205972,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-medium-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-high-seed1.xml",
+    "sha256": "0747164d370ebecf81956d52cde7a7e8df0cd163a1fec8170873ba5608eb7d1a",
+    "bytes": 206928,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-high-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-high-seed4.xml",
+    "sha256": "42e0b4adcbcc69f1fd2c51bede4a21b3c140ca8ca879d4e627e2dd942307e8b8",
+    "bytes": 206976,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-high-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-low-seed1.xml",
+    "sha256": "fc5db5be1ad5604874a9d0f51beca16e877faa806fa3613505e81246f6b55064",
+    "bytes": 204781,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-low-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-low-seed4.xml",
+    "sha256": "ff38fedb90e076f9fb4fa6deccb0d5a05b9de104d47f8c6377f7a2f944e002f8",
+    "bytes": 204802,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-low-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-medium-seed1.xml",
+    "sha256": "0f13e5f35b77e0ce8d3716329873138d7e1077df9600f2ffe9db9e2f432411cc",
+    "bytes": 205833,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-medium-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-medium-seed4.xml",
+    "sha256": "de2dad14d992ac5f4672943c2fd4cf64cf5a54fa8a8f5f29a3639dc74b3665e7",
+    "bytes": 205983,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-MistDynamicFogFallback-medium-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-high-seed1.xml",
+    "sha256": "583590702a0815af25c375135fbd456680fe8557a77db743675cf1d11d21fa97",
+    "bytes": 206923,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-high-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-high-seed4.xml",
+    "sha256": "1802656c0bf393f86e2215de0ffffed9c13c1f93c0cb4742c11f5188915ac4f3",
+    "bytes": 206982,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-high-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-low-seed1.xml",
+    "sha256": "5eeaf7192950309eece9380ef5a821bed4c70f47ce7002a955e8762ab4a8d560",
+    "bytes": 204800,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-low-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-low-seed4.xml",
+    "sha256": "de1e64b283d501c00db6b8fd618129cbdfbcb6d71e403039c01649932b279d8e",
+    "bytes": 204795,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-low-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-medium-seed1.xml",
+    "sha256": "e23f0e8705036859e038eb5e5ff799735c4a078f79c6df70610339b5b756bf9c",
+    "bytes": 205843,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-medium-seed1.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-medium-seed4.xml",
+    "sha256": "169c00cc4740b4a1bbe78cb5c069622c03d1b737f02bc04e25fb835f4ea91f25",
+    "bytes": 205991,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-NoPreemptionBaseline-medium-seed4.xml"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-high-seed1.csv",
+    "sha256": "f8fcc0aa24a4b78450d900592dcc018fcd243b5064c5ba660775234194ba9862",
+    "bytes": 4558,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-high-seed4.csv",
+    "sha256": "043c0c8e800bb9076d77c26266d61b49f0548132e4b61f564cfe55f79cab9966",
+    "bytes": 4390,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-low-seed1.csv",
+    "sha256": "415e1b9136453beb9f5fe9012fb907eeb656bbe28496ec881c51048333bb1a6a",
+    "bytes": 4558,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-low-seed4.csv",
+    "sha256": "7eefb3e418a3f1a188b77df370319ea4ad38c2c8276cad0ed357638a509bc944",
+    "bytes": 4253,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-medium-seed1.csv",
+    "sha256": "7e63ac77efb58f307a544d3d25e12e0c7ffeda5c2199c7cade63fc1e49b01c9d",
+    "bytes": 4566,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-FogCloudAStar-medium-seed4.csv",
+    "sha256": "7a71ff0b0a8f2917a612af7ea5303d4f38f6dfef8515d40860c93b86634e0ba5",
+    "bytes": 4292,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-FogCloudAStar-medium-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-high-seed1.csv",
+    "sha256": "d0382a41dce0bbd504cf9d427f1d4277923943ef5c5de46e89137285a7bda88d",
+    "bytes": 4566,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-high-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-high-seed4.csv",
+    "sha256": "877042c3b5c9dc488d88b561228f3a96cd69d7b8fb21290a40c17848ab8a103b",
+    "bytes": 4227,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-high-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-low-seed1.csv",
+    "sha256": "9d46ee16652649dd3efb6557cb9a44290948cd54b987b604743bf3b202eb0d70",
+    "bytes": 4558,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-low-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-low-seed4.csv",
+    "sha256": "df787422a65c4748341586d24942749fdb36bfb77346c2a0fe0901c6900e3062",
+    "bytes": 4256,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-low-seed4.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-medium-seed1.csv",
+    "sha256": "34ff8689b13b7c9d62f54ac5e805edc428ad8973bdfdcb211b3941a8a9c58f81",
+    "bytes": 4519,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-medium-seed1.csv"
+  },
+  {
+    "file": "artifacts/logs/batch/traffic-light-MistDynamicFogFallback-medium-seed4.csv",
+    "sha256": "d41c7df933ab9a1b6f7bf75c120707fc3ebbefebc379c9c0f7e039d15d9fb770",
+    "bytes": 4273,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/traffic-light-MistDynamicFogFallback-medium-seed4.csv"
+  },
+  {
+    "file": "simulations/grid/.gitkeep",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/.gitkeep"
+  },
+  {
+    "file": "simulations/grid/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/antenna.xml"
+  },
+  {
+    "file": "simulations/grid/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/config.xml"
+  },
+  {
+    "file": "simulations/grid/congestion.rou.xml",
+    "sha256": "f95912b4ce033b1e558d9cbb1c0327674cf9b53b093e636ec02e21ef45a04c6e",
+    "bytes": 375,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/congestion.rou.xml"
+  },
+  {
+    "file": "simulations/grid/grid-congestion.launchd.xml",
+    "sha256": "a2129a82b747b603a50f6a892773e85e36fb7f2b60bab6763bdc93e3b675084e",
+    "bytes": 267,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/grid-congestion.launchd.xml"
+  },
+  {
+    "file": "simulations/grid/grid-congestion.sumocfg",
+    "sha256": "8d795282b6178e56348328ffd984e86ff3a60fcdbaf08b48ad26834ff95a298e",
+    "bytes": 425,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/grid-congestion.sumocfg"
+  },
+  {
+    "file": "simulations/grid/grid.launchd.xml",
+    "sha256": "5f1c4b22a7a90ea80b7d77aef07dc230133a7a257fb457d8ecdc726858f19184",
+    "bytes": 218,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/grid/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/grid.net.xml"
+  },
+  {
+    "file": "simulations/grid/grid.sumocfg",
+    "sha256": "dc06820278abd8772d65ee1e64939baee505c659a9b0d2708132e5a0dac7ae0a",
+    "bytes": 466,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/grid.sumocfg"
+  },
+  {
+    "file": "simulations/grid/normal-high-seed1.rou.xml",
+    "sha256": "b1a3177ab162fc385adc339e178ec535de08820561bf211c3a8c5ceab3105e9f",
+    "bytes": 23319,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-high-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/grid/normal-high-seed1.trips.xml",
+    "sha256": "717d372fabf8fb21b950a817222780442897bccee9c21c3e803f5827c20c9648",
+    "bytes": 14471,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-high-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/grid/normal-low-seed1.rou.xml",
+    "sha256": "3d32d5c42ac4653f00c77cfadb2f3729586ecdddf3a40e7b617366bf86133816",
+    "bytes": 9343,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-low-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/grid/normal-low-seed1.trips.xml",
+    "sha256": "b3a0e00249bf04b704b50295d2536264ac87f715959fe15bb42b8fc2a389c048",
+    "bytes": 6215,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-low-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/grid/normal-medium-seed1.rou.xml",
+    "sha256": "b69d5dea9d3aa14c2a25f9bc8e30570ec8d74e73a416b4f80a11eedb7ca30373",
+    "bytes": 17186,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-medium-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/grid/normal-medium-seed1.trips.xml",
+    "sha256": "9f8988b910a9a199efbd61eea49d718ebe89f3ad2c6251209b9e13f06323ed4b",
+    "bytes": 10833,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/normal-medium-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/grid/omnetpp.ini",
+    "sha256": "5c5a1c117ea05d12db9cc2922176b853edbea61a29a1344442b92e8e150d7a6b",
+    "bytes": 10333,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/omnetpp.ini"
+  },
+  {
+    "file": "simulations/grid/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/special.rou.xml"
+  },
+  {
+    "file": "simulations/grid/viewsettings.xml",
+    "sha256": "985eeb8a871ebdf9fde4909542cfc3124df1aacb4f7fd981b442c9200cb96b33",
+    "bytes": 645,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/grid/viewsettings.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/grid.launchd.xml",
+    "sha256": "6e0f1accf9646ee065f7556d13d0ad7f0bc6023319d683d33d5bf6b5e2860ca4",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/grid.sumocfg",
+    "sha256": "b98106f2b95c5e29f6296df671344450892934de59204b20f73568269f265e58",
+    "bytes": 494,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/normal-high-seed1.rou.xml",
+    "sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+    "bytes": 23475,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/normal-high-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/omnetpp.ini",
+    "sha256": "d90e5c389734f635d7b0885641a1947aa1029a7880a8a29cb171cc0b45a488f8",
+    "bytes": 11191,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed1/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "6e0f1accf9646ee065f7556d13d0ad7f0bc6023319d683d33d5bf6b5e2860ca4",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "b3671ae8ddfb3d1594244ce0c89d17ea62b54e2adf9f3e224cf0d3438a35648b",
+    "bytes": 503,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/normal-high-seed1.rou.xml",
+    "sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+    "bytes": 23475,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/normal-high-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "008889c8b595a2cf7df0fb74e6773c43c737bf120804f40ee73bf4592d7eb15b",
+    "bytes": 11245,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed1/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "6e0f1accf9646ee065f7556d13d0ad7f0bc6023319d683d33d5bf6b5e2860ca4",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "835d9aaf721b36b7c99522c5a4e00a8b45e1dc163146d16087739c557825b6fb",
+    "bytes": 501,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/normal-high-seed1.rou.xml",
+    "sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+    "bytes": 23475,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/normal-high-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "d85a8f6fd7654ba35c53ed5396e1c0dd873d6c9357c5ddde2953d7db799c8afa",
+    "bytes": 11233,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed1/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/grid.launchd.xml",
+    "sha256": "6e0f1accf9646ee065f7556d13d0ad7f0bc6023319d683d33d5bf6b5e2860ca4",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/grid.sumocfg",
+    "sha256": "0eccf2ee3cb4f50760b868dbdb9f6c099c6c9de99b31c3e8557ce30674e2038e",
+    "bytes": 346,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed1/normal-high-seed1.rou.xml",
+    "sha256": "839498e47431b74a0b6f51c5e2375fd2693d4f9a23c32d2efbfd0a82c0f7a448",
+    "bytes": 23475,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/normal-high-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/normal-high-seed1.trips.xml",
+    "sha256": "4aeffd01f5252439b14e42d898639f1d23b64c54f2953647200c408b4c6194ef",
+    "bytes": 14627,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/normal-high-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed1/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed1/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/grid.launchd.xml",
+    "sha256": "8d503645c3f76096dbb20e9b4e6bc4c16fb0b17be33d03c17e53da15c616de98",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/grid.sumocfg",
+    "sha256": "4660fdf8ca36eb1f35d8a19119f35cdc840e231b45501c04a0424c8d91d2b6d7",
+    "bytes": 494,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/normal-high-seed4.rou.xml",
+    "sha256": "ad285cf9238aca55b7ff3c341c7e018e5b0c5a7ce9ccc2e14ad2d54600a33418",
+    "bytes": 23575,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/normal-high-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/omnetpp.ini",
+    "sha256": "155cf20c1d3f7ef43808a84db3f81524313e201b2db971e16940bb3478e5d08a",
+    "bytes": 11191,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed4/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "8d503645c3f76096dbb20e9b4e6bc4c16fb0b17be33d03c17e53da15c616de98",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "3dbf569c9b0a383225764ed1fe9075ff539a4497414a4605639fd598689df687",
+    "bytes": 503,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/normal-high-seed4.rou.xml",
+    "sha256": "ad285cf9238aca55b7ff3c341c7e018e5b0c5a7ce9ccc2e14ad2d54600a33418",
+    "bytes": 23575,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/normal-high-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "fef013be8f961f71abeacd72a3c3b6684f992ce2dc4c4eaf248c133d8b7cc8db",
+    "bytes": 11247,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed4/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "8d503645c3f76096dbb20e9b4e6bc4c16fb0b17be33d03c17e53da15c616de98",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "7c0765a3e92eef3367b5a6f37b3732f580296126599b31af3072357d8f1bacfc",
+    "bytes": 501,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/normal-high-seed4.rou.xml",
+    "sha256": "ad285cf9238aca55b7ff3c341c7e018e5b0c5a7ce9ccc2e14ad2d54600a33418",
+    "bytes": 23575,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/normal-high-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "2ebdd59db53d3cc72960d96d008112e456029633e99e93dc24892bec3dcca97f",
+    "bytes": 11233,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/high-seed4/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/config.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/grid.launchd.xml",
+    "sha256": "8d503645c3f76096dbb20e9b4e6bc4c16fb0b17be33d03c17e53da15c616de98",
+    "bytes": 178,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/grid.sumocfg",
+    "sha256": "ffde85b39a1f9dc7f07d29690c80d4fa185c7da35520223bba79b4dfe28a3b0f",
+    "bytes": 346,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/high-seed4/normal-high-seed4.rou.xml",
+    "sha256": "ad285cf9238aca55b7ff3c341c7e018e5b0c5a7ce9ccc2e14ad2d54600a33418",
+    "bytes": 23575,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/normal-high-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/normal-high-seed4.trips.xml",
+    "sha256": "0c4d9c8bea58b1042412f40d82313c139409bf2a42660594859876f01d98abde",
+    "bytes": 14627,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/normal-high-seed4.trips.xml"
+  },
+  {
+    "file": "simulations/batch/high-seed4/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/high-seed4/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/grid.launchd.xml",
+    "sha256": "3e97676dde3b084dc2c6f1deffbd922c011840c0586d156c99eeb1912596f850",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/grid.sumocfg",
+    "sha256": "497bd88209534879a54266a4ad0925761fa2f0fe22bb2636edb81d0781465ed0",
+    "bytes": 492,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/normal-low-seed1.rou.xml",
+    "sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+    "bytes": 9495,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/normal-low-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/omnetpp.ini",
+    "sha256": "02b4eb22e1adf9e5afb50907c8861ce69457c186455f449b77e24a57addb4043",
+    "bytes": 11186,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed1/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "3e97676dde3b084dc2c6f1deffbd922c011840c0586d156c99eeb1912596f850",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "3c2a92eb67ad61ce11e14b876d01e61d37b5b9b586e7bbc7fbb02ccd23d7e681",
+    "bytes": 501,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/normal-low-seed1.rou.xml",
+    "sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+    "bytes": 9495,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/normal-low-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "649e1abda5536c80edaba854b7edf54400a474a2de6bf685fc5cbfb930126b1b",
+    "bytes": 11240,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed1/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "3e97676dde3b084dc2c6f1deffbd922c011840c0586d156c99eeb1912596f850",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "8694625d520b793414190785c1cc806b64f05ca57ede2d8c25485754f50d22f8",
+    "bytes": 499,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/normal-low-seed1.rou.xml",
+    "sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+    "bytes": 9495,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/normal-low-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "b090edbdb445128b5d3af0a1e91b845fddbe8d1dbcf2a67ad9f14479d5af249e",
+    "bytes": 11228,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed1/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/grid.launchd.xml",
+    "sha256": "3e97676dde3b084dc2c6f1deffbd922c011840c0586d156c99eeb1912596f850",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/grid.sumocfg",
+    "sha256": "2084d37ce2130c0d7cc34668a77f4f64712c312329e51bd4393778f645dddc8a",
+    "bytes": 345,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed1/normal-low-seed1.rou.xml",
+    "sha256": "e282336e61ce8dfe159e9f57cf319361c8c7ed184b209ff3835410628d307a45",
+    "bytes": 9495,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/normal-low-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/normal-low-seed1.trips.xml",
+    "sha256": "85d4428e5b9fb86b4ed28a2bac58017afa1d550e0f5bdd2ca9421ab329b2685f",
+    "bytes": 6367,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/normal-low-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed1/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed1/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/grid.launchd.xml",
+    "sha256": "4657fdffea97681b98ad836745b1bccb4f46b55d857be69185e3658a5b842d41",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/grid.sumocfg",
+    "sha256": "c13a2c91d4e5a835a3eddd7d084fa4bd2e26d63953265cacbd3948e4e853cd0e",
+    "bytes": 492,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/normal-low-seed4.rou.xml",
+    "sha256": "1db2d3a2d478e5860c58b9f0f1430314d885a5c544f446e8bc537c3bb2440f66",
+    "bytes": 9585,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/normal-low-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/omnetpp.ini",
+    "sha256": "006ab10e2daeeae77ed5b760f737e2ed54d64c320d79b520628ada6842027349",
+    "bytes": 11186,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed4/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "4657fdffea97681b98ad836745b1bccb4f46b55d857be69185e3658a5b842d41",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "5ef25e3e58c3fd42725815cc0870cc933899ead50f652746fd22bd1ca733ed3a",
+    "bytes": 501,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/normal-low-seed4.rou.xml",
+    "sha256": "1db2d3a2d478e5860c58b9f0f1430314d885a5c544f446e8bc537c3bb2440f66",
+    "bytes": 9585,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/normal-low-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "4936552060df08ccf4975b889d8c99f899132b0c8089e36eb9a6cc130f9ace37",
+    "bytes": 11242,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed4/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "4657fdffea97681b98ad836745b1bccb4f46b55d857be69185e3658a5b842d41",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "63f46dd56bcbf0da41d1e365607181d992d13dc773b41f65750978c8b44a2c8f",
+    "bytes": 499,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/normal-low-seed4.rou.xml",
+    "sha256": "1db2d3a2d478e5860c58b9f0f1430314d885a5c544f446e8bc537c3bb2440f66",
+    "bytes": 9585,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/normal-low-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "77012b0f45f7e5dcd72f1f60758983c6b6b1e9ef17629c895c02064e977d4f37",
+    "bytes": 11228,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/low-seed4/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/config.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/grid.launchd.xml",
+    "sha256": "4657fdffea97681b98ad836745b1bccb4f46b55d857be69185e3658a5b842d41",
+    "bytes": 177,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/grid.sumocfg",
+    "sha256": "3db9e51813eabc8eb161a24003ba9be6fbf1d7dfe92783601c90d0914c22d532",
+    "bytes": 345,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/low-seed4/normal-low-seed4.rou.xml",
+    "sha256": "1db2d3a2d478e5860c58b9f0f1430314d885a5c544f446e8bc537c3bb2440f66",
+    "bytes": 9585,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/normal-low-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/normal-low-seed4.trips.xml",
+    "sha256": "6e8b8addf4add588cdba1a31f4f2344729e164b43ce5cfe8a60eb3dd31efd671",
+    "bytes": 6367,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/normal-low-seed4.trips.xml"
+  },
+  {
+    "file": "simulations/batch/low-seed4/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/low-seed4/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/grid.launchd.xml",
+    "sha256": "3ad507df7b9e879b6ce7810a5204bf07dbd4b550b2fb4378969e99664b83514a",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/grid.sumocfg",
+    "sha256": "7a83c302d838e0b5032dc726369948ea1f82f5399ca1475b5fd07a414e05d2e6",
+    "bytes": 498,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/normal-medium-seed1.rou.xml",
+    "sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+    "bytes": 17374,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/normal-medium-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/omnetpp.ini",
+    "sha256": "a875cde914ae2ec874ca475046507034193dd2058b410330a42fc5207be94d75",
+    "bytes": 11201,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "3ad507df7b9e879b6ce7810a5204bf07dbd4b550b2fb4378969e99664b83514a",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "b729aa7be733242c707684d39b393b40152f48771ffa422838d5986539352405",
+    "bytes": 507,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/normal-medium-seed1.rou.xml",
+    "sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+    "bytes": 17374,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/normal-medium-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "a47dfc5f2669ac6047441d7fa39ddb82002afcb44f1289c941471abea42ac1f4",
+    "bytes": 11255,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "3ad507df7b9e879b6ce7810a5204bf07dbd4b550b2fb4378969e99664b83514a",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "5e213d791fe96ed54009cadd99e4e8e9cc0a9accad16c11113cbc34e05010247",
+    "bytes": 505,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/normal-medium-seed1.rou.xml",
+    "sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+    "bytes": 17374,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/normal-medium-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "a934c7d99839ab02d8e537028542727f1e27faded56065cbb39b7f9f3849f0db",
+    "bytes": 11243,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/grid.launchd.xml",
+    "sha256": "3ad507df7b9e879b6ce7810a5204bf07dbd4b550b2fb4378969e99664b83514a",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/grid.sumocfg",
+    "sha256": "76c6c3bbc3c245214d619d92ea34b1473b8e84785215e3eb797957ae89a5e05a",
+    "bytes": 348,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/normal-medium-seed1.rou.xml",
+    "sha256": "a7bd7b73a8d35672b2f168b575fb48ebdb229d198eacc1c7961d8687115a2ea3",
+    "bytes": 17374,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/normal-medium-seed1.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/normal-medium-seed1.trips.xml",
+    "sha256": "2f5bb700bc251558bdec178cbbc35d7ff5e494e3f77e63abd225b95bc735ba37",
+    "bytes": 11021,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/normal-medium-seed1.trips.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed1/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed1/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/grid.launchd.xml",
+    "sha256": "b4c920c32abcfd0ec5728d324d6c461c5af8062624add16ce521a7c6255a8f8f",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/grid.sumocfg",
+    "sha256": "fa5905c66db50a31f1894027494cb58d8a67ec1ef93265aec4db0290bb8fb39d",
+    "bytes": 498,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/normal-medium-seed4.rou.xml",
+    "sha256": "29ea439461a50b2cf33f38ad0bcedd722174778077364c5d1a62fa0d1e9afabe",
+    "bytes": 17459,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/normal-medium-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/omnetpp.ini",
+    "sha256": "8ecbee804643f2d42af1eb73c34c6ba74f8cec75fb8fc88ac8a21727eb2ce2df",
+    "bytes": 11201,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/FogCloudAStar/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/FogCloudAStar/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/grid.launchd.xml",
+    "sha256": "b4c920c32abcfd0ec5728d324d6c461c5af8062624add16ce521a7c6255a8f8f",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/grid.sumocfg",
+    "sha256": "df0fdd26c8cb4d3c7550ccc0f3c94a63ac63207bc997126ec14ec6e8d213e65f",
+    "bytes": 507,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/normal-medium-seed4.rou.xml",
+    "sha256": "29ea439461a50b2cf33f38ad0bcedd722174778077364c5d1a62fa0d1e9afabe",
+    "bytes": 17459,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/normal-medium-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/omnetpp.ini",
+    "sha256": "306f9980eb6b638683f851a4a68606d60072c9234497860120f94df7e78ac4d0",
+    "bytes": 11257,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/MistDynamicFogFallback/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/MistDynamicFogFallback/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/grid.launchd.xml",
+    "sha256": "b4c920c32abcfd0ec5728d324d6c461c5af8062624add16ce521a7c6255a8f8f",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/grid.sumocfg",
+    "sha256": "c2b6f4bbabf2ecdb41c4bf06f4502f61d429bcaf5666845d84205c56755a20bb",
+    "bytes": 505,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/normal-medium-seed4.rou.xml",
+    "sha256": "29ea439461a50b2cf33f38ad0bcedd722174778077364c5d1a62fa0d1e9afabe",
+    "bytes": 17459,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/normal-medium-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/omnetpp.ini",
+    "sha256": "676bd9c6a0e22b808980ae8a4caf986e2c112d85ec5d4d0b48e12cb75404f561",
+    "bytes": 11243,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/omnetpp.ini"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/NoPreemptionBaseline/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/NoPreemptionBaseline/special.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/antenna.xml",
+    "sha256": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+    "bytes": 3617,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/antenna.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/config.xml",
+    "sha256": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+    "bytes": 1667,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/config.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/grid.launchd.xml",
+    "sha256": "b4c920c32abcfd0ec5728d324d6c461c5af8062624add16ce521a7c6255a8f8f",
+    "bytes": 180,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/grid.launchd.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/grid.net.xml",
+    "sha256": "fc4790ed670cdd3167e11001257b3580bdf41fb43db312fb530b4b3af5f19ba3",
+    "bytes": 76782,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/grid.net.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/grid.sumocfg",
+    "sha256": "0e4854bda9e006dcc66cb65dc1b9081c485bafdbe13ace8dfefce70be1a5d3a5",
+    "bytes": 348,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/grid.sumocfg"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/normal-medium-seed4.rou.xml",
+    "sha256": "29ea439461a50b2cf33f38ad0bcedd722174778077364c5d1a62fa0d1e9afabe",
+    "bytes": 17459,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/normal-medium-seed4.rou.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/normal-medium-seed4.trips.xml",
+    "sha256": "d652cd26852ae3675e9ac4318763109413601491a055a5b44cb9daebf7e69e0c",
+    "bytes": 11021,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/normal-medium-seed4.trips.xml"
+  },
+  {
+    "file": "simulations/batch/medium-seed4/special.rou.xml",
+    "sha256": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+    "bytes": 724,
+    "copied": true,
+    "native_source": "/home/opp_env/client_signal_final_20261010/simulations/batch/medium-seed4/special.rou.xml"
+  }
+]

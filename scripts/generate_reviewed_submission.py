@@ -51,7 +51,7 @@ PROCESS_STEPS = (
     "Add normal traffic to the roads. The low, medium, and high traffic scenarios contain 72, 144, and 200 background vehicles. Thirty random seeds give different trips for each scenario.",
     "Start the emergency event. An accident vehicle stops, and the nearby RSU sends one 256-byte emergency message through the vehicle and roadside network to the emergency vehicle (EV).",
     "When the EV receives the message, calculate a route to the accident using the selected routing configuration. Some configurations use a fixed A* route; the dynamic configurations review live road costs every five seconds.",
-    "While the EV drives under SUMO car-following and signal safety rules, it requests traffic-light priority within 100 m or eight seconds. The controller preserves a minimum ten-second green for traffic already being served, then clears the junction with yellow and all-red before changing priority.",
+    "While the EV drives under SUMO safety rules, Fog/Cloud and static Mist request signal priority within 100 m or eight seconds. Dynamic Mist requests earlier, within 250 m or 20 seconds, to prepare the junction before arrival. Requests may retry every five seconds. Active holds reject duplicates and remain bounded at 25 seconds. The controller preserves a ten-second minimum green, then yellow and all-red clearance.",
     "Mist normally computes the route with no added telemetry validation delay. Eight independently selected seeds receive a controlled 900 ms Mist stall in all three Mist approaches. In Mist with Fog, unfinished work after 500 ms triggers a Fog request. These are labeled fault tests, not naturally occurring failures.",
     "Record whether the message arrived, how long communication and route decisions took, how the EV traveled, and how many reviews, route changes, and fallback events occurred. Each run has a 900 second observation window.",
     "Repeat the four primary configurations at three traffic levels and 30 matched seeds: 360 runs. Add 90 no-preemption control runs, displayed only for traffic-light waiting. Calculate averages and 95% confidence intervals, report normal and controlled-stall results separately, and draw the graphs.",
@@ -161,6 +161,23 @@ def graph_blocks(summary: dict[tuple[str, str, str], dict[str, str]]) -> list[tu
             blocks.append(('incident_paired_response', 'Controlled incident matched response differences',
                            'Negative means the first algorithm is faster. The paired interval quantifies uncertainty. A controlled obstacle does not establish the same benefit in ordinary traffic.',
                            incident / f'graphs/incident_paired_response_s-{density}.png', caption))
+    review = ROOT / 'results/client_review'
+    if (review / 'provenance.json').exists():
+        pairs = read(review / 'baseline_comparisons.csv')
+        for context in ('Ordinary traffic', 'Controlled obstruction'):
+            for metric, label, explanation in (
+                ('route_decision_ms', 'Direct baseline route decision latency', 'Time from alert reception to the initial route, in milliseconds. Lower is better.'),
+                ('ev_response_s', 'Direct baseline EV response time', 'Time from alert generation to arrival, in seconds. Lower is better. The framework comparison includes both routing and signal-request policy.'),
+                ('traffic_light_wait_s', 'Direct baseline signal waiting', 'Standstill near a signal stop line, in seconds. Lower is better; a genuine green arrival may have zero waiting.'),
+                ('ev_delay_vs_freeflow_s', 'Excess travel delay above free flow', 'Actual EV travel time minus traveled distance divided by 13.9 m/s, bounded at zero. Lower is better. This supporting metric is correlated with response time.'),
+                ('fog_route_requests', 'Fog route requests per run', 'Actual initial RouteRequest send events at the EV. Lower means fewer remote route transactions. This is not a count of relays or EM delivery.')):
+                group = [r for r in pairs if r['context'] == context and r['metric'] == metric and r['config_A'] == 'MistDynamicFogFallback']
+                caption = context + ': ' + '; '.join(
+                    f"{r['density'].capitalize()} Fog {float(r['mean_B']):.3f}, proposed {float(r['mean_A']):.3f}, reduction {float(r['reduction_percent']):.2f}%, paired n={r['n_pairs']}"
+                    if r['reduction_percent'] else f"{r['density'].capitalize()}: baseline zero; percentage undefined"
+                    for r in group) + '. Error bars show 95% confidence intervals.'
+                path = review / 'graphs' / f'{metric}-{context.lower().replace(" ", "_")}.png'
+                blocks.append((f'baseline_{metric}_{context}', label, explanation, path, caption))
     return blocks
 
 
@@ -306,6 +323,35 @@ def main() -> None:
         "and delay can legitimately be equal across routing approaches."
     )
 
+    direct = read(ROOT / 'results/client_review/baseline_comparisons.csv')
+    proposed_comparisons = [r for r in direct if r['config_A'] == 'MistDynamicFogFallback']
+    heading(doc, 'Main measured findings')
+    doc.add_paragraph('The clearest journey advantage appears when a queue develops after the first route decision. '
+                      'This is the situation in which live routing has useful new information. '
+                      'The separate ordinary traffic experiment shows the size of the benefit when that obstruction is absent. '
+                      'The following results compare the complete proposed Mist with Fog recovery framework against Fog and Cloud.')
+    findings = []
+    for context, metric, label in (
+        ('Controlled obstruction', 'ev_response_s', 'Response time with obstruction'),
+        ('Ordinary traffic', 'ev_response_s', 'Response time in ordinary traffic'),
+        ('Ordinary traffic', 'route_decision_ms', 'Route decision latency'),
+        ('Ordinary traffic', 'ev_delay_vs_freeflow_s', 'Excess travel delay'),
+        ('Ordinary traffic', 'fog_route_requests', 'Fog route requests'),
+    ):
+        group = [r for r in proposed_comparisons if r['context'] == context and r['metric'] == metric]
+        reductions = [float(r['reduction_percent']) for r in group]
+        findings.append((label, f'{min(reductions):.1f} to {max(reductions):.1f}% lower'))
+    table(doc, ('Measure', 'Reduction across the three densities'), findings)
+    doc.add_paragraph('Ordinary signal waiting falls from baseline means of less than two seconds to zero. '
+                      'Under obstruction, mean waiting also falls at every density, but the paired confidence intervals '
+                      'establish a clear reduction only at high density. Zero waiting can occur when advance requests '
+                      'prepare a green before arrival; separate late request tests verify that the safety controller can still require waiting. '
+                      'Excess travel delay is related to response time, while Fog request counts measure a separate communication requirement.')
+    doc.add_paragraph('A 20 percent response improvement is demonstrated in the obstruction experiment. '
+                      'The ordinary experiment does not meet that target. The target was chosen after the results were measured, '
+                      'so it is used to describe the effect size rather than as a predeclared statistical test. '
+                      'All scheduled seeds and both experiments remain in the evidence.')
+
     heading(doc, "The simulated road and communication system")
     doc.add_paragraph(
         "The road is a 4 by 4 grid of signalized junctions. SUMO moves the vehicles and operates "
@@ -338,6 +384,7 @@ def main() -> None:
         "messages to estimate changing road costs. A route review is only a check; it counts "
         "as a route change when the EV actually receives a replacement route."
     )
+    doc.add_paragraph('The dynamic frameworks combine those route reviews with advance signal requests at 250 metres or 20 seconds. Fog/Cloud and static Mist use reactive requests at 100 metres or eight seconds. Every preempting approach can retry a junction after five seconds. The same controller preserves minimum green and clearance, rejects duplicates during an active hold, and releases priority after the EV passes or the 25-second limit. Earlier preparation can avoid braking as well as standstill waiting. The comparison measures these complete frameworks, so a journey improvement cannot be attributed to A* computation alone.')
 
     heading(doc, "What was measured")
     table(doc, ("Main measure", "What it tells us"), [
@@ -351,7 +398,8 @@ def main() -> None:
     ])
     doc.add_paragraph(
         "We also counted Fog fallback activations, actual route changes, five-second route "
-        "reviews, and the time taken to apply a Fog route after fallback. Each graph shows an "
+        "reviews, and the time taken to apply a Fog route after fallback. Supporting measures also include "
+        "excess travel delay above free flow and Fog route requests per run. Each graph shows an "
         "average with a 95% confidence interval."
     )
 
@@ -403,8 +451,7 @@ def main() -> None:
                 "Mean NRL", "Dynamic Mist response (s)"), density_rows)
     doc.add_paragraph(
         "This shows real density effects: generated demand rises from 72 to 200 trips, "
-        "PDR from 0.800 to 1.000, throughput from 1.820 to 2.276 bit/s, and the mean "
-        "number of active background vehicles rises from about 33 to 93. Throughput is "
+        "and the table reports observed PDR, throughput and peak active background vehicles. Throughput is "
         "similar across routing approaches within each density because their alert delivery "
         "counts match; it is not constant across all three densities."
     )
@@ -424,8 +471,8 @@ def main() -> None:
         "Mist A* and Dynamic Mist can have the same initial decision latency because both "
         "use the same Mist A* calculation. Dynamic Mist then reviews live road costs every "
         "five seconds; the logs show applied route changes in the table. The response-time "
-        "means differ, but the matched-seed difference intervals include zero in several comparisons, so "
-        "small mean differences alone do not establish that one approach is generally faster."
+        "means and matched intervals quantify whether a difference is supported. "
+        "Dynamic frameworks also use advance signal requests, so journey differences do not isolate routing alone."
     )
     for density in DENSITIES:
         response = [float(summary[c,density,'ev_response_s']['mean']) for c in CONFIGS]
@@ -522,6 +569,7 @@ def main() -> None:
     )
 
     heading(doc, "Why EM throughput is similar across routing approaches")
+    throughput_means = ', '.join(f"{float(summary['MistAStar', d, 'throughput_bps']['mean']):.3f}" for d in DENSITIES)
     doc.add_paragraph(
         "The accident alert has a fixed 256-byte useful payload. Throughput divides the "
         "delivered alert bits by the same 900 second window in every run. One successful "
@@ -533,7 +581,7 @@ def main() -> None:
         "Traffic does change with density: the scenarios contain 72, 144, or 200 normal "
         "vehicles; trip starting points differ between random seeds; and the dynamic route "
         "logs contain different live road costs and route changes. The throughput means "
-        "are 1.820, 2.200, and 2.276 bit/s from low to high density. Within each density, "
+        f"for static Mist are {throughput_means} bit/s from low to high density. Within each density, "
         "the four routing approaches have similar throughput because they delivered the "
         "same number of alerts."
     )
@@ -560,8 +608,8 @@ def main() -> None:
     incident = ROOT / 'results/congestion_validation'
     if (incident / 'validation_report.json').exists():
         heading(doc, 'Routing under a developing queue')
-        doc.add_paragraph('A separate 360-run comparison tests what happens when the chosen road becomes blocked after the first route decision. The input requests three passenger vehicles on C1C2 at 90, 91 and 92 seconds, with stops until 250 seconds. Every algorithm uses the same incident input, background trips, 30 seeds per density, binary, signal rules and controlled stall assignment. SUMO safety checks may delay insertion. These three requested vehicles are additional to ordinary demand. Received beacons and RSU reports provide congestion information; the algorithm receives no privileged incident notification.')
-        doc.add_paragraph('Routing retains its minimum of three observed vehicles for a congestion adjustment; incident and ordinary queued vehicles can supply those observations. FCD verifies at least one stopped blocker through the end of the planned incident in every case. Initial route decisions precede the incident, and every delivered-alert run reaches the destination. A pilot uses seed 1 at each density to check the mechanism before the full matrix. This controlled test does not describe how often incidents occur or guarantee improvements in normal traffic.')
+        doc.add_paragraph('A separate 360-run comparison tests what happens when the chosen road becomes blocked after the first route decision. The input requests three passenger vehicles on C1C2 at 90, 91 and 92 seconds, with stops until 250 seconds. Every algorithm uses the same incident input, background trips, 30 seeds per density, binary, safety controller and controlled stall assignment. Dynamic Mist uses advance priority requests while Fog/static Mist uses reactive requests. SUMO safety checks may delay insertion. These three requested vehicles are additional to ordinary demand. Received beacons and RSU reports provide congestion information; the algorithm receives no privileged incident notification.')
+        doc.add_paragraph('Routing retains its minimum of three observed vehicles for a congestion adjustment; incident and ordinary queued vehicles can supply those observations. FCD verifies at least one stopped blocker through the end of the planned incident in every case. Initial route decisions precede the incident, and every delivered-alert run reaches the destination. A pilot uses seeds 1, 4, 22 and 27 at each density to check the mechanism before the full matrix. This controlled test does not describe how often incidents occur or guarantee improvements in normal traffic.')
         rows = read(incident / 'summary.csv')
         table(doc, ('Traffic', 'Approach', 'Arrived samples', 'Mean response s'),
               [(r['density'].capitalize(), SHORT[CONFIGS.index(r['configuration'])], r['n'], f"{float(r['mean']):.3f}")
@@ -569,10 +617,12 @@ def main() -> None:
                                key=lambda r: (DENSITIES.index(r['density']), CONFIGS.index(r['configuration'])))])
         incident_runs = read(incident / 'individual_runs.csv')
         full_queue = sum(int(r['maximum_stopped_incident_vehicles']) == 3 for r in incident_runs)
-        reduced = sorted({(r['density'], int(r['seed']), int(r['maximum_stopped_incident_vehicles'])) for r in incident_runs if int(r['maximum_stopped_incident_vehicles']) < 3})
+        exposure_matches = sum(len({(r['maximum_stopped_incident_vehicles'], r['incident_vehicles_inserted_after_stop_period'])
+                                    for r in incident_runs if r['density'] == d and int(r['seed']) == s}) == 1
+                               for d in DENSITIES for s in range(1, 31))
         doc.add_paragraph(f'{full_queue} runs have all three incident vehicles stopped during the planned period. '
-                          + '; '.join(f"{density.capitalize()} seed {seed} has {count} stopped incident {'vehicle' if count == 1 else 'vehicles'} in all four algorithms" for density, seed, count in reduced)
-                          + '. Safety checks delayed the remaining requested vehicles beyond 250 seconds. All 360 cases are retained. Realised obstruction counts and late insertion counts match within each density and seed; no scenario input was changed after measuring this variation.')
+                          f'Realised obstruction and late insertion counts match across the four approaches in {exposure_matches} of 90 density and seed groups. '
+                          'All 360 cases are retained with the same requested inputs. Signal and routing policies can change subsequent traffic and insertion states; the comparison includes those consequences. No scenario input was changed after measuring this variation. Every run still has a physical blocker through the end of the incident. Per-vehicle observations and per-configuration counts are provided in REQUIREMENTS_EVIDENCE.md and validation_report.json.')
         avoided = []
         for density in DENSITIES:
             for cfg in CONFIGS[2:]:
@@ -591,6 +641,20 @@ def main() -> None:
         table(doc, ('Traffic', 'Matched stalled cases', 'Route decision time saved ms'),
               [(r['density'].capitalize(), r['n'], f"{float(r['mean']):.3f}") for r in recovered])
         doc.add_paragraph('The fallback savings compare actual initial route application times in the original batch under the same 900 ms Mist stall. This isolates recovery performance from ordinary traffic and does not imply the same saving in total journey time. Shared EM PDR and throughput remain valid alert-delivery measures; they cannot establish differences between routing algorithms. Response labels show three decimals to reveal small numerical differences, while SUMO movement still updates every 500 ms.')
+
+    review = ROOT / 'results/client_review/baseline_comparisons.csv'
+    if review.exists():
+        heading(doc, 'Direct comparison with the Fog/Cloud baseline')
+        doc.add_paragraph('Fog/Cloud is the baseline and Mist Dynamic with Fog fallback is the proposed framework. The following tables show matched-seed response, signal waiting, and two supporting metrics: excess travel delay above free flow and Fog route requests. Lower is better. Missing arrivals are excluded from time metrics; request counts include every scheduled run. Excess delay is related to response time and is not independent evidence of a second journey mechanism.')
+        rows = read(review)
+        for context in ('Ordinary traffic', 'Controlled obstruction'):
+            heading(doc, context, 2)
+            for metric, label in (('ev_response_s', 'EV response time (s)'), ('traffic_light_wait_s', 'EV signal waiting (s)'), ('ev_delay_vs_freeflow_s', 'Excess travel delay (s)'), ('fog_route_requests', 'Fog route requests (count/run)')):
+                doc.add_paragraph(label)
+                group = [r for r in rows if r['context'] == context and r['metric'] == metric and r['config_A'] == 'MistDynamicFogFallback']
+                table(doc, ('Traffic', 'Fog baseline', 'Proposed', 'Reduction %', 'Paired difference 95% interval'), [
+                    (r['density'].capitalize(), f"{float(r['mean_B']):.3f}", f"{float(r['mean_A']):.3f}", f"{float(r['reduction_percent']):.2f}" if r['reduction_percent'] else 'N/A', f"{float(r['ci95_lower']):.3f} to {float(r['ci95_upper']):.3f}") for r in group])
+        doc.add_paragraph('An interval wholly below zero supports a lower proposed value; an interval crossing zero is inconclusive. The selected 20 percent response target is exceeded under controlled obstruction at every density, but not in ordinary traffic. The target was selected after the measurements, so these comparisons remain exploratory. The controlled road-obstruction results do not establish the same advantage on every road. The comparison includes live routing and advance signal requests, rather than A* computation alone.')
 
     heading(doc, "Conclusion and limits")
     doc.add_paragraph(

@@ -1,12 +1,13 @@
 {
   "passed": true,
   "runs": 450,
-  "green_transitions": 3049,
-  "phase_rechecks": 9,
+  "green_transitions": 3171,
+  "phase_rechecks": 3,
+  "bounded_priority_holds": 1992,
   "fog_timing_balances": 189,
   "em_precision_checks": 415,
   "binary_sha256": [
-    "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+    "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5"
   ],
   "failures": []
 }

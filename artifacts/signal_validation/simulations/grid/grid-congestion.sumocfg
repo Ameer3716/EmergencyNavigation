@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <input>
+        <net-file value="grid.net.xml"/>
+        <route-files value="normal-medium-seed1.rou.xml,special.rou.xml,congestion.rou.xml"/>
+    </input>
+    <time><begin value="0"/><end value="300"/><step-length value="0.5"/></time>
+    <processing><time-to-teleport value="-1"/></processing>
+    <random_number><seed value="1"/></random_number>
+</configuration>

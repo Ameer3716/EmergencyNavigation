@@ -164,7 +164,8 @@ def main() -> None:
                     break
                 text = output.read_text(encoding="utf-8", errors="replace")
                 startup_disconnect = startup_timed_out or (any(error in text for error in (
-                    "Connection to TraCI server lost.", "Attempted to read past end of byte buffer"))
+                    "Connection to TraCI server lost.", "Connection to TraCI server closed unexpectedly.",
+                    "Attempted to read past end of byte buffer"))
                     and "at t=0s, event #1" in text)
                 if not startup_disconnect:
                     result.check_returncode()

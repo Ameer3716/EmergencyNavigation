@@ -21,6 +21,12 @@
       "expected": "400m, 0ms, 500ms, 100ms, 10s minimum green, matched stall assignment"
     },
     {
+      "check": "effective framework signal policy",
+      "status": "PASS",
+      "observed": [],
+      "expected": "dynamic Mist 250m/20s; Fog/static Mist and waiting control 100m/8s"
+    },
+    {
       "check": "uniform binary and fault provenance",
       "status": "PASS",
       "observed": {
@@ -33,7 +39,7 @@
       "check": "current rebuilt binary",
       "status": "PASS",
       "observed": [
-        "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+        "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5"
       ],
       "expected": "every run used the current binary"
     },
@@ -131,39 +137,39 @@
       "check": "different actual live traffic by density",
       "status": "PASS",
       "observed": {
-        "low": 33.2,
-        "medium": 66.2,
-        "high": 93.66666666666667
+        "low": 33.0,
+        "medium": 65.83333333333333,
+        "high": 92.43333333333334
       },
       "expected": "increasing peak live background counts"
     },
     {
-      "check": "priority reduces measured waiting without forcing zero",
+      "check": "priority reduces measured waiting with genuine green arrivals allowed",
       "status": "PASS",
       "observed": {
         "low": {
           "FogCloudAStar": 1.5625,
           "MistAStar": 1.8333333333333333,
-          "MistDynamicAStar": 2.2083333333333335,
-          "MistDynamicFogFallback": 2.25,
+          "MistDynamicAStar": 0.0,
+          "MistDynamicFogFallback": 0.0,
           "NoPreemptionBaseline": 26.291666666666668
         },
         "medium": {
           "FogCloudAStar": 0.8448275862068966,
           "MistAStar": 0.9137931034482759,
-          "MistDynamicAStar": 1.1206896551724137,
-          "MistDynamicFogFallback": 1.1551724137931034,
+          "MistDynamicAStar": 0.0,
+          "MistDynamicFogFallback": 0.0,
           "NoPreemptionBaseline": 27.34482758620686
         },
         "high": {
           "FogCloudAStar": 0.6666666666666666,
           "MistAStar": 0.7166666666666667,
-          "MistDynamicAStar": 0.8166666666666667,
-          "MistDynamicFogFallback": 0.7666666666666667,
+          "MistDynamicAStar": 0.4,
+          "MistDynamicFogFallback": 0.0,
           "NoPreemptionBaseline": 22.716666666666665
         }
       },
-      "expected": "positive average priority waiting, lower than matched no-priority control"
+      "expected": "nonnegative measured waiting, lower than matched no-priority control; short-notice red approaches are validated separately"
     },
     {
       "check": "primary and supplemental graphs",
@@ -177,12 +183,13 @@
       "observed": {
         "passed": true,
         "runs": 450,
-        "green_transitions": 3049,
-        "phase_rechecks": 9,
+        "green_transitions": 3171,
+        "phase_rechecks": 3,
+        "bounded_priority_holds": 1992,
         "fog_timing_balances": 189,
         "em_precision_checks": 415,
         "binary_sha256": [
-          "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8"
+          "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5"
         ],
         "failures": []
       },

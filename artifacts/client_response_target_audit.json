@@ -1,0 +1,65 @@
+{
+  "target_percent": 20.0,
+  "external_distance_lower_bound_m": 1721.6,
+  "speed_cap_mps": 13.9,
+  "optimistic_response_lower_bound_s": 123.85611510791367,
+  "verified_start_positions": 83,
+  "comparisons": [
+    {
+      "experiment": "Ordinary traffic",
+      "density": "low",
+      "baseline_s": 153.3125,
+      "proposed_s": 147.10416666666666,
+      "target_s": 122.65,
+      "target_met": false,
+      "reduction_percent": 4.04946324228836
+    },
+    {
+      "experiment": "Ordinary traffic",
+      "density": "medium",
+      "baseline_s": 154.51724137931035,
+      "proposed_s": 147.36206896551724,
+      "target_s": 123.61379310344829,
+      "target_met": false,
+      "reduction_percent": 4.6306627984824855
+    },
+    {
+      "experiment": "Ordinary traffic",
+      "density": "high",
+      "baseline_s": 156.2,
+      "proposed_s": 146.73333333333332,
+      "target_s": 124.96,
+      "target_met": false,
+      "reduction_percent": 6.060606060606062
+    },
+    {
+      "experiment": "Controlled obstruction",
+      "density": "low",
+      "baseline_s": 266.2916666666667,
+      "proposed_s": 144.41666666666666,
+      "target_s": 213.03333333333336,
+      "target_met": true,
+      "reduction_percent": 45.76748552652168
+    },
+    {
+      "experiment": "Controlled obstruction",
+      "density": "medium",
+      "baseline_s": 272.2586206896552,
+      "proposed_s": 158.22413793103448,
+      "target_s": 217.80689655172415,
+      "target_met": true,
+      "reduction_percent": 41.88461782027737
+    },
+    {
+      "experiment": "Controlled obstruction",
+      "density": "high",
+      "baseline_s": 278.4166666666667,
+      "proposed_s": 160.08333333333334,
+      "target_s": 222.73333333333335,
+      "target_met": true,
+      "reduction_percent": 42.502244836875185
+    }
+  ],
+  "comparison_sha256": "027173f4559abf4a9ae192844012a7fd7a2a91b00554db37ed36f8c630f581d9",
+  "network_sha256": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480"
+}

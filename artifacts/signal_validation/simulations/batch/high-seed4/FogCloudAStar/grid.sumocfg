@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<configuration><input><net-file value="grid.net.xml"/>
+<route-files value="normal-high-seed4.rou.xml,special.rou.xml"/></input>
+<time><begin value="0"/><end value="900"/><step-length value="0.5"/></time>
+<processing><time-to-teleport value="-1"/></processing>
+<random_number><seed value="4"/></random_number><output><summary-output value="/home/opp_env/client_signal_final_20261010/artifacts/logs/batch/sumo-summary-FogCloudAStar-high-seed4.xml"/></output></configuration>

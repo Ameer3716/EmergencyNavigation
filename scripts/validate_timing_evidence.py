@@ -14,6 +14,7 @@ from raw_data import events, scalars
 def audit(root):
     binaries = set()
     failures, counts = [], {"runs": 0, "green_transitions": 0, "phase_rechecks": 0,
+                            "bounded_priority_holds": 0,
                             "fog_timing_balances": 0, "em_precision_checks": 0}
     for path in sorted((root / "results/raw").glob("*.sca")):
         if "-seed" not in path.stem:
@@ -43,10 +44,16 @@ def audit(root):
                 counts["em_precision_checks"] += 1
                 if not math.isclose(delay, first("emEndToEndDelay"), abs_tol=2e-11):
                     failures.append([path.stem, "EM timestamp precision"])
-        last = {}
+        last, priority_start = {}, {}
         for row in events(logs / f"traffic-light-{path.stem}.csv"):
             action, light = row["action"], row["trafficLightId"]
             time = float(row["eventTime"])
+            if action == 'green_active':
+                priority_start[light] = time
+            if action == 'release_yellow' and light in priority_start:
+                counts['bounded_priority_holds'] += 1
+                if time - priority_start[light] > 25.5 + 1e-8:
+                    failures.append([path.stem, light, 'priority hold exceeded 25 s plus one polling step'])
             if action == "minimum_green_recheck":
                 counts["phase_rechecks"] += 1
             if action in ("yellow", "release_yellow") and any(c in row["stateBeforeTransition"] for c in "Gg"):

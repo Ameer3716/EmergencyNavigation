@@ -42,6 +42,19 @@ def main() -> None:
         copy(ROOT / name, OUT / name)
     for name in ("METHODOLOGY.md", "VERIFICATION.md", "PROGRESS.md", "EXPERIMENTS.md", "INSTALLATION.md", "PROCESS_AND_GRAPHS.md"):
         copy(ROOT / "docs" / name, OUT / "docs" / name)
+    if (ROOT / 'docs/CLIENT_RESULTS.html').exists():
+        copy(ROOT / 'docs/CLIENT_RESULTS.html', OUT / 'docs/CLIENT_RESULTS.html')
+        copy(ROOT / 'docs/Emergency_Vehicle_Navigation_Final_Submission.docx', OUT / 'docs/Emergency_Vehicle_Navigation_Final_Submission.docx')
+        copy(ROOT / 'artifacts/client_brief_provenance.json', OUT / 'artifacts/client_brief_provenance.json')
+        for path in (ROOT / 'docs/client_brief').glob('*.png'):
+            copy(path, OUT / path.relative_to(ROOT))
+    if (ROOT / 'results/client_review/provenance.json').exists():
+        copy(ROOT / 'docs/CLIENT_BASELINE_COMPARISON.md', OUT / 'docs/CLIENT_BASELINE_COMPARISON.md')
+        copy(ROOT / 'docs/CLIENT_20_PERCENT_FEASIBILITY.md', OUT / 'docs/CLIENT_20_PERCENT_FEASIBILITY.md')
+        copy(ROOT / 'artifacts/client_response_target_audit.json', OUT / 'artifacts/client_response_target_audit.json')
+        for path in (ROOT / 'results/client_review').rglob('*'):
+            if path.is_file():
+                copy(path, OUT / path.relative_to(ROOT))
     if (ROOT / 'results/congestion_validation/validation_report.json').exists():
         incident = json.loads((ROOT / 'results/congestion_validation/validation_report.json').read_text())
         if not incident.get('passed') or incident.get('runs') != 360:
@@ -50,8 +63,8 @@ def main() -> None:
         for path in (ROOT / 'results/congestion_validation').rglob('*'):
             if path.is_file():
                 copy(path, OUT / path.relative_to(ROOT))
-        for path in (ROOT / 'artifacts/congestion_validation').glob('*'):
-            if path.is_file():
+        for path in (ROOT / 'artifacts/congestion_validation').rglob('*'):
+            if path.is_file() and path.suffix not in ('.vec', '.vci'):
                 copy(path, OUT / path.relative_to(ROOT))
     for name in ("summary-batch.csv", "individual_runs-batch.csv", "paired_comparisons.csv",
                  "fallback_validation.csv", "graph_plot_data.csv", "before_after_headline.csv", "summary-cohorts.csv",
@@ -62,6 +75,7 @@ def main() -> None:
     copy(ROOT / "artifacts/sample_validation.json",
          OUT / "artifacts/sample_validation.json")
     copy(ROOT / "artifacts/timing_validation.json", OUT / "artifacts/timing_validation.json")
+    copy(ROOT / "artifacts/client_model_revision.json", OUT / "artifacts/client_model_revision.json")
     copy(ROOT / "artifacts/final_binary_sample_validation.json", OUT / "artifacts/final_binary_sample_validation.json")
     if (ROOT / 'results/supplemental/validation_report.json').exists():
         copy(ROOT / 'docs/SUPPLEMENTAL_VALIDATION.md', OUT / 'docs/SUPPLEMENTAL_VALIDATION.md')
@@ -83,7 +97,7 @@ def main() -> None:
     for name in ("build.sh", "run_batch_env.sh", "run_batch.py", "generate_demand.py",
                  "audit_batch.py", "verify_response_times.py", "generate_final_graph.py",
                  "write_final_reports.py", "generate_reviewed_submission.py",
-                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py", "run_signal_validation.py", "run_congestion_validation.py"):
+                 "generate_final_docx.py", "package_reviewed_submission.py", "validate_review_sample.py", "validate_timing_evidence.py", "run_signal_validation.py", "run_congestion_validation.py", "run_framework_validation.py"):
         copy(ROOT / "scripts" / name, OUT / "scripts" / name)
     for path in (ROOT / "tests").glob("*.py"):
         copy(path, OUT / "tests" / path.name)
@@ -139,7 +153,7 @@ def main() -> None:
         "EmergencyNavigation/results/raw/. This package includes their sizes and SHA-256 "
         "hashes in results/raw_evidence_manifest.csv. The 360 primary and 90 waiting-control run event logs, "
         "processed CSVs, graphs, source, and reproduction instructions are included here. "
-        "Earlier evidence is retained separately in EmergencyNavigation/archive_20261005_before_audit_fixes/, EmergencyNavigation/archive_20261005_400m_telemetry20/ "
+        "Earlier evidence is retained separately in EmergencyNavigation/archive_20261010_before_advance_priority/, EmergencyNavigation/archive_20261005_before_audit_fixes/, EmergencyNavigation/archive_20261005_400m_telemetry20/ "
         "and EmergencyNavigation/archive_raw_20261001_650m/.\n", encoding="utf-8")
     with zipfile.ZipFile(ZIP, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         for path in sorted(OUT.rglob("*")):

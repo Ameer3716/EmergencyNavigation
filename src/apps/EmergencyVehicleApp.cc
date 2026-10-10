@@ -12,7 +12,6 @@
 #include <map>
 #include <memory>
 #include <sstream>
-#include <set>
 #include <iomanip>
 
 namespace emergencynavigation {
@@ -172,7 +171,7 @@ private:
     bool navigationStarted = false;
     bool navigationHeld = false;
     std::string requestId;
-    std::set<std::string> requestedLights;
+    std::map<std::string, double> requestedLights;
     std::map<std::string, int> consecutiveSlowSamples;
     std::string lastSlowEdges;
     double lastRerouteTime = -1e9;
@@ -190,7 +189,12 @@ private:
         if (edgeId.empty() || edgeId[0] == ':') return;
         const auto& edge = graph->edge(edgeId);
         const std::string lightId = edge.to;
-        if (requestedLights.count(lightId)) return;
+        // A broadcast can be lost, and a bounded priority hold can expire while
+        // the EV is queued. Re-request while approaching; an active controller
+        // rejects duplicates, so retries never extend its maximum hold.
+        const auto previous = requestedLights.find(lightId);
+        if (previous != requestedLights.end()
+            && simTime().dbl() - previous->second < par("preemptionRetryInterval").doubleValue()) return;
         auto* command = veins::TraCIScenarioManagerAccess().get()->getCommandInterface();
         auto vehicle = command->vehicle(nodeId());
         const double remaining = std::max(0.0, edge.length - vehicle.getLanePosition());
@@ -210,7 +214,8 @@ private:
         request->setTimestamp(simTime().dbl());
         request->setByteLength(96);
         sendControl(request);
-        requestedLights.insert(lightId);
+        requestedLights[lightId] = simTime().dbl();
+        recordScalar("signalPriorityRequests", 1);
     }
 
     void logFallback(const char* reason) const {

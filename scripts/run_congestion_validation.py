@@ -11,7 +11,7 @@ from pathlib import Path
 import run_batch as batch
 
 
-def prepare(source, destination):
+def prepare(source, destination, with_incident=True):
     if destination.exists():
         raise SystemExit(f'Use a new workspace: {destination}')
     (destination / 'simulations/grid').mkdir(parents=True)
@@ -22,20 +22,20 @@ def prepare(source, destination):
         if path.is_file():
             shutil.copy2(path, destination / 'simulations/grid' / path.name)
     special = destination / 'simulations/grid/special.rou.xml'
-    tree = ET.parse(special)
-    routes = tree.getroot()
-    kind = ET.Element('vType', id='incidentQueue', vClass='passenger', color='0.7,0,0.8')
-    ET.SubElement(kind, 'param', key='has.fcd.device', value='true')
-    routes.insert(0, kind)
-    routes.insert(1, ET.Element('route', id='incidentQueueRoute', edges='C1C2 C2D2'))
-    # Three physical vehicles provide an observable stopped queue, not a fabricated
-    # routing cost. All algorithms receive exactly the same SUMO incident input.
-    for index, position in enumerate((70, 55, 40)):
-        vehicle = ET.SubElement(routes, 'vehicle', id=f'incidentQueue{index}',
-                                type='incidentQueue', route='incidentQueueRoute',
-                                depart=str(90 + index), departPos=str(position), departSpeed='0')
-        ET.SubElement(vehicle, 'stop', lane='C1C2_0', endPos=str(position + 5), until='250')
-    tree.write(special, encoding='utf-8', xml_declaration=True)
+    if with_incident:
+        tree = ET.parse(special)
+        routes = tree.getroot()
+        kind = ET.Element('vType', id='incidentQueue', vClass='passenger', color='0.7,0,0.8')
+        ET.SubElement(kind, 'param', key='has.fcd.device', value='true')
+        routes.insert(0, kind)
+        routes.insert(1, ET.Element('route', id='incidentQueueRoute', edges='C1C2 C2D2'))
+        # Physical vehicles, with the same obstruction input for every algorithm.
+        for index, position in enumerate((70, 55, 40)):
+            vehicle = ET.SubElement(routes, 'vehicle', id=f'incidentQueue{index}',
+                                    type='incidentQueue', route='incidentQueueRoute',
+                                    depart=str(90 + index), departPos=str(position), departSpeed='0')
+            ET.SubElement(vehicle, 'stop', lane='C1C2_0', endPos=str(position + 5), until='250')
+        tree.write(special, encoding='utf-8', xml_declaration=True)
     for density in ('low', 'medium', 'high'):
         for seed in range(1, 31):
             name = f'{density}-seed{seed}'
@@ -51,6 +51,12 @@ def prepare(source, destination):
                     source_special_sha256=hashlib.sha256((source / 'simulations/grid/special.rou.xml').read_bytes()).hexdigest(),
                     incident_special_sha256=hashlib.sha256(special.read_bytes()).hexdigest(),
                     interpretation='Controlled incident experiment, separate from ordinary traffic; no guarantee of improvement.')
+    if not with_incident:
+        scenario = dict(scenario='ordinary_traffic_advance_priority', horizon_s=900,
+                        source_project=str(source),
+                        source_special_sha256=scenario['source_special_sha256'],
+                        special_sha256=hashlib.sha256(special.read_bytes()).hexdigest(),
+                        interpretation='Matched ordinary traffic with advance priority in dynamic Mist; no injected obstruction.')
     (destination / 'scenario.json').write_text(json.dumps(scenario, indent=2) + '\n')
 
 

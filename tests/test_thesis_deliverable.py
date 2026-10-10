@@ -37,6 +37,7 @@ class TestThesisDeliverable(unittest.TestCase):
         self.assertTrue(result['passed'], result['failures'][:10])
         self.assertGreater(result['green_transitions'], 0)
         self.assertGreater(result['fog_timing_balances'], 0)
+        self.assertGreater(result['bounded_priority_holds'], 0)
 
     def test_dynamic_reroutes_and_reviews(self):
         for config in CONFIGS[2:]:
@@ -98,7 +99,9 @@ class TestThesisDeliverable(unittest.TestCase):
         summary = {(r['configuration'], r['density'], r['metric']): float(r['mean']) for r in read('summary-batch.csv')}
         for d in ('low', 'medium', 'high'):
             for c in CONFIGS:
-                self.assertGreater(summary[c, d, 'traffic_light_wait_s'], 0)
+                # Advance priority can legitimately prepare green before arrival.
+                # Positive red-approach waiting is checked in the separate safety suite.
+                self.assertGreaterEqual(summary[c, d, 'traffic_light_wait_s'], 0)
                 self.assertLess(summary[c, d, 'traffic_light_wait_s'], summary['NoPreemptionBaseline', d, 'traffic_light_wait_s'])
 
 

@@ -192,12 +192,13 @@ def summarize(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     return result
 
 
-def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]:
-    comparisons = [
-        ("MistAStar", "FogCloudAStar", ["ev_response_s", "ev_travel_s", "route_decision_ms"]),
-        ("MistDynamicAStar", "MistAStar", ["ev_response_s", "ev_travel_s", "ev_distance_m"]),
-        ("MistDynamicFogFallback", "MistDynamicAStar", ["ev_response_s", "route_decision_ms", "ev_travel_s"]),
-    ]
+def paired_comparisons(rows: list[dict[str, object]], comparisons=None) -> list[dict[str, object]]:
+    if comparisons is None:
+        comparisons = [
+            ("MistAStar", "FogCloudAStar", ["ev_response_s", "ev_travel_s", "route_decision_ms"]),
+            ("MistDynamicAStar", "MistAStar", ["ev_response_s", "ev_travel_s", "ev_distance_m"]),
+            ("MistDynamicFogFallback", "MistDynamicAStar", ["ev_response_s", "route_decision_ms", "ev_travel_s"]),
+        ]
     results = []
     for density in ("low", "medium", "high"):
         by_seed = defaultdict(dict)
@@ -240,7 +241,7 @@ def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]
                         "config_A": cfg_a,
                         "config_B": cfg_b,
                         "metric": metric,
-                        "N_scheduled": 30,
+                        "N_scheduled": len(by_seed),
                         "n_pairs": n_pairs,
                         "mean_A": mean_a,
                         "mean_B": mean_b,
@@ -267,7 +268,7 @@ def paired_comparisons(rows: list[dict[str, object]]) -> list[dict[str, object]]
                         "config_A": cfg_a,
                         "config_B": cfg_b,
                         "metric": metric,
-                        "N_scheduled": 30,
+                        "N_scheduled": len(by_seed),
                         "n_pairs": n_pairs,
                         "mean_A": mean_a,
                         "mean_B": mean_b,
@@ -442,6 +443,7 @@ def comparison_graphs(cohorts: list[dict[str, object]], paired: list[dict[str, o
 
 
 def main() -> None:
+    global ROOT
     parser = argparse.ArgumentParser()
     parser.add_argument("--require-all", action="store_true")
     parser.add_argument("--batch", action="store_true", help="Process density/seed batch instead of the seed-1 prototype")
@@ -451,6 +453,7 @@ def main() -> None:
     parser.add_argument("--artifact-root", type=Path, default=ROOT, help="Process an isolated sample")
     parser.add_argument("--no-graphs", action="store_true")
     args = parser.parse_args()
+    ROOT = args.artifact_root.resolve()
 
     if args.render_graphs_only:
         summary_path = ROOT / "results/processed/summary-batch.csv"

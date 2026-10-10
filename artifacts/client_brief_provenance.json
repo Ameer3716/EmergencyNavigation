@@ -1,0 +1,8 @@
+{
+  "source": "results\\client_review\\baseline_comparisons.csv",
+  "source_sha256": "027173f4559abf4a9ae192844012a7fd7a2a91b00554db37ed36f8c630f581d9",
+  "comparisons": 30,
+  "new_simulation_runs": 0,
+  "chart": "docs/client_brief/response_time_saved.png",
+  "interpretation": "Measured congestion benefit; ordinary results retained on the same scale."
+}

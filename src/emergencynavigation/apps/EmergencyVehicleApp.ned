@@ -17,6 +17,7 @@ simple EmergencyVehicleApp extends EmergencyRelayApp
     string fallbackLogPath = default("../../artifacts/logs/fallback-events.csv");
     bool preemptionEnabled = default(true);
     double preemptionCheckInterval @unit(s) = default(500ms);
+    double preemptionRetryInterval @unit(s) = default(5s);
     double preemptionDistance @unit(m) = default(250m);
     double preemptionEta @unit(s) = default(15s);
     double navigationHoldTime @unit(s) = default(64s);

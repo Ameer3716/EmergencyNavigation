@@ -2,8 +2,8 @@
   "configuration": "NoPreemptionBaseline",
   "density": "medium",
   "seed": 4,
-  "binary_sha256": "5546a93038b5e52a6cc3bc86a0bfe449adc842592d7dab82f1b44c710edfcfc8",
+  "binary_sha256": "336d5bb26617955dde7bb07248e989fcecbe4412000e9e010656fa35f89cc6f5",
   "scenario_condition": "controlled_stall",
   "controlled_mist_stall_ms": 0,
-  "ini_sha256": "0f75f9696f055f8f0874fe2fa3eb124ebd5bb5b7a5575a876ae94490f69b8c87"
+  "ini_sha256": "676bd9c6a0e22b808980ae8a4caf986e2c112d85ec5d4d0b48e12cb75404f561"
 }

@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import sys
 import xml.etree.ElementTree as ET
@@ -36,8 +37,9 @@ def prepare(source, destination):
         light.append(phases[i])
     tree.write(grid / 'grid.net.xml', encoding='utf-8', xml_declaration=True)
     ini = (grid / 'omnetpp.ini').read_text()
-    ini = ini.replace('*.node[*].appl.preemptionDistance = 100m', '*.node[*].appl.preemptionDistance = 10m')
-    ini = ini.replace('*.node[*].appl.preemptionEta = 8s', '*.node[*].appl.preemptionEta = 0.5s')
+    # Deliberately late notice overrides every policy in this boundary test.
+    ini = re.sub(r'(\*\.node\[\*\]\.appl\.preemptionDistance\s*=\s*)[^\r\n]+', r'\g<1>10m', ini)
+    ini = re.sub(r'(\*\.node\[\*\]\.appl\.preemptionEta\s*=\s*)[^\r\n]+', r'\g<1>0.5s', ini)
     (grid / 'omnetpp.ini').write_text(ini)
     # Retain the original matched trips; the validation changes signal timing only.
     for density in ('low', 'medium', 'high'):

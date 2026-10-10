@@ -34,7 +34,9 @@ class TestCongestionValidation(unittest.TestCase):
 
     def test_matched_recovery(self):
         rows = recovery()
-        self.assertEqual(len(rows), 23)
+        expected = sum(r['configuration'] == 'MistDynamicFogFallback' and r['fallback_triggered'] == '1'
+                       for r in events(ROOT / 'results/processed/individual_runs-batch.csv'))
+        self.assertEqual(len(rows), expected)
         for r in events(ROOT / 'results/congestion_validation/fault_recovery_summary.csv'):
             group = [x['recovery_saved_ms'] for x in rows if x['density'] == r['density']]
             self.assertEqual(len(group), int(r['n']))

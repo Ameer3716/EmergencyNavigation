@@ -64,9 +64,11 @@ Dynamic A* reads received vehicle beacons and RSU edge reports, requires at leas
 
 The EV is held until its first route is ready. Release uses SUMO automatic speed control, a 13.9 m/s maximum speed, and speed mode 31 so car following, acceleration, junction priority, and red-light safety checks apply. No blue-light device is used to ignore red signals.
 
-The EV sends a priority request within 100 m or an estimated eight seconds of the next signal. If its approach already has a compatible green, that phase is extended. Otherwise the controller uses 150 ms processing and checks the active green again before clearance. If SUMO started a new green during processing, that phase receives its full ten-second minimum before two seconds of yellow and one second of all-red clearance. Priority green also lasts at least ten seconds. Priority is released after the EV passes the junction or a 25-second maximum hold, followed by yellow and all-red before restoring the normal program. These are scenario timing assumptions, not a claim of compliance with a local traffic standard. They allow some requests to finish before EV arrival and others to cause waiting; no artificial waiting is added to the measurements.
+Fog/Cloud and static Mist send a reactive priority request within 100 m or an estimated eight seconds of the next signal. Both dynamic Mist frameworks send advance requests within 250 m or an estimated 20 seconds. This allows time for the existing minimum green and clearance before arrival. Every preempting configuration may retry at five-second intervals if the EV still approaches the junction. The controller rejects duplicate requests during an active transition or hold; retries do not extend the 25-second maximum hold. This fixes the former permanent suppression of a junction after its first request, which prevented recovery from a lost request or an expired hold.
 
-The collector accumulates and logs at 100 ms. SUMO and the Veins manager still update motion every 500 ms; intervening polls reuse the last SUMO state. The finer accumulator does not claim 100 ms underlying motion accuracy. Traffic-light waiting is EV speed below 0.1 m/s within 20 m of the next signal after alert reception; it includes queue waiting near that stop line.
+If the approach already has a compatible green, that phase is extended. Otherwise the controller uses 150 ms processing and checks the active green again before clearance. If SUMO started a new green during processing, that phase receives its full ten-second minimum before two seconds of yellow and one second of all-red clearance. Priority green also lasts at least ten seconds. Priority is released after the EV passes the junction or a 25-second maximum hold, followed by yellow and all-red before restoring the normal program. These are scenario timing assumptions, not a claim of compliance with a local traffic standard. No artificial waiting is added to the measurements. The dynamic frameworks combine live routing and advance signal requests; their journey-time comparison does not isolate A* computation from the signal policy.
+
+The collector accumulates and logs at 100 ms. SUMO and the Veins manager still update motion every 500 ms; intervening polls reuse the last SUMO state. The finer accumulator does not claim 100 ms underlying motion accuracy. Traffic-light waiting is EV speed below 0.1 m/s within 20 m of the next signal after alert reception; it includes queue waiting near that stop line. Preparing green can also avoid braking before the stop line, so a response-time improvement need not equal the reduction in measured standstill waiting. Genuine green arrivals may have zero waiting. The separate short-notice red-signal suite checks positive waits and protected clearance; the simulator does not add a minimum wait to make a graph nonzero.
 
 ## Metrics and confidence intervals
 
@@ -150,7 +152,13 @@ PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor
     sources = (("before_audit_fixes", "archive_20261005_before_audit_fixes/results/processed/summary-batch.csv"),
                ("400m_telemetry20", "archive_20261005_400m_telemetry20/results/processed/summary-batch.csv"),
                ("archived_650m", "archive_raw_20261001_650m/summary-batch-650m.csv"))
+    client_before = 'archive_20261010_before_advance_priority/results/processed/summary-batch.csv'
+    if (ROOT / client_before).exists():
+        sources += (("before_advance_priority", client_before),)
     for version, source in sources:
+        if not (ROOT / source).is_file():
+            print(f"Historical comparison unavailable: {source}")
+            continue
         old = {(r['configuration'], r['density'], r['metric']): r for r in rows(ROOT / source)}
         for cfg in CONFIGS:
             for density in DENSITIES:
@@ -165,11 +173,11 @@ PDR and fallback activation use Wilson score 95% intervals. Waiting and corridor
                                            before_mean=before, current_mean=b['mean'],
                                            change=float(b['mean'])-before, before_n=a['n'], current_n=b['n']))
     for filename, records in (("historical_headline_comparisons.csv", comparison),
-                              ("before_after_headline.csv", [r for r in comparison if r['comparison_version'] == 'before_audit_fixes'])):
+                              ("before_after_headline.csv", [r for r in comparison if r['comparison_version'] == ('before_advance_priority' if (ROOT / client_before).exists() else 'before_audit_fixes')])):
         with (ROOT / 'results/processed' / filename).open('w', newline='', encoding='utf-8') as handle:
             writer = csv.DictWriter(handle, records[0].keys()); writer.writeheader(); writer.writerows(records)
     (docs / "EXPERIMENTS.md").write_text("# Experiments\n\n" + methodology.split("## Routing and controlled fallback tests")[0].split("## Experiment design\n\n")[1] + "\nThe eight controlled stall seeds and all timing assumptions are specified in METHODOLOGY.md. Normal and stall results are in summary-cohorts.csv. NoPreemptionBaseline appears only in waiting-time summaries and graphs.\n",encoding='utf-8')
-    (docs / 'PROGRESS.md').write_text('# Progress\n\nCompleted 360 primary matched runs and 90 no-preemption waiting-time controls. See VERIFICATION.md for measured counts and intervals, and METHODOLOGY.md for controlled fault labels and signal safety timing. Pre-fix outputs are preserved in archive_20261005_before_audit_fixes/. Separate named comparisons retain the 400m telemetry20 and archived 650m versions; they change multiple model settings and do not isolate a telemetry effect.\n',encoding='utf-8')
+    (docs / 'PROGRESS.md').write_text('# Progress\n\nCompleted 360 primary matched runs and 90 no-preemption waiting-time controls, plus 360 separate controlled-obstruction runs and 18 separate red-signal checks. See VERIFICATION.md for measured counts and intervals, METHODOLOGY.md for model assumptions, and CLIENT_BASELINE_COMPARISON.md for direct comparisons with FogCloudAStar. The selected 20 percent response target is exceeded under obstruction at every density; ordinary traffic improves by a smaller margin. The ordinary and obstruction experiments are reported separately. Previous submission evidence is preserved in archive_20261010_before_advance_priority/. Historical comparison CSVs include only versions whose source data are available locally.\n',encoding='utf-8')
     (docs / 'INSTALLATION.md').write_text('''# Installation and reproduction
 
 The installed stack is opp_env WSL, SUMO 1.18.0, OMNeT++ 6.3.0, and Veins 5.3.1. Run from the project directory in PowerShell:
@@ -253,6 +261,18 @@ Build with scripts/build.sh, run with scripts/run_batch_env.sh, process with ana
                          'First screen seed 1 at all densities in a separate workspace with --seeds 1. '
                          'Retain the complete final workspace and copy it to artifacts/congestion_validation '
                          'before packaging. The 360-run final matrix uses all 30 seeds without selection based on outcomes.\n')
+    if (ROOT / 'results/client_review/provenance.json').exists():
+        for name in ('METHODOLOGY.md', 'VERIFICATION.md', 'PROGRESS.md', 'EXPERIMENTS.md'):
+            with (ROOT / 'docs' / name).open('a', encoding='utf-8') as handle:
+                handle.write('\n## Direct comparison with the Fog/Cloud baseline\n\n'
+                             '[CLIENT_BASELINE_COMPARISON.md](CLIENT_BASELINE_COMPARISON.md) reports response, signal waiting, '
+                             'decision latency, excess travel delay above free flow, and actual Fog route request counts. '
+                             'The latter two are supporting metrics derived from recorded scalars, not substitutes for the seven headline metrics. '
+                             'Ordinary traffic and controlled obstruction have separate matched-seed estimates and 95% intervals. '
+                             'The framework comparison includes advance signal requests in dynamic Mist and reactive requests in Fog/static Mist; '
+                             'both use the same safety controller and bounded retry mechanism. It is not an isolated comparison of A* computation alone.\n')
+        with (ROOT / 'README.md').open('a', encoding='utf-8') as handle:
+            handle.write('\nSee [direct baseline comparisons and supporting metrics](docs/CLIENT_BASELINE_COMPARISON.md).\n')
     print(f"Wrote reports from {len(individual)} measured runs")
 
 
