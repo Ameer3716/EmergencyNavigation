@@ -1,0 +1,89 @@
+{
+  "training_seeds": [
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110
+  ],
+  "reported_seeds_used_for_selection": [],
+  "candidate": "MistTuningReference",
+  "settings": {
+    "review_s": 5,
+    "improvement": 0.1,
+    "slow_improvement": 0.05,
+    "gap_s": 30
+  },
+  "scores": [
+    {
+      "candidate": "MistTuningReference",
+      "scheduled": 60,
+      "arrivals": 54,
+      "mean_response_s": 148.87037037037038,
+      "mean_route_changes": 0.7222222222222222
+    },
+    {
+      "candidate": "MistTuningFast",
+      "scheduled": 60,
+      "arrivals": 54,
+      "mean_response_s": 151.63888888888889,
+      "mean_route_changes": 0.9444444444444444
+    },
+    {
+      "candidate": "MistTuningBalanced",
+      "scheduled": 60,
+      "arrivals": 54,
+      "mean_response_s": 156.5185185185185,
+      "mean_route_changes": 0.8888888888888888
+    }
+  ],
+  "selection_rule": "Smallest mean response; within 0.5 s prefer fewer reroutes then reference.",
+  "binary_sha256": "7e579ed1b18896b6807a7b864e6cac5ac4360771449f528877628de5d9f19da9",
+  "input_roots": [
+    "\\\\wsl.localhost\\opp_env\\home\\opp_env\\policy_tuning_ordinary_20261010",
+    "\\\\wsl.localhost\\opp_env\\home\\opp_env\\policy_tuning_obstruction_20261010"
+  ],
+  "source_model_sha256": {
+    "src/apps/CloudService.cc": "3561a60e9a262f47704d9c29548d4b17f072384fcf649991cc46e9343994da8f",
+    "src/apps/CloudService.h": "8b362b310eec8f1f90e8532894a686637a39d206e35cd0bcd07ad3b8e38c2f91",
+    "src/apps/EmergencyRelayApp.cc": "2c5feadd34779fded9b0151328ecb3f73837c8e5b9cfa1ef7e5829728e675d95",
+    "src/apps/EmergencyRelayApp.h": "2723320f139d79fc36b5d8e86abc3012688d86641633cd12ea8eb46424922c54",
+    "src/apps/EmergencyVehicleApp.cc": "1b67c5ade7b19fa5ddf405831d37e226ead869efc81ddd9cba01dfea828a9d7b",
+    "src/apps/FogService.cc": "9f2624b7d05bd895e6ae99a851adeb6bb5e076fccb5ac4b146a7f2383a7b21fe",
+    "src/apps/FogService.h": "8d70f6cc5aca201b0156bbfa84131013dedb8631cf923532b29443402ca11d89",
+    "src/apps/MistRoutingModule.cc": "7fbb60c5f3c4818e4652260d2aaf535fe27c8d47bfb8a1576e5e8e452cb57b86",
+    "src/apps/MistRoutingModule.h": "26e40599b975777d2c0055d4ea77266efc354cc9c6380e5f9d5ebcdce93f8a98",
+    "src/apps/NormalVehicleApp.cc": "d3879d76e7f9ebba062fcd3c2557883508de85ce2af8642a0c772e2af1a92ee3",
+    "src/apps/RsuApp.cc": "27ae7b4ffc9d04aaec220d8a24b73f7494404b850317014066b416a291beb68e",
+    "src/apps/TrafficLightController.cc": "e2ee7d4907e8773f424ffa4f3db1259e7b279e4b3aca12623887c7dedbb1dff0",
+    "src/apps/TrafficLightController.h": "47c1fb393c3b85e424955f16bf9a3ec41693b245ea1dbf0054c222c6eb33f4c9",
+    "src/emergencynavigation/apps/CloudService.ned": "cbf8d55f621f83e87d5f9f476ed1dcef03c4fade9b25f12f2de2cb25c55b738f",
+    "src/emergencynavigation/apps/EmergencyRelayApp.ned": "8a8779719ce05bd81f1d5b9b208eddde1febcb19f99a2664e42bc898d4ca8e67",
+    "src/emergencynavigation/apps/EmergencyVehicleApp.ned": "0b21b453488a6052bcec015f53e2eabe95ec7e129772252513e66d85b8683b5c",
+    "src/emergencynavigation/apps/FogService.ned": "d7a075873e4ee91275c0552f1a172191115ccdb56d94f2842a10b262d71b722a",
+    "src/emergencynavigation/apps/MetricsCollector.ned": "8c8ccdf1a93f7ce353db31bd241c768e9101f1b1383b443a679536f2eeffd08a",
+    "src/emergencynavigation/apps/MistRoutingModule.ned": "83a8d933473ed63895a4d69238a5cdf81e90747cbaedb5369c5a5856dfd201b8",
+    "src/emergencynavigation/apps/NormalVehicleApp.ned": "b4ca9e0323450fd7bd0da3e69f589e0533a78ef8ea1786efbd0c1b49bd8cca2b",
+    "src/emergencynavigation/apps/RsuApp.ned": "d7600161ed64cfaa3b49aedf68dda24b970a8f647d6a99889c691bc0ae0a18b8",
+    "src/emergencynavigation/apps/TrafficLightController.ned": "cc1201ae0759602eed3efff5ef2295fa2f6c256fa86800bafc5e87395c45a363",
+    "src/emergencynavigation/scenario/ControlledTrafficLight.ned": "688064b7da330def03757816ea9fd0c5e7f85bb44bc243d791d9d58b8122e59c",
+    "src/emergencynavigation/scenario/EmergencyCar.ned": "3b8174464ed660bcde56834ac7334e1bc63e6be4af9076d0cca91df1de623bc6",
+    "src/emergencynavigation/scenario/EmergencyGridScenario.ned": "1472954efd2b62fe724eac67534635b6cac930e1db5029a7be2b62e7b297bc49",
+    "src/emergencynavigation/scenario/NormalCar.ned": "ca0122ecda12edb61919056db0bcf3c79fde4935c6ce6117c7f50204e4783d5a",
+    "src/emergencynavigation/scenario/ServiceRSU.ned": "908e525ff82c67ca7e278d58b53c877198156c116159720720e87ea41e592d13",
+    "src/messages/EmergencyNavigation.msg": "638be6e54f5d282da46334bdaaef3eb0d945060042ec7d11f952b7e33bb0645f",
+    "src/messages/EmergencyNavigation_m.cc": "ea3613f658f810959a2973bde724b7419af72054bddbd3da45a882ffd34553db",
+    "src/messages/EmergencyNavigation_m.h": "8077eb89fc2ba911df355979ae66780402617a2f1e4b21bc1e96aa2f5f3f0b73",
+    "src/metrics/MetricsCollector.cc": "812fc90f9c4a91c91ced88449313b6819142aba576d8e86ecdcd7e6067ef3a66",
+    "src/metrics/MetricsCollector.h": "8deda13c5b642b458284d1dc6bde6861b527d9719259a87a5b423c40bf440ce9",
+    "src/routing/AStarRouter.cc": "8a73339bb74b73eca673193681fb104fa68092cd46128f664419ee055662532d",
+    "src/routing/AStarRouter.h": "c156004237f130be37109ee6e72a335e22b95437c85457102d2917605865cd70",
+    "src/routing/RoadGraph.cc": "53e4e110f31ed8db6b3d07aa1787fc79d977517aa4d14243b4b5dd277687ccec",
+    "src/routing/RoadGraph.h": "fd7d1038f20eacd8cc1e515e9fb1a9f51ff7653778724d7e8362b7e5e240e1cf"
+  }
+}

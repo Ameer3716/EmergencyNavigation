@@ -292,6 +292,8 @@ private:
             command->vehicle(nodeId()).setSpeedMode(31);
             command->vehicle(nodeId()).setSpeed(-1);
             navigationHeld = false;
+            auto* metrics = dynamic_cast<MetricsCollector*>(getSimulation()->getSystemModule()->getSubmodule("metrics"));
+            if (metrics) metrics->navigationReleased();
         }
         selected = route.edges;
         if (par("preemptionEnabled").boolValue() && !preemptionTimer->isScheduled()) scheduleAt(simTime() + par("preemptionCheckInterval"), preemptionTimer);

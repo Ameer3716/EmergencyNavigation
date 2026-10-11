@@ -1,3 +1,5 @@
+> Retained original-policy experiment. See [POLICY_VALIDATION.md](POLICY_VALIDATION.md) for the new matched-policy results and unmet requirements.
+
 # Methodology
 
 ## Experiment design
@@ -43,3 +45,9 @@ A separate 360-run matrix uses a physical C1C2 stopped queue after initial route
 ## Direct comparison with the Fog/Cloud baseline
 
 [CLIENT_BASELINE_COMPARISON.md](CLIENT_BASELINE_COMPARISON.md) reports response, signal waiting, decision latency, excess travel delay above free flow, and actual Fog route request counts. The latter two are supporting metrics derived from recorded scalars, not substitutes for the seven headline metrics. Ordinary traffic and controlled obstruction have separate matched-seed estimates and 95% intervals. The framework comparison includes advance signal requests in dynamic Mist and reactive requests in Fog/static Mist; both use the same safety controller and bounded retry mechanism. It is not an isolated comparison of A* computation alone.
+
+## Matched-policy extension (2026-10-10)
+
+The new isolated experiment contains 630 ordinary and 540 obstruction runs, plus 180 held-out candidate runs on seeds 101–110. Previous tables in this file describe the retained original-policy experiment. New matched-policy estimates and explicit unmet requirements are in [POLICY_VALIDATION.md](POLICY_VALIDATION.md). The fixed design is in [POLICY_EXPERIMENT_PLAN.md](POLICY_EXPERIMENT_PLAN.md); the prior timing and zero-wait diagnosis is in [DIAGNOSIS.md](DIAGNOSIS.md). The selected settings are frozen in results/policy_validation/selection.json. No artificial waiting or outcome gate is used.
+
+New metric definitions: full stops are below-0.1 m/s episodes after reaching 1 m/s, with recovery to 1 m/s required between stops. Whole-route slow time integrates below-1 m/s samples from navigation release, excluding the initial hold and including the shared scheduled 30 m stop. Green crossing share counts the prior approach link lamp in the phase observed at first entry sample, divided by observed signal entries; the exact crossing is only resolved to 500 ms. Green approach share instead records the lamp on first entry within 20 m of the next TLS on each external edge visit; a red arrival followed by a green crossing stays a red arrival. Crossing on green can be common to every configuration because all respect red-light safety; it does not establish an unstopped green arrival. Background time loss uses SUMO tripinfo at 900 s, including unfinished observed trips, restricted to common background IDs within each seed/context across preempting configurations. Observed, matched and unfinished background counts are exported to disclose censoring. Mean EV speed is distance divided by travel time and is secondary, not counted as independent evidence for C. New continuous metric intervals use the existing Student-t implementation; zero-inflated signal waiting retains bootstrap intervals. Matched difference intervals are paired Student-t, exploratory and unadjusted for multiple testing. Normal and controlled-stall cohort summaries and pairs are exported separately.

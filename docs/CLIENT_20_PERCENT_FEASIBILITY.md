@@ -1,3 +1,5 @@
+> Retained original-policy experiment. See [POLICY_VALIDATION.md](POLICY_VALIDATION.md) for the new matched-policy results and unmet requirements.
+
 # Audit of the 20 percent EV response target
 
 The acceptance target is at least 20 percent lower mean EV response time in each density. Ordinary traffic and controlled obstruction remain separate experiments.
@@ -22,3 +24,20 @@ Ordinary densities whose targets fall below this optimistic bound: low, medium. 
 A different demand scenario or vehicle policy would be a new experiment. Apply common input changes to every compared configuration, justify them before running, retain every scheduled seed, and keep the current ordinary results. Do not slow the baseline or select seeds to manufacture the target.
 
 Final verdict: 3 of 6 experiment and density combinations meet the target.
+
+## Matched-policy extension (2026-10-10)
+
+The new isolated experiment contains 630 ordinary and 540 obstruction runs, plus 180 held-out candidate runs on seeds 101–110. Previous tables in this file describe the retained original-policy experiment. New matched-policy estimates and explicit unmet requirements are in [POLICY_VALIDATION.md](POLICY_VALIDATION.md). The fixed design is in [POLICY_EXPERIMENT_PLAN.md](POLICY_EXPERIMENT_PLAN.md); the prior timing and zero-wait diagnosis is in [DIAGNOSIS.md](DIAGNOSIS.md). The selected settings are frozen in results/policy_validation/selection.json. No artificial waiting or outcome gate is used.
+
+### Updated bound against the matched advance-policy baseline
+
+| Context | Density | Matched baseline s | Optimistic bound s | Maximum theoretically possible reduction % | 20% target below bound |
+| --- | --- | ---: | ---: | ---: | --- |
+| ordinary | low | 147.542 | 123.856 | 16.05 | Yes |
+| ordinary | medium | 148.000 | 123.856 | 16.31 | Yes |
+| ordinary | high | 147.717 | 123.856 | 16.15 | Yes |
+| obstruction | low | 264.792 | 123.856 | 53.23 | No |
+| obstruction | medium | 263.466 | 123.856 | 52.99 | No |
+| obstruction | high | 266.617 | 123.856 | 53.55 | No |
+
+This bound remains optimistic and excludes the common scheduled start stop, junctions, acceleration and communication. It is not an achievable performance prediction.

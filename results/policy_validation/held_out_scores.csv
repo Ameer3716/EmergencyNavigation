@@ -1,0 +1,4 @@
+candidate,scheduled,arrivals,mean_response_s,mean_route_changes
+MistTuningReference,60,54,148.87037037037038,0.7222222222222222
+MistTuningFast,60,54,151.63888888888889,0.9444444444444444
+MistTuningBalanced,60,54,156.5185185185185,0.8888888888888888

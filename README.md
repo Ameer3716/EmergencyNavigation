@@ -1,5 +1,7 @@
 # Emergency vehicle navigation simulation
 
+The matched signal-policy extension is defined in [POLICY_EXPERIMENT_PLAN.md](docs/POLICY_EXPERIMENT_PLAN.md), with the prior diagnosis in [DIAGNOSIS.md](docs/DIAGNOSIS.md). Its runs and held-out tuning use isolated workspaces. The new complete matched-policy results and all new graphs are in [POLICY_VALIDATION.md](docs/POLICY_VALIDATION.md). Earlier results below remain historical.
+
 Start with the [short client results page](docs/CLIENT_RESULTS.html): it shows actual seconds saved, percentage reductions and confidence intervals for ordinary traffic and controlled congestion. Open the downloaded HTML file in a browser; its chart is embedded for offline use.
 
 SUMO, OMNeT++, and Veins model accident alert delivery and emergency vehicle routing on a signalized grid. The main comparison contains FogCloudAStar, MistAStar, MistDynamicAStar, and MistDynamicFogFallback (360 matched runs). A further 90 NoPreemptionBaseline runs appear only in the traffic-light waiting comparison.

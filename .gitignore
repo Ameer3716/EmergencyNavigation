@@ -98,3 +98,7 @@ artifacts/congestion_validation/**/*.vci
 
 # Packaging deliveries (retained locally)
 *.zip
+
+# Local policy batch status and storage accounting; retain workspace evidence map.
+artifacts/policy_validation/*.json
+!artifacts/policy_validation/workspaces.json

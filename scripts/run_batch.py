@@ -11,6 +11,7 @@ import json
 import hashlib
 import re
 import time
+import uuid
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
@@ -18,10 +19,35 @@ from threading import Lock
 ROOT = Path(__file__).resolve().parents[1]
 GRID = ROOT / "simulations/grid"
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
+POLICY_CONFIGS = CONFIGS + ("FogCloudAStarAdvance", "MistAStarAdvance")
 # Fixed independent selection, identical across densities and every Mist approach.
 STALL_SEEDS = frozenset(random.Random(20261005).sample(range(1, 31), 8))
 STARTUP_ATTEMPTS = 10
 SUMO_HOME = Path(os.environ.get("SUMO_HOME", "/home/opp_env/sumo118_pkg/sumo"))
+
+
+def detach_result_links(run_dir: Path) -> None:
+    """Keep prior canonical evidence intact if a shared run file is rerun."""
+    for extension in ('sca', 'vec', 'vci'):
+        source = run_dir/'results'/f'Batch-#0.{extension}'
+        if source.is_file() and source.stat().st_nlink > 1:
+            temporary = source.with_name(source.name+'.private-copy')
+            shutil.copy2(source, temporary)
+            os.replace(temporary, source)
+
+
+def publish_result(source: Path, destination: Path) -> None:
+    """Publish completed output without storing a second identical copy."""
+    temporary = destination.with_name(destination.name+'.publishing-'+uuid.uuid4().hex)
+    try:
+        try:
+            os.link(source, temporary)
+        except OSError:
+            shutil.copy2(source, temporary)
+        os.replace(temporary, destination)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
 
 
 def one_sumo_config(directory: Path, route_name: str, seed: int, summary_path: Path | None = None) -> None:
@@ -117,6 +143,7 @@ def main() -> None:
                 continue
             run_dir = base / config
             run_dir.mkdir(exist_ok=True)
+            detach_result_links(run_dir)
             for prefix in ("emergency-", "routing-", "fallback-", "mobility-", "traffic-light-"):
                 old_log = logs_dir / f"{prefix}{stem}.csv"
                 if old_log.exists():
@@ -189,7 +216,7 @@ def main() -> None:
                 if not source.exists():
                     raise RuntimeError(f"Missing result: {source}")
                 destination = raw_dir / f"{stem}.{extension}"
-                shutil.copyfile(source, destination)
+                publish_result(source, destination)
             print(f"Complete {stem}", flush=True)
 
     keys = [(density, seed) for density in args.densities

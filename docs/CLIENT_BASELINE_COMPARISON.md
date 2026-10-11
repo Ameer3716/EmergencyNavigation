@@ -1,3 +1,5 @@
+> Retained original-policy experiment. See [POLICY_VALIDATION.md](POLICY_VALIDATION.md) for the new matched-policy results and unmet requirements.
+
 # Client baseline comparisons
 
 FogCloudAStar is the baseline. The proposed framework is MistDynamicFogFallback. All three Mist approaches are retained in the comparison CSV. Ordinary traffic and controlled obstruction are separate experiments.
@@ -66,3 +68,7 @@ Controlled obstruction, ev traffic-light waiting time: lower proposed values sup
 Controlled obstruction, excess travel delay above free flow: lower proposed values supported in low, medium, high. Read the percentage reductions and intervals above for the size and uncertainty of each effect.
 
 Controlled obstruction, fog route requests per scheduled run: lower proposed values supported in low, medium, high. Read the percentage reductions and intervals above for the size and uncertainty of each effect.
+
+## Matched-policy extension (2026-10-10)
+
+The new isolated experiment contains 630 ordinary and 540 obstruction runs, plus 180 held-out candidate runs on seeds 101–110. Previous tables in this file describe the retained original-policy experiment. New matched-policy estimates and explicit unmet requirements are in [POLICY_VALIDATION.md](POLICY_VALIDATION.md). The fixed design is in [POLICY_EXPERIMENT_PLAN.md](POLICY_EXPERIMENT_PLAN.md); the prior timing and zero-wait diagnosis is in [DIAGNOSIS.md](DIAGNOSIS.md). The selected settings are frozen in results/policy_validation/selection.json. No artificial waiting or outcome gate is used.

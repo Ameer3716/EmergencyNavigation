@@ -1,0 +1,382 @@
+configuration,density,metric,n,mean,stddev,ci95_lower,ci95_upper,event_count,context,unit,ci_method
+FogCloudAStar,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+FogCloudAStar,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+FogCloudAStar,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+FogCloudAStar,high,nrl,30,54436.1,1187.9834072334802,53992.49970537222,54879.70029462778,,ordinary,packets/delivery,Student-t
+FogCloudAStar,high,control_transmissions,30,54396.76666666667,1187.9423439896727,53953.181705306124,54840.351628027216,,ordinary,packets,Student-t
+FogCloudAStar,high,control_bytes,30,4352083.933333334,95033.6121093328,4316597.79937342,4387570.067293247,,ordinary,bytes,Student-t
+FogCloudAStar,high,ev_response_s,30,156.2,5.197147758875651,154.2593531331972,158.14064686680277,,ordinary,s,Student-t
+FogCloudAStar,high,route_decision_ms,30,626.539460082334,0.0038374463048468106,626.5380271563344,626.5408930083337,,ordinary,ms,Student-t
+FogCloudAStar,high,traffic_light_wait_s,30,0.6666666666666666,1.0531834608931392,0.31666666666666665,1.05,,ordinary,s,Bootstrap percentile
+FogCloudAStar,high,ev_delay_vs_freeflow_s,30,27.255466891944845,5.160440818953077,25.568972231881084,29.18964259778617,,ordinary,s,Bootstrap percentile
+FogCloudAStar,high,ev_distance_m,30,1778.4290102019668,1.5729620609070474,1777.8416565155364,1779.016363888397,,ordinary,m,Student-t
+FogCloudAStar,high,ev_travel_s,30,155.2,5.197147758875651,153.2593531331972,157.14064686680277,,ordinary,s,Student-t
+FogCloudAStar,high,ev_full_stops,30,1.3666666666666667,0.490132517853561,1.183648176675448,1.5496851566578853,,ordinary,stops/run,Student-t
+FogCloudAStar,high,ev_below_1_s,30,2.3666666666666667,1.330888563259934,1.8697047098042363,2.863628623529097,,ordinary,s,Student-t
+FogCloudAStar,high,ev_whole_stopped_s,30,1.5,1.0795912380986195,1.0968740065037004,1.9031259934962996,,ordinary,s,Student-t
+FogCloudAStar,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStar,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStar,high,ev_green_approach_fraction,30,0.8733333333333334,0.09802650357071217,0.8367296353350897,0.9099370313315771,,ordinary,share,Student-t
+FogCloudAStar,high,background_time_loss_s,30,68.75851,3.8915837489249228,67.30536874644334,70.21165125355667,,ordinary,s/vehicle,Student-t
+FogCloudAStar,high,ev_mean_speed_mps,30,11.470840434583662,0.36779687314820225,11.333502825069683,11.608178044097642,,ordinary,m/s,Student-t
+MistAStar,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+MistAStar,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+MistAStar,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+MistAStar,high,nrl,30,54300.26666666667,1034.0014984759812,53914.16416171867,54686.36917161467,,ordinary,packets/delivery,Student-t
+MistAStar,high,control_transmissions,30,54260.933333333334,1033.9335312903033,53874.85620774956,54647.01045891711,,ordinary,packets,Student-t
+MistAStar,high,control_bytes,30,4341094.933333334,82718.33037021953,4310207.40115071,4371982.465515957,,ordinary,bytes,Student-t
+MistAStar,high,ev_response_s,30,156.88333333333333,5.821605616496448,154.70951007034813,159.05715659631852,,ordinary,s,Student-t
+MistAStar,high,route_decision_ms,30,566.0000000000014,404.7988005979224,414.84564370441865,717.1543562955841,,ordinary,ms,Student-t
+MistAStar,high,traffic_light_wait_s,30,0.7166666666666667,1.088207426136603,0.35,1.1333333333333333,,ordinary,s,Bootstrap percentile
+MistAStar,high,ev_delay_vs_freeflow_s,30,28.152952479535017,5.831577233651609,26.203980784825678,30.300361972998587,,ordinary,s,Bootstrap percentile
+MistAStar,high,ev_distance_m,30,1778.69562720113,1.1627886694562977,1778.2614347762023,1779.1298196260577,,ordinary,m,Student-t
+MistAStar,high,ev_travel_s,30,156.11666666666667,5.851146856833273,153.93181252325226,158.3015208100811,,ordinary,s,Student-t
+MistAStar,high,ev_full_stops,30,1.4,0.49827287912243984,1.2139418491555538,1.586058150844446,,ordinary,stops/run,Student-t
+MistAStar,high,ev_below_1_s,30,2.3266666666666667,1.2558644044238416,1.8577191911187478,2.7956141422145855,,ordinary,s,Student-t
+MistAStar,high,ev_whole_stopped_s,30,1.3433333333333333,1.1056854118080142,0.9304636152403137,1.7562030514263527,,ordinary,s,Student-t
+MistAStar,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStar,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStar,high,ev_green_approach_fraction,30,0.8866666666666667,0.10080138659874616,0.8490268103169691,0.9243065230163643,,ordinary,share,Student-t
+MistAStar,high,background_time_loss_s,30,68.22400166666667,3.1175604417027003,67.05988546602059,69.38811786731274,,ordinary,s/vehicle,Student-t
+MistAStar,high,ev_mean_speed_mps,30,11.408285721571659,0.4120034092807117,11.254441120180982,11.562130322962336,,ordinary,m/s,Student-t
+MistDynamicAStar,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+MistDynamicAStar,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+MistDynamicAStar,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+MistDynamicAStar,high,nrl,30,54515.433333333334,1445.637472639268,53975.62342952236,55055.24323714431,,ordinary,packets/delivery,Student-t
+MistDynamicAStar,high,control_transmissions,30,54476.1,1445.6512754965588,53936.28494211741,55015.91505788259,,ordinary,packets,Student-t
+MistDynamicAStar,high,control_bytes,30,4358481.6,115653.13687043864,4315296.008957254,4401667.1910427455,,ordinary,bytes,Student-t
+MistDynamicAStar,high,ev_response_s,30,147.51666666666668,4.098955572046274,145.9860915017658,149.04724183156756,,ordinary,s,Student-t
+MistDynamicAStar,high,route_decision_ms,30,566.0000000000014,404.7988005979224,414.84564370441865,717.1543562955841,,ordinary,ms,Student-t
+MistDynamicAStar,high,traffic_light_wait_s,30,0.4,2.1908902300206643,0.0,1.2,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,high,route_changes,30,0.2,0.4068381021724862,0.048084155981774734,0.3519158440182253,,ordinary,events/run,Student-t
+MistDynamicAStar,high,route_reviews,30,26.9,1.0288929437289247,26.515805060744512,27.284194939255485,,ordinary,reviews/run,Student-t
+MistDynamicAStar,high,ev_delay_vs_freeflow_s,30,18.73530724000216,3.912371388796424,17.675024124997655,20.31293111260104,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,high,ev_distance_m,30,1779.40422936397,2.5965132937587114,1778.4346753659065,1780.3737833620335,,ordinary,m,Student-t
+MistDynamicAStar,high,ev_travel_s,30,146.75,3.9626488876629673,145.270322587529,148.229677412471,,ordinary,s,Student-t
+MistDynamicAStar,high,ev_full_stops,30,1.0666666666666667,0.3651483716701107,0.9303180238578197,1.2030153094755136,,ordinary,stops/run,Student-t
+MistDynamicAStar,high,ev_below_1_s,30,1.46,2.705626321779016,0.4497025276734694,2.4702974723265303,,ordinary,s,Student-t
+MistDynamicAStar,high,ev_whole_stopped_s,30,1.0266666666666666,2.2051559227587876,0.20324791260006447,1.8500854207332686,,ordinary,s,Student-t
+MistDynamicAStar,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicAStar,high,ev_green_approach_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,high,background_time_loss_s,30,69.22020833333333,4.832148675440987,67.41585436419614,71.02456230247053,,ordinary,s/vehicle,Student-t
+MistDynamicAStar,high,ev_mean_speed_mps,30,12.133002896649078,0.2921284363578493,12.02392034579151,12.242085447506646,,ordinary,m/s,Student-t
+MistDynamicFogFallback,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+MistDynamicFogFallback,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+MistDynamicFogFallback,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+MistDynamicFogFallback,high,nrl,30,54511.8,1425.6270586464145,53979.46210757303,55044.137892426974,,ordinary,packets/delivery,Student-t
+MistDynamicFogFallback,high,control_transmissions,30,54472.46666666667,1425.7067390410716,53940.09902109135,55004.83431224198,,ordinary,packets,Student-t
+MistDynamicFogFallback,high,control_bytes,30,4358247.366666666,114065.61811200916,4315654.564870536,4400840.168462796,,ordinary,bytes,Student-t
+MistDynamicFogFallback,high,ev_response_s,30,146.73333333333332,1.4003283687156685,146.21044212697842,147.25622453968822,,ordinary,s,Student-t
+MistDynamicFogFallback,high,route_decision_ms,30,459.5012558552,225.17145230414607,375.420853742098,543.5816579683019,,ordinary,ms,Student-t
+MistDynamicFogFallback,high,traffic_light_wait_s,30,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,high,route_changes,30,0.2,0.4068381021724862,0.048084155981774734,0.3519158440182253,,ordinary,events/run,Student-t
+MistDynamicFogFallback,high,route_reviews,30,26.766666666666666,0.6789105539243627,26.513157299521467,27.020176033811865,,ordinary,reviews/run,Student-t
+MistDynamicFogFallback,high,fallback_triggered,30,0.26666666666666666,0.4497764451088036,0.14182663319596317,0.4444796169518888,8,ordinary,ratio,Wilson score
+MistDynamicFogFallback,high,fallback_decision_ms,8,826.629709456995,0.04865255381215642,826.5890349041173,826.6703840098727,,ordinary,ms,Student-t
+MistDynamicFogFallback,high,ev_delay_vs_freeflow_s,30,18.09915049820168,1.4792568317166856,17.54485940948261,18.611164297127974,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,high,ev_distance_m,30,1779.2118080749967,2.2882108593677284,1778.3573760979123,1780.0662400520812,,ordinary,m,Student-t
+MistDynamicFogFallback,high,ev_travel_s,30,146.1,1.3982747990981972,145.57787560914252,146.62212439085746,,ordinary,s,Student-t
+MistDynamicFogFallback,high,ev_full_stops,30,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistDynamicFogFallback,high,ev_below_1_s,30,0.9666666666666667,0.2916461404928374,0.8577642080448262,1.0755691252885071,,ordinary,s,Student-t
+MistDynamicFogFallback,high,ev_whole_stopped_s,30,0.6166666666666667,0.0912870929175277,0.582579505964455,0.6507538273688784,,ordinary,s,Student-t
+MistDynamicFogFallback,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicFogFallback,high,ev_green_approach_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,high,background_time_loss_s,30,69.21517833333333,4.787123027306285,67.42763721752115,71.0027194491455,,ordinary,s/vehicle,Student-t
+MistDynamicFogFallback,high,ev_mean_speed_mps,30,12.17919515870834,0.1256241689276854,12.132286323105607,12.226103994311075,,ordinary,m/s,Student-t
+NoPreemptionBaseline,high,traffic_light_wait_s,30,22.716666666666665,14.243379183842318,18.266666666666666,28.267083333333325,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+FogCloudAStarAdvance,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+FogCloudAStarAdvance,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+FogCloudAStarAdvance,high,nrl,30,54531.63333333333,1364.6206112482978,54022.075622746626,55041.19104392004,,ordinary,packets/delivery,Student-t
+FogCloudAStarAdvance,high,control_transmissions,30,54492.3,1364.6013728912014,53982.7494731339,55001.8505268661,,ordinary,packets,Student-t
+FogCloudAStarAdvance,high,control_bytes,30,4359903.133333334,109169.87584864789,4319138.431742329,4400667.834924338,,ordinary,bytes,Student-t
+FogCloudAStarAdvance,high,ev_response_s,30,147.71666666666667,1.193974335002088,147.27082932284523,148.1625040104881,,ordinary,s,Student-t
+FogCloudAStarAdvance,high,route_decision_ms,30,626.539460082334,0.0038374463048468106,626.5380271563344,626.5408930083337,,ordinary,ms,Student-t
+FogCloudAStarAdvance,high,traffic_light_wait_s,30,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,high,ev_delay_vs_freeflow_s,30,18.757930706410555,1.1975180578612614,18.40513662145726,19.237124590938038,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,high,ev_distance_m,30,1778.62642984756,1.2117015788734882,1778.1739730420893,1779.0788866530308,,ordinary,m,Student-t
+FogCloudAStarAdvance,high,ev_travel_s,30,146.71666666666667,1.193974335002088,146.27082932284523,147.1625040104881,,ordinary,s,Student-t
+FogCloudAStarAdvance,high,ev_full_stops,30,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+FogCloudAStarAdvance,high,ev_below_1_s,30,1.1833333333333333,0.2841603885779677,1.0772261004147539,1.2894405662519128,,ordinary,s,Student-t
+FogCloudAStarAdvance,high,ev_whole_stopped_s,30,0.8333333333333334,0.1268540658512312,0.7859652466717675,0.8807014199948993,,ordinary,s,Student-t
+FogCloudAStarAdvance,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStarAdvance,high,ev_green_approach_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,high,background_time_loss_s,30,69.12690166666667,4.459485137931078,67.46170254938166,70.79210078395168,,ordinary,s/vehicle,Student-t
+FogCloudAStarAdvance,high,ev_mean_speed_mps,30,12.123623080872381,0.096608711112637,12.087548795278632,12.15969736646613,,ordinary,m/s,Student-t
+MistAStarAdvance,high,pdr,30,1.0,0.0,0.8864866068260312,0.9999999999999999,,ordinary,ratio,Wilson score
+MistAStarAdvance,high,e2e_delay_ms,30,32.1712761943649,7.883862602177889,29.227393517353992,35.115158871375804,,ordinary,ms,Student-t
+MistAStarAdvance,high,throughput_bps,30,2.2755555555555556,0.0,2.2755555555555556,2.2755555555555556,,ordinary,bit/s,Student-t
+MistAStarAdvance,high,nrl,30,54535.03333333333,1465.6615896591884,53987.74630134396,55082.3203653227,,ordinary,packets/delivery,Student-t
+MistAStarAdvance,high,control_transmissions,30,54495.7,1465.6936253693252,53948.401005679865,55042.99899432013,,ordinary,packets,Student-t
+MistAStarAdvance,high,control_bytes,30,4360047.466666667,117255.39116014897,4316263.584039495,4403831.349293838,,ordinary,bytes,Student-t
+MistAStarAdvance,high,ev_response_s,30,147.5,1.3130643285972257,147.00969372174364,147.99030627825636,,ordinary,s,Student-t
+MistAStarAdvance,high,route_decision_ms,30,566.0000000000014,404.7988005979224,414.84564370441865,717.1543562955841,,ordinary,ms,Student-t
+MistAStarAdvance,high,traffic_light_wait_s,30,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,high,ev_delay_vs_freeflow_s,30,18.782238808660914,1.3161858144778535,18.39320613811208,19.30626969515501,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,high,ev_distance_m,30,1778.5202138929467,1.411893209252409,1777.9930043041647,1779.0474234817286,,ordinary,m,Student-t
+MistAStarAdvance,high,ev_travel_s,30,146.73333333333332,1.3113124074319809,146.24368123319118,147.22298543347546,,ordinary,s,Student-t
+MistAStarAdvance,high,ev_full_stops,30,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistAStarAdvance,high,ev_below_1_s,30,0.9600000000000001,0.29896372747346395,0.8483651094933324,1.0716348905066677,,ordinary,s,Student-t
+MistAStarAdvance,high,ev_whole_stopped_s,30,0.6266666666666666,0.044977644510880356,0.6098717381893796,0.6434615951439536,,ordinary,s,Student-t
+MistAStarAdvance,high,ev_green_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,high,ev_green_count,30,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStarAdvance,high,ev_green_approach_fraction,30,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,high,background_time_loss_s,30,69.25567333333333,4.984295500710436,67.39450680595228,71.11683986071439,,ordinary,s/vehicle,Student-t
+MistAStarAdvance,high,ev_mean_speed_mps,30,12.12167608101893,0.10589637537068551,12.082133724595076,12.161218437442782,,ordinary,m/s,Student-t
+FogCloudAStar,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+FogCloudAStar,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+FogCloudAStar,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+FogCloudAStar,low,nrl,24,22038.208333333332,768.7981574405976,21713.57334272941,22362.843323937253,,ordinary,packets/delivery,Student-t
+FogCloudAStar,low,control_transmissions,30,22661.9,1558.6909262096433,22079.875242844155,23243.924757155848,,ordinary,packets,Student-t
+FogCloudAStar,low,control_bytes,30,1813220.5333333334,124580.53346792998,1766701.3976158106,1859739.6690508563,,ordinary,bytes,Student-t
+FogCloudAStar,low,ev_response_s,24,153.3125,1.2667357914014237,152.77760438694563,153.84739561305437,,ordinary,s,Student-t
+FogCloudAStar,low,route_decision_ms,24,626.5385801005825,0.004017502611791513,626.5368836580117,626.5402765431534,,ordinary,ms,Student-t
+FogCloudAStar,low,traffic_light_wait_s,24,1.5625,1.0664090495065977,1.125,1.9791666666666667,,ordinary,s,Bootstrap percentile
+FogCloudAStar,low,ev_delay_vs_freeflow_s,24,24.332172674800365,1.2399255293416827,23.868702877170218,24.834973190040337,,ordinary,s,Bootstrap percentile
+FogCloudAStar,low,ev_distance_m,24,1778.9265498202749,1.7077992244543807,1778.205409453563,1779.6476901869867,,ordinary,m,Student-t
+FogCloudAStar,low,ev_travel_s,24,152.3125,1.2667357914014237,151.77760438694563,152.84739561305437,,ordinary,s,Student-t
+FogCloudAStar,low,ev_full_stops,24,1.7916666666666667,0.4148511169990534,1.6164904033450165,1.966842929988317,,ordinary,stops/run,Student-t
+FogCloudAStar,low,ev_below_1_s,24,3.2375,1.1731831466792275,2.7421082042303584,3.7328917957696413,,ordinary,s,Student-t
+FogCloudAStar,low,ev_whole_stopped_s,24,2.3625,1.0664090495065977,1.9121949512482934,2.8128050487517062,,ordinary,s,Student-t
+FogCloudAStar,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStar,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStar,low,ev_green_approach_fraction,24,0.8250000000000001,0.06756639246921761,0.7964692146799532,0.8535307853200469,,ordinary,share,Student-t
+FogCloudAStar,low,background_time_loss_s,30,64.95654926596617,21.40257930849363,56.964694809722715,72.94840372220963,,ordinary,s/vehicle,Student-t
+FogCloudAStar,low,ev_mean_speed_mps,24,11.680196616154602,0.09403233502882456,11.640490243418002,11.719902988891201,,ordinary,m/s,Student-t
+MistAStar,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+MistAStar,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+MistAStar,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+MistAStar,low,nrl,24,22038.25,757.2900914502286,21718.474439479898,22358.025560520102,,ordinary,packets/delivery,Student-t
+MistAStar,low,control_transmissions,30,22661.933333333334,1554.198694378938,22081.586003110813,23242.280663555855,,ordinary,packets,Student-t
+MistAStar,low,control_bytes,30,1813123.7333333334,124263.51537536542,1766722.9741170374,1859524.4925496294,,ordinary,bytes,Student-t
+MistAStar,low,ev_response_s,24,153.5,2.074692224424374,152.62393430673112,154.37606569326888,,ordinary,s,Student-t
+MistAStar,low,route_decision_ms,24,588.499999999998,417.87505933878424,412.04683781543486,764.953162184561,,ordinary,ms,Student-t
+MistAStar,low,traffic_light_wait_s,24,1.8333333333333333,1.1484078455453641,1.375,2.2708333333333335,,ordinary,s,Bootstrap percentile
+MistAStar,low,ev_delay_vs_freeflow_s,24,24.732900086419967,2.1832660318103843,24.025904830630704,25.7043120888408,,ordinary,s,Bootstrap percentile
+MistAStar,low,ev_distance_m,24,1778.858522132096,1.5097633633035021,1778.221004975588,1779.496039288604,,ordinary,m,Student-t
+MistAStar,low,ev_travel_s,24,152.70833333333334,2.176538269955231,151.78926182675187,153.62740483991482,,ordinary,s,Student-t
+MistAStar,low,ev_full_stops,24,1.8333333333333333,0.3806934938134405,1.6725805693067766,1.99408609735989,,ordinary,stops/run,Student-t
+MistAStar,low,ev_below_1_s,24,3.4625,1.3564058966702182,2.8897400222880836,4.035259977711916,,ordinary,s,Student-t
+MistAStar,low,ev_whole_stopped_s,24,2.4625,1.146189338634765,1.9785066896924612,2.9464933103075386,,ordinary,s,Student-t
+MistAStar,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStar,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStar,low,ev_green_approach_fraction,24,0.8250000000000001,0.06756639246921761,0.7964692146799532,0.8535307853200469,,ordinary,share,Student-t
+MistAStar,low,background_time_loss_s,30,64.97031778448469,21.38711905527442,56.984236281669126,72.95639928730026,,ordinary,s/vehicle,Student-t
+MistAStar,low,ev_mean_speed_mps,24,11.650917768160099,0.16028676042686468,11.583234605210883,11.718600931109314,,ordinary,m/s,Student-t
+MistDynamicAStar,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+MistDynamicAStar,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+MistDynamicAStar,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+MistDynamicAStar,low,nrl,24,22059.375,771.2933132084058,21733.686397519676,22385.063602480324,,ordinary,packets/delivery,Student-t
+MistDynamicAStar,low,control_transmissions,30,22678.833333333332,1552.4721794016446,22099.130694398536,23258.535972268128,,ordinary,packets,Student-t
+MistDynamicAStar,low,control_bytes,30,1814620.8,124065.2836307257,1768294.0617336528,1860947.5382663473,,ordinary,bytes,Student-t
+MistDynamicAStar,low,ev_response_s,24,147.16666666666666,0.7322785563281032,146.85745255116404,147.47588078216927,,ordinary,s,Student-t
+MistDynamicAStar,low,route_decision_ms,24,588.499999999998,417.87505933878424,412.04683781543486,764.953162184561,,ordinary,ms,Student-t
+MistDynamicAStar,low,traffic_light_wait_s,24,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,low,route_changes,30,0.1,0.30512857662936466,-0.013936883013668952,0.21393688301366898,,ordinary,events/run,Student-t
+MistDynamicAStar,low,route_reviews,30,21.433333333333334,10.918770087783928,17.356197576704034,25.510469089962633,,ordinary,reviews/run,Student-t
+MistDynamicAStar,low,ev_delay_vs_freeflow_s,24,18.434131289601623,0.6469918143356966,18.22218376460354,18.720831344182784,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,low,ev_distance_m,24,1778.3780750745375,1.7735687242129314,1777.6291626837522,1779.1269874653228,,ordinary,m,Student-t
+MistDynamicAStar,low,ev_travel_s,24,146.375,0.6468989572333266,146.1018385272901,146.6481614727099,,ordinary,s,Student-t
+MistDynamicAStar,low,ev_full_stops,24,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistDynamicAStar,low,ev_below_1_s,24,1.0458333333333334,0.29485319363558105,0.9213277491055007,1.170338917561166,,ordinary,s,Student-t
+MistDynamicAStar,low,ev_whole_stopped_s,24,0.6291666666666667,0.04643056214875364,0.6095607597572709,0.6487725735760624,,ordinary,s,Student-t
+MistDynamicAStar,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicAStar,low,ev_green_approach_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,low,background_time_loss_s,30,65.1642900067069,21.33991236352954,57.19583577228492,73.13274424112889,,ordinary,s/vehicle,Student-t
+MistDynamicAStar,low,ev_mean_speed_mps,24,12.149685575658454,0.053225985992395274,12.127210212918188,12.17216093839872,,ordinary,m/s,Student-t
+MistDynamicFogFallback,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+MistDynamicFogFallback,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+MistDynamicFogFallback,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+MistDynamicFogFallback,low,nrl,24,22062.041666666668,768.4192401438088,21737.56667880455,22386.516654528787,,ordinary,packets/delivery,Student-t
+MistDynamicFogFallback,low,control_transmissions,30,22680.966666666667,1550.4356558685388,22102.024478116786,23259.90885521655,,ordinary,packets,Student-t
+MistDynamicFogFallback,low,control_bytes,30,1814829.5333333334,123891.19788854038,1768567.7997514403,1861091.2669152266,,ordinary,bytes,Student-t
+MistDynamicFogFallback,low,ev_response_s,24,147.10416666666666,0.7067864609974326,146.8057169189608,147.40261641437252,,ordinary,s,Student-t
+MistDynamicFogFallback,low,route_decision_ms,24,471.99064945553914,232.403243180172,373.8553665650552,570.1259323460231,,ordinary,ms,Student-t
+MistDynamicFogFallback,low,traffic_light_wait_s,24,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,low,route_changes,30,0.1,0.30512857662936466,-0.013936883013668952,0.21393688301366898,,ordinary,events/run,Student-t
+MistDynamicFogFallback,low,route_reviews,30,21.5,10.950515654682581,17.41101025387588,25.58898974612412,,ordinary,reviews/run,Student-t
+MistDynamicFogFallback,low,fallback_triggered,30,0.23333333333333334,0.4301830671520763,0.11792388144489496,0.40928326158122164,7,ordinary,ratio,Wilson score
+MistDynamicFogFallback,low,fallback_decision_ms,7,826.5393695618558,0.014424359258831709,826.526029254523,826.5527098691886,,ordinary,ms,Student-t
+MistDynamicFogFallback,low,ev_delay_vs_freeflow_s,24,18.508156304767688,0.6629921230091007,18.281971928706707,18.798918977342023,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,low,ev_distance_m,24,1778.5074606970625,1.6735705657286397,1777.8007738253236,1779.2141475688013,,ordinary,m,Student-t
+MistDynamicFogFallback,low,ev_travel_s,24,146.45833333333334,0.6580053301400784,146.18048205065273,146.73618461601396,,ordinary,s,Student-t
+MistDynamicFogFallback,low,ev_full_stops,24,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistDynamicFogFallback,low,ev_below_1_s,24,0.9958333333333333,0.2941149829376358,0.8716394681447203,1.1200271985219463,,ordinary,s,Student-t
+MistDynamicFogFallback,low,ev_whole_stopped_s,24,0.6,0.0,0.6,0.6,,ordinary,s,Student-t
+MistDynamicFogFallback,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicFogFallback,low,ev_green_approach_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,low,background_time_loss_s,30,65.16070667337357,21.336657170247346,57.19346794809949,73.12794539864764,,ordinary,s/vehicle,Student-t
+MistDynamicFogFallback,low,ev_mean_speed_mps,24,12.143666426057127,0.054609697361054185,12.120606773249545,12.16672607886471,,ordinary,m/s,Student-t
+NoPreemptionBaseline,low,traffic_light_wait_s,24,26.291666666666668,5.0796196936270785,24.166666666666668,28.145833333333332,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+FogCloudAStarAdvance,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+FogCloudAStarAdvance,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+FogCloudAStarAdvance,low,nrl,24,22057.416666666668,762.2957269736719,21735.5274116412,22379.305921692136,,ordinary,packets/delivery,Student-t
+FogCloudAStarAdvance,low,control_transmissions,30,22677.266666666666,1549.6074015216159,22098.63375337272,23255.899579960613,,ordinary,packets,Student-t
+FogCloudAStarAdvance,low,control_bytes,30,1814597.0666666667,123791.03979466236,1768372.7327316736,1860821.4006016597,,ordinary,bytes,Student-t
+FogCloudAStarAdvance,low,ev_response_s,24,147.54166666666666,0.6064269314504476,147.28559503162427,147.79773830170905,,ordinary,s,Student-t
+FogCloudAStarAdvance,low,route_decision_ms,24,626.5385801005825,0.004017502611791513,626.5368836580117,626.5402765431534,,ordinary,ms,Student-t
+FogCloudAStarAdvance,low,traffic_light_wait_s,24,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,low,ev_delay_vs_freeflow_s,24,18.590397373750903,0.6013324245395504,18.36381421158978,18.844719741060185,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,low,ev_distance_m,24,1778.5226431715291,1.1702551100369079,1778.028487777198,1779.0167985658602,,ordinary,m,Student-t
+FogCloudAStarAdvance,low,ev_travel_s,24,146.54166666666666,0.6064269314504476,146.28559503162427,146.79773830170905,,ordinary,s,Student-t
+FogCloudAStarAdvance,low,ev_full_stops,24,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+FogCloudAStarAdvance,low,ev_below_1_s,24,1.2166666666666668,0.19034674690672024,1.1362902846533884,1.2970430486799451,,ordinary,s,Student-t
+FogCloudAStarAdvance,low,ev_whole_stopped_s,24,0.8,0.0,0.8,0.8,,ordinary,s,Student-t
+FogCloudAStarAdvance,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStarAdvance,low,ev_green_approach_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,low,background_time_loss_s,30,65.13825296966986,21.322172651349923,57.17642285264007,73.10008308669966,,ordinary,s/vehicle,Student-t
+FogCloudAStarAdvance,low,ev_mean_speed_mps,24,12.136828719492186,0.049611153718323614,12.115879766551386,12.157777672432987,,ordinary,m/s,Student-t
+MistAStarAdvance,low,pdr,30,0.8,0.4068381021724862,0.6269430358685175,0.9049489282271013,,ordinary,ratio,Wilson score
+MistAStarAdvance,low,e2e_delay_ms,24,44.36618120891646,9.558331928333388,40.330051614025464,48.40231080380745,,ordinary,ms,Student-t
+MistAStarAdvance,low,throughput_bps,30,1.8204444444444445,0.9257827036102798,1.4747515016118609,2.166137387277028,,ordinary,bit/s,Student-t
+MistAStarAdvance,low,nrl,24,22053.416666666668,759.4942777737134,21732.710359890883,22374.122973442452,,ordinary,packets/delivery,Student-t
+MistAStarAdvance,low,control_transmissions,30,22674.066666666666,1549.883954128298,22095.33048693225,23252.802846401082,,ordinary,packets,Student-t
+MistAStarAdvance,low,control_bytes,30,1814238.9333333333,123858.02858582813,1767989.585372625,1860488.2812940418,,ordinary,bytes,Student-t
+MistAStarAdvance,low,ev_response_s,24,147.14583333333334,0.7442411756522423,146.83156784670777,147.46009881995892,,ordinary,s,Student-t
+MistAStarAdvance,low,route_decision_ms,24,588.499999999998,417.87505933878424,412.04683781543486,764.953162184561,,ordinary,ms,Student-t
+MistAStarAdvance,low,traffic_light_wait_s,24,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,low,ev_delay_vs_freeflow_s,24,18.412354046140294,0.6529030521730537,18.198560012419676,18.703253314929015,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,low,ev_distance_m,24,1778.3911954253167,1.6972409001067739,1777.6745134479652,1779.1078774026682,,ordinary,m,Student-t
+MistAStarAdvance,low,ev_travel_s,24,146.35416666666666,0.6507381538895166,146.07938404338773,146.62894928994558,,ordinary,s,Student-t
+MistAStarAdvance,low,ev_full_stops,24,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistAStarAdvance,low,ev_below_1_s,24,1.0458333333333334,0.29485319363558105,0.9213277491055007,1.170338917561166,,ordinary,s,Student-t
+MistAStarAdvance,low,ev_whole_stopped_s,24,0.6291666666666667,0.04643056214875364,0.6095607597572709,0.6487725735760624,,ordinary,s,Student-t
+MistAStarAdvance,low,ev_green_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,low,ev_green_count,24,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStarAdvance,low,ev_green_approach_fraction,24,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,low,background_time_loss_s,30,65.08574834004024,21.348141592622905,57.114221260974006,73.05727541910647,,ordinary,s/vehicle,Student-t
+MistAStarAdvance,low,ev_mean_speed_mps,24,12.151508670926761,0.05372760271586842,12.128821494020793,12.17419584783273,,ordinary,m/s,Student-t
+FogCloudAStar,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+FogCloudAStar,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+FogCloudAStar,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+FogCloudAStar,medium,nrl,29,39778.65517241379,1044.0558713792936,39381.51755825327,40175.79278657431,,ordinary,packets/delivery,Student-t
+FogCloudAStar,medium,control_transmissions,30,40004.3,1733.8455395946935,39356.87143532468,40651.72856467532,,ordinary,packets,Student-t
+FogCloudAStar,medium,control_bytes,30,3200669.1,138658.10643756724,3148893.3121449547,3252444.8878550455,,ordinary,bytes,Student-t
+FogCloudAStar,medium,ev_response_s,29,154.51724137931035,3.5088733402940893,153.1825373419537,155.851945416667,,ordinary,s,Student-t
+FogCloudAStar,medium,route_decision_ms,29,626.5427008316537,0.017713654418355117,626.5359629178633,626.5494387454441,,ordinary,ms,Student-t
+FogCloudAStar,medium,traffic_light_wait_s,29,0.8448275862068966,1.1188598172427116,0.4650862068965521,1.2586206896551724,,ordinary,s,Bootstrap percentile
+FogCloudAStar,medium,ev_delay_vs_freeflow_s,29,25.536557450410072,3.5093307815343997,24.30175844138723,26.840366610824614,,ordinary,s,Bootstrap percentile
+FogCloudAStar,medium,ev_distance_m,29,1778.9315066117138,1.4786269559216247,1778.3690669975076,1779.49394622592,,ordinary,m,Student-t
+FogCloudAStar,medium,ev_travel_s,29,153.51724137931035,3.5088733402940893,152.1825373419537,154.851945416667,,ordinary,s,Student-t
+FogCloudAStar,medium,ev_full_stops,29,1.4827586206896552,0.5085476277156078,1.2893174485317347,1.6761997928475758,,ordinary,stops/run,Student-t
+FogCloudAStar,medium,ev_below_1_s,29,2.593103448275862,1.671810616940883,1.9571806993687484,3.2290261971829755,,ordinary,s,Student-t
+FogCloudAStar,medium,ev_whole_stopped_s,29,1.8172413793103448,1.3461768525073519,1.3051830900000116,2.3292996686206777,,ordinary,s,Student-t
+FogCloudAStar,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStar,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStar,medium,ev_green_approach_fraction,29,0.8620689655172414,0.09416472308615165,0.8262506204557684,0.8978873105787145,,ordinary,share,Student-t
+FogCloudAStar,medium,background_time_loss_s,30,63.4874823943662,11.126005961011693,59.33296349091723,67.64200129781517,,ordinary,s/vehicle,Student-t
+FogCloudAStar,medium,ev_mean_speed_mps,29,11.593560961267206,0.2601046179988738,11.494622455909498,11.692499466624914,,ordinary,m/s,Student-t
+MistAStar,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+MistAStar,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+MistAStar,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+MistAStar,medium,nrl,29,39778.1724137931,1067.0424770285629,39372.29116246196,40184.053665124244,,ordinary,packets/delivery,Student-t
+MistAStar,medium,control_transmissions,30,40003.833333333336,1747.3560930995015,39351.35984506832,40656.30682159835,,ordinary,packets,Student-t
+MistAStar,medium,control_bytes,30,3200512.0,139757.34756182675,3148325.748763379,3252698.251236621,,ordinary,bytes,Student-t
+MistAStar,medium,ev_response_s,29,154.72413793103448,3.1780109651449098,153.5152872104248,155.93298865164417,,ordinary,s,Student-t
+MistAStar,medium,route_decision_ms,29,574.2758620689631,409.3729435326093,418.5587222557165,729.9930018822097,,ordinary,ms,Student-t
+MistAStar,medium,traffic_light_wait_s,29,0.9137931034482759,1.1957436830964339,0.5,1.3448275862068966,,ordinary,s,Bootstrap percentile
+MistAStar,medium,ev_delay_vs_freeflow_s,29,25.9619961598452,3.2978065981197235,24.86942812816136,27.257769633145408,,ordinary,s,Bootstrap percentile
+MistAStar,medium,ev_distance_m,29,1779.0092878609103,1.535553559436664,1778.4251945247895,1779.593381197031,,ordinary,m,Student-t
+MistAStar,medium,ev_travel_s,29,153.94827586206895,3.285098464457689,152.69869123521028,155.19786048892763,,ordinary,s,Student-t
+MistAStar,medium,ev_full_stops,29,1.4827586206896552,0.5085476277156078,1.2893174485317347,1.6761997928475758,,ordinary,stops/run,Student-t
+MistAStar,medium,ev_below_1_s,29,2.524137931034483,1.5331236024194417,1.940968901130288,3.107306960938678,,ordinary,s,Student-t
+MistAStar,medium,ev_whole_stopped_s,29,1.5931034482758621,1.1738006141476496,1.146613573373945,2.039593323177779,,ordinary,s,Student-t
+MistAStar,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStar,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStar,medium,ev_green_approach_fraction,29,0.8620689655172414,0.09416472308615165,0.8262506204557684,0.8978873105787145,,ordinary,share,Student-t
+MistAStar,medium,background_time_loss_s,30,63.52644072769953,11.145807484128941,59.36452781400142,67.68835364139764,,ordinary,s/vehicle,Student-t
+MistAStar,medium,ev_mean_speed_mps,29,11.560813531382413,0.23918027693901975,11.46983421969833,11.651792843066497,,ordinary,m/s,Student-t
+MistDynamicAStar,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+MistDynamicAStar,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+MistDynamicAStar,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+MistDynamicAStar,medium,nrl,29,39892.75862068965,1008.9494414337411,39508.97477830751,40276.5424630718,,ordinary,packets/delivery,Student-t
+MistDynamicAStar,medium,control_transmissions,30,40114.6,1696.6880842312808,39481.04625718369,40748.15374281631,,ordinary,packets,Student-t
+MistDynamicAStar,medium,control_bytes,30,3209549.8666666667,135674.89708903243,3158888.0274895984,3260211.705843735,,ordinary,bytes,Student-t
+MistDynamicAStar,medium,ev_response_s,29,147.36206896551724,2.4817064683547674,146.4180783105084,148.30605962052607,,ordinary,s,Student-t
+MistDynamicAStar,medium,route_decision_ms,29,574.2758620689631,409.3729435326093,418.5587222557165,729.9930018822097,,ordinary,ms,Student-t
+MistDynamicAStar,medium,traffic_light_wait_s,29,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,medium,route_changes,30,0.26666666666666666,0.4497764451088036,0.09871738189379667,0.4346159514395367,,ordinary,events/run,Student-t
+MistDynamicAStar,medium,route_reviews,30,26.0,4.9965505342565395,24.134257367886644,27.865742632113356,,ordinary,reviews/run,Student-t
+MistDynamicAStar,medium,ev_delay_vs_freeflow_s,29,18.53904142444927,2.648531514403859,17.677681552013915,19.578134386136306,,ordinary,s,Bootstrap percentile
+MistDynamicAStar,medium,ev_distance_m,29,1779.855600062224,2.8483346768711235,1778.7721514950426,1780.9390486294055,,ordinary,m,Student-t
+MistDynamicAStar,medium,ev_travel_s,29,146.58620689655172,2.577612979085638,145.6057353558947,147.56667843720874,,ordinary,s,Student-t
+MistDynamicAStar,medium,ev_full_stops,29,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistDynamicAStar,medium,ev_below_1_s,29,1.0413793103448277,0.2884902095136362,0.9316435034252644,1.151115117264391,,ordinary,s,Student-t
+MistDynamicAStar,medium,ev_whole_stopped_s,29,0.6275862068965516,0.04548588261473419,0.6102843024728577,0.6448881113202456,,ordinary,s,Student-t
+MistDynamicAStar,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicAStar,medium,ev_green_approach_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicAStar,medium,background_time_loss_s,30,64.06141063510694,10.921180769231801,59.983374715231236,68.13944655498264,,ordinary,s/vehicle,Student-t
+MistDynamicAStar,medium,ev_mean_speed_mps,29,12.145633003934204,0.21290354868619898,12.064648825127907,12.226617182740501,,ordinary,m/s,Student-t
+MistDynamicFogFallback,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+MistDynamicFogFallback,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+MistDynamicFogFallback,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+MistDynamicFogFallback,medium,nrl,29,39899.93103448276,1015.562860509048,39513.63158202168,40286.230486943845,,ordinary,packets/delivery,Student-t
+MistDynamicFogFallback,medium,control_transmissions,30,40121.53333333333,1699.4413023784862,39486.95152196503,40756.11514470164,,ordinary,packets,Student-t
+MistDynamicFogFallback,medium,control_bytes,30,3210159.7,135894.7670851008,3159415.760017111,3260903.6399828894,,ordinary,bytes,Student-t
+MistDynamicFogFallback,medium,ev_response_s,29,147.36206896551724,2.4197718005015396,146.4416369982179,148.2825009328166,,ordinary,s,Student-t
+MistDynamicFogFallback,medium,route_decision_ms,29,464.09588362017104,227.7012276389262,377.4829687706234,550.7087984697187,,ordinary,ms,Student-t
+MistDynamicFogFallback,medium,traffic_light_wait_s,29,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,medium,route_changes,30,0.26666666666666666,0.4497764451088036,0.09871738189379667,0.4346159514395367,,ordinary,events/run,Student-t
+MistDynamicFogFallback,medium,route_reviews,30,26.066666666666666,5.002987613163885,24.198520389786513,27.93481294354682,,ordinary,reviews/run,Student-t
+MistDynamicFogFallback,medium,fallback_triggered,30,0.26666666666666666,0.4497764451088036,0.14182663319596317,0.4444796169518888,8,ordinary,ratio,Wilson score
+MistDynamicFogFallback,medium,fallback_decision_ms,8,826.5975781231288,0.04007488957493207,826.5640746770121,826.6310815692455,,ordinary,ms,Student-t
+MistDynamicFogFallback,medium,ev_delay_vs_freeflow_s,29,18.674630830926322,2.527989270283037,17.87854837339617,19.68066694669566,,ordinary,s,Bootstrap percentile
+MistDynamicFogFallback,medium,ev_distance_m,29,1779.8881486915034,3.016938929168738,1778.7405664966777,1781.035730886329,,ordinary,m,Student-t
+MistDynamicFogFallback,medium,ev_travel_s,29,146.72413793103448,2.458898587988096,145.7888229297346,147.65945293233435,,ordinary,s,Student-t
+MistDynamicFogFallback,medium,ev_full_stops,29,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistDynamicFogFallback,medium,ev_below_1_s,29,1.0482758620689656,0.27854300726557785,0.9423237685278322,1.154227955610099,,ordinary,s,Student-t
+MistDynamicFogFallback,medium,ev_whole_stopped_s,29,0.6,0.0,0.6,0.6,,ordinary,s,Student-t
+MistDynamicFogFallback,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistDynamicFogFallback,medium,ev_green_approach_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistDynamicFogFallback,medium,background_time_loss_s,30,64.07120230177361,10.931298979496923,59.9893881800919,68.15301642345531,,ordinary,s/vehicle,Student-t
+MistDynamicFogFallback,medium,ev_mean_speed_mps,29,12.134093314893194,0.2019863001225719,12.057261835350038,12.21092479443635,,ordinary,m/s,Student-t
+NoPreemptionBaseline,medium,traffic_light_wait_s,29,27.34482758620686,20.157904975590128,21.344827586206897,35.55172413793089,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+FogCloudAStarAdvance,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+FogCloudAStarAdvance,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+FogCloudAStarAdvance,medium,nrl,29,39884.48275862069,1002.2531267345895,39503.24605812643,40265.719459114945,,ordinary,packets/delivery,Student-t
+FogCloudAStarAdvance,medium,control_transmissions,30,40106.6,1694.0949694504266,39474.01454215618,40739.185457843814,,ordinary,packets,Student-t
+FogCloudAStarAdvance,medium,control_bytes,30,3209030.1666666665,135449.19634136997,3158452.605533846,3259607.727799487,,ordinary,bytes,Student-t
+FogCloudAStarAdvance,medium,ev_response_s,29,148.0,2.220038609702865,147.15554247529218,148.84445752470782,,ordinary,s,Student-t
+FogCloudAStarAdvance,medium,route_decision_ms,29,626.5427008316537,0.017713654418355117,626.5359629178633,626.5494387454441,,ordinary,ms,Student-t
+FogCloudAStarAdvance,medium,traffic_light_wait_s,29,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,medium,ev_delay_vs_freeflow_s,29,18.99882388467105,2.2092701377803508,18.352984429184026,19.903780120061693,,ordinary,s,Bootstrap percentile
+FogCloudAStarAdvance,medium,ev_distance_m,29,1779.2163480030724,1.6670895232456906,1778.5822210621654,1779.8504749439794,,ordinary,m,Student-t
+FogCloudAStarAdvance,medium,ev_travel_s,29,147.0,2.220038609702865,146.15554247529218,147.84445752470782,,ordinary,s,Student-t
+FogCloudAStarAdvance,medium,ev_full_stops,29,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+FogCloudAStarAdvance,medium,ev_below_1_s,29,1.1448275862068966,0.23541180771537917,1.055281723553214,1.2343734488605793,,ordinary,s,Student-t
+FogCloudAStarAdvance,medium,ev_whole_stopped_s,29,0.8,0.0,0.8,0.8,,ordinary,s,Student-t
+FogCloudAStarAdvance,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+FogCloudAStarAdvance,medium,ev_green_approach_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+FogCloudAStarAdvance,medium,background_time_loss_s,30,63.868598135106936,10.97173449831512,59.77168514255551,67.96551112765836,,ordinary,s/vehicle,Student-t
+FogCloudAStarAdvance,medium,ev_mean_speed_mps,29,12.106036218431475,0.17342765816421463,12.04006786531854,12.172004571544411,,ordinary,m/s,Student-t
+MistAStarAdvance,medium,pdr,30,0.9666666666666667,0.18257418583505536,0.8332960900859082,0.9940914096183874,,ordinary,ratio,Wilson score
+MistAStarAdvance,medium,e2e_delay_ms,29,37.12327117951748,8.936278973476224,33.72409244944558,40.52244990958938,,ordinary,ms,Student-t
+MistAStarAdvance,medium,throughput_bps,30,2.1997037037037037,0.41545770287799266,2.044569247885638,2.3548381595217696,,ordinary,bit/s,Student-t
+MistAStarAdvance,medium,nrl,29,39855.89655172414,1011.436331758935,39471.1667468533,40240.62635659498,,ordinary,packets/delivery,Student-t
+MistAStarAdvance,medium,control_transmissions,30,40078.96666666667,1703.5694672906818,39442.8433731866,40715.08996014673,,ordinary,packets,Student-t
+MistAStarAdvance,medium,control_bytes,30,3206698.1333333333,136226.23231196203,3155830.4222006123,3257565.8444660543,,ordinary,bytes,Student-t
+MistAStarAdvance,medium,ev_response_s,29,147.39655172413794,1.466161840272731,146.83885358634586,147.95424986193,,ordinary,s,Student-t
+MistAStarAdvance,medium,route_decision_ms,29,574.2758620689631,409.3729435326093,418.5587222557165,729.9930018822097,,ordinary,ms,Student-t
+MistAStarAdvance,medium,traffic_light_wait_s,29,0.0,0.0,0.0,0.0,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,medium,ev_delay_vs_freeflow_s,29,18.66954572229745,1.4966786972842812,18.29046493571334,19.286156754247457,,ordinary,s,Bootstrap percentile
+MistAStarAdvance,medium,ev_distance_m,29,1778.520900666962,1.5354445834673653,1777.9368487830832,1779.1049525508408,,ordinary,m,Student-t
+MistAStarAdvance,medium,ev_travel_s,29,146.6206896551724,1.4799563966416682,146.05774434876136,147.18363496158346,,ordinary,s,Student-t
+MistAStarAdvance,medium,ev_full_stops,29,1.0,0.0,1.0,1.0,,ordinary,stops/run,Student-t
+MistAStarAdvance,medium,ev_below_1_s,29,1.0413793103448277,0.2884902095136362,0.9316435034252644,1.151115117264391,,ordinary,s,Student-t
+MistAStarAdvance,medium,ev_whole_stopped_s,29,0.6275862068965516,0.04548588261473419,0.6102843024728577,0.6448881113202456,,ordinary,s,Student-t
+MistAStarAdvance,medium,ev_green_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,medium,ev_green_count,29,5.0,0.0,5.0,5.0,,ordinary,signals/run,Student-t
+MistAStarAdvance,medium,ev_green_approach_fraction,29,1.0,0.0,1.0,1.0,,ordinary,share,Student-t
+MistAStarAdvance,medium,background_time_loss_s,30,63.81771850547731,10.983220781380451,59.716516464340756,67.91892054661386,,ordinary,s/vehicle,Student-t
+MistAStarAdvance,medium,ev_mean_speed_mps,29,12.131235377031732,0.11884848447422429,12.086027831281971,12.176442922781494,,ordinary,m/s,Student-t

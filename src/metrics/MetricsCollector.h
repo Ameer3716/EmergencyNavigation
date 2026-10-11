@@ -9,6 +9,7 @@ class MetricsCollector : public omnetpp::cSimpleModule {
 public:
     ~MetricsCollector() override { cancelAndDelete(pollTimer); }
     void emergencyReceived(double generation, double reception);
+    void navigationReleased();
 protected:
     void initialize() override;
     void handleMessage(omnetpp::cMessage* message) override;
@@ -26,5 +27,13 @@ private:
     long lastSumoStep = -1;
     int activeBackground = 0;
     bool present = false, nearLight = false;
+    double released = -1, slowTime = 0, wholeRouteStopped = 0;
+    int fullStops = 0, crossings = 0, greenCrossings = 0;
+    bool wasMoving = false, inStop = false;
+    std::string nextLight, signalState, junctionEvent, crossingLight, crossingState;
+    double nextLightDistance = -1;
+    int signalPhase = -1, crossingPhase = -1;
+    int nextLinkIndex = -1;
+    char nextLinkState = '?', crossingLinkState = '?';
 };
 }
