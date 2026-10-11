@@ -1,0 +1,14 @@
+﻿{
+    "scheduled_second_pilot":  60,
+    "completed_first_pilot":  60,
+    "reported_batch_started":  false,
+    "reason":  "User called off the experiment",
+    "completed_and_partial_evidence_preserved":  true,
+    "phase":  "cancelled_by_user",
+    "completed_second_pilot":  49,
+    "checked_at":  "2026-10-11T19:43:49.0856474+05:00",
+    "documentation_updated":  true,
+    "exported_completed_runs":  109,
+    "excluded_unfinished_or_unstarted_runs":  11,
+    "submission_document":  "docs/Emergency_Vehicle_Navigation_Final_Submission.docx"
+}

@@ -1,5 +1,6 @@
 #include "routing/AStarRouter.h"
 #include <cassert>
+#include <cmath>
 #include <iostream>
 
 using namespace emergencynavigation;
@@ -17,6 +18,10 @@ int main(int argc, char** argv)
     auto dynamicRoute = DynamicAStarRouter(graph, congestion, 0.5).route("A0A1", "D2D3");
     assert(graph.connected(dynamicRoute.edges));
     assert(staticRoute.edges != dynamicRoute.edges);
+    // Both Mist and asynchronous Fog reviews compare costs after the current
+    // edge. A* search starts at zero and charges only successor edges.
+    const std::vector<std::string> future(dynamicRoute.edges.begin()+1,dynamicRoute.edges.end());
+    assert(std::abs(dynamicRoute.cost-DynamicAStarRouter(graph,congestion,0.5).routeCost(future))<1e-9);
     std::map<std::string, EdgeObservation> speeding;
     for (const auto& edge : staticRoute.edges) speeding[edge] = {3, 100.0, 100};
     const auto cappedRoute = DynamicAStarRouter(graph, speeding, 0.5).route("A0A1", "D2D3");

@@ -18,7 +18,10 @@ if ! python3 -c 'from pathlib import Path; rows = Path("/proc/net/tcp").read_tex
 fi
 
 cd "$project_dir"
-if [ "${1:-}" = "--policy-validation" ]; then
+if [ "${1:-}" = "--next-validation" ]; then
+    shift
+    python3 "$project_dir/scripts/run_next_validation.py" "$@"
+elif [ "${1:-}" = "--policy-validation" ]; then
     shift
     python3 "$project_dir/scripts/run_policy_validation.py" "$@"
 elif [ "${1:-}" = "--framework-validation" ]; then

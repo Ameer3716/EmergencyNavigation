@@ -101,13 +101,44 @@ protected:
     }
     void onRouteReply(const RouteReply& reply) override {
         if (reply.getRequestId() != requestId || reply.getEmergencyVehicleId() != nodeId()) return;
-        if (!reply.getRouteValid()) throw omnetpp::cRuntimeError("Fog/cloud returned invalid route");
+        if (!reply.getRouteValid()) {
+            if (fogReviewPending) { fogReviewPending = false; recordScalar("dynamicFogInvalidReplies", 1); return; }
+            throw omnetpp::cRuntimeError("Fog/cloud returned invalid route");
+        }
         RouteResult route;
         std::istringstream ids(reply.getRouteEdges());
         std::string id;
         while (std::getline(ids, id, '|')) route.edges.push_back(id);
         route.cost = reply.getEstimatedCost();
         route.expandedNodes = reply.getExpandedNodes();
+        if (fogReviewPending) {
+            fogReviewPending = false;
+            recordScalar("dynamicFogReplyLatency", simTime().dbl() - fogReviewSent);
+            auto current = std::find(route.edges.begin(), route.edges.end(), mobility->getRoadId());
+            if (current == route.edges.end()) {
+                logRoute("discarded", "stale_fog_reply", route, simTime().dbl() - fogReviewSent);
+                return;
+            }
+            route.edges.erase(route.edges.begin(), current);
+            auto found = std::find(selected.begin(), selected.end(), mobility->getRoadId());
+            if (found == selected.end()) return;
+            const std::vector<std::string> remaining(found, selected.end());
+            DynamicAStarRouter router(*graph, fogReviewSnapshot, par("densityLambda"), 1.0 / 7.5, par("minimumObservedVehicles").intValue());
+            const std::vector<std::string> future(remaining.begin() + 1, remaining.end());
+            const std::vector<std::string> candidate(route.edges.begin() + 1, route.edges.end());
+            lastCurrentCost = future.empty() ? 0 : router.routeCost(future);
+            route.cost = candidate.empty() ? 0 : router.routeCost(candidate);
+            logRoute("evaluated", "fog_periodic", route, simTime().dbl() - fogReviewSent);
+            const double improvement = lastCurrentCost > 0 ? (lastCurrentCost - route.cost) / lastCurrentCost : 0;
+            if (route.edges != remaining && simTime().dbl() - lastRerouteTime >= par("minimumRerouteGap").doubleValue()
+                && (improvement >= par("minimumRouteImprovement").doubleValue()
+                    || (fogReviewSlow && improvement >= par("slowRouteImprovement").doubleValue()))) {
+                applyRoute(route, fogReviewSlow ? "low_speed" : "cost_improvement");
+                lastRerouteTime = simTime().dbl();
+                recordScalar("reroutes", 1);
+            }
+            return;
+        }
         pending = route;
         applyRoute(pending, reply.getComputationLocation());
         recordScalar("routeDecisionLatency", simTime().dbl() - decisionStart);
@@ -177,6 +208,10 @@ private:
     double lastRerouteTime = -1e9;
     double lastCurrentCost = 0;
     int lastObservedEdges = 0;
+    bool fogReviewPending = false;
+    bool fogReviewSlow = false;
+    double fogReviewSent = 0;
+    std::map<std::string, EdgeObservation> fogReviewSnapshot;
 
     MistRoutingModule* mist() const {
         auto* module = dynamic_cast<MistRoutingModule*>(getParentModule()->getSubmodule("mist"));
@@ -227,12 +262,16 @@ private:
         out << simTime().dbl() << ',' << decisionStart << ',' << par("watchdogThreshold").doubleValue()
             << ',' << reason << ',' << simTime().dbl() << '\n';
     }
-    void sendFogRequest(bool useCloud, const char*) {
-        fogRequestStart = simTime().dbl();
-        recordScalar("routeFogRequestTime", fogRequestStart);
+    void sendFogRequest(bool useCloud, const char*, bool review = false) {
+        if (!review) {
+            fogRequestStart = simTime().dbl();
+            recordScalar("routeFogRequestTime", fogRequestStart);
+        }
+        recordScalar("fogRequests", 1);
         auto* request = new RouteRequest("RouteRequest");
         populateWSM(request);
         requestId = std::string("route-") + nodeId() + "-" + std::to_string(decisionStart);
+        if (review) requestId += "-review-" + std::to_string(simTime().dbl());
         request->setRequestId(requestId.c_str());
         request->setTargetRsu(par("nearestFogRsu").stringValue());
         request->setUseCloud(useCloud);
@@ -240,13 +279,27 @@ private:
         request->setStartEdge(mobility->getRoadId().c_str());
         request->setDestinationEdge(par("destinationEdge").stringValue());
         const auto pos = mobility->getPositionAt(simTime());
+        if (review) {
+            double closest = 1e100;
+            auto* system = getSimulation()->getSystemModule();
+            for (int i = 0; i < system->getSubmoduleVectorSize("rsu"); ++i) {
+                auto* rsu = system->getSubmodule("rsu", i);
+                auto* position = rsu->getSubmodule("mobility");
+                const double dx = position->par("x").doubleValue() - pos.x;
+                const double dy = position->par("y").doubleValue() - pos.y;
+                if (dx*dx + dy*dy < closest) {
+                    closest = dx*dx + dy*dy;
+                    request->setTargetRsu(rsu->getFullPath().c_str());
+                }
+            }
+        }
         request->setStartX(pos.x);
         request->setStartY(pos.y);
         request->setAccidentX(870);
         request->setAccidentY(900);
         request->setRequestTimestamp(simTime().dbl());
         std::ostringstream traffic;
-        if (!useCloud) for (const auto& [id, sample] : trafficSnapshot())
+        if (!useCloud) for (const auto& [id, sample] : (review ? fogReviewSnapshot : trafficSnapshot()))
             traffic << id << '|' << sample.vehicleCount << '|' << sample.meanSpeed << ';';
         request->setEdgeCosts(traffic.str().c_str());
         request->setByteLength(128 + traffic.str().size());
@@ -301,6 +354,10 @@ private:
         recordScalar("lastRouteCost", route.cost);
     }
     void evaluateDynamic() {
+        if (par("routingMode").stdstringValue() == "fog_cloud") {
+            evaluateFogDynamic();
+            return;
+        }
         if (selected.empty()) return;
         auto found = std::find(selected.begin(), selected.end(), mobility->getRoadId());
         if (found == selected.end()) return;
@@ -335,6 +392,32 @@ private:
             recordScalar("reroutes", 1);
         }
     }
+    void evaluateFogDynamic() {
+        if (selected.empty()) return;
+        auto found = std::find(selected.begin(), selected.end(), mobility->getRoadId());
+        if (found == selected.end()) return;
+        if (fogReviewPending) {
+            logRoute("discarded", "unanswered_fog_review", RouteResult{}, simTime().dbl() - fogReviewSent);
+            recordScalar("dynamicFogUnansweredReviews", 1);
+        }
+        fogReviewSnapshot = trafficSnapshot();
+        lastObservedEdges = static_cast<int>(fogReviewSnapshot.size());
+        fogReviewSlow = false;
+        std::ostringstream slowEdges;
+        for (auto it = found + 1; it != selected.end(); ++it) {
+            auto sample = fogReviewSnapshot.find(*it);
+            const bool below = sample != fogReviewSnapshot.end() && sample->second.vehicleCount >= par("minimumObservedVehicles").intValue()
+                && sample->second.meanSpeed < par("congestionSpeedThreshold").doubleValue() * graph->edge(*it).speedLimit;
+            consecutiveSlowSamples[*it] = below ? consecutiveSlowSamples[*it] + 1 : 0;
+            if (below) { if (slowEdges.tellp() > 0) slowEdges << '|'; slowEdges << *it; }
+            if (consecutiveSlowSamples[*it] >= par("minimumSlowSamples").intValue()) fogReviewSlow = true;
+        }
+        lastSlowEdges = slowEdges.str();
+        fogReviewPending = true;
+        fogReviewSent = simTime().dbl();
+        logRoute("review_requested", "fog_network", RouteResult{}, 0);
+        sendFogRequest(false, "dynamic_review", true);
+    }
     static std::string join(const std::vector<std::string>& edges) {
         std::ostringstream out;
         for (size_t i = 0; i < edges.size(); ++i) { if (i) out << '|'; out << edges[i]; }
@@ -348,11 +431,11 @@ private:
         if (first) out << "action,configuration,algorithm,location,time,decisionStart,computationDelay,expandedNodes,estimatedCost,reason,currentEdge,selectedEdges,candidateEdges,belowThresholdEdges,currentRemainingCost,observedEdges,controlledMistStallDelay\n";
         out << std::setprecision(15);
         const std::string mode = par("routingMode").stdstringValue();
-        const char* configuration = mode == "fog_cloud" ? "FogCloudAStar" :
+        const char* configuration = mode == "fog_cloud" ? (par("dynamicRouting").boolValue() ? "FogCloudDynamicAdvance" : "FogCloudAStar") :
                                     mode == "mist_fallback" ? "MistDynamicFogFallback" :
                                     mode == "mist_dynamic" ? "MistDynamicAStar" : "MistAStar";
         const char* location = std::string(reason) == "cloud" ? "cloud" :
-                               std::string(reason) == "fog" ? "fog" : "mist";
+                               (std::string(reason) == "fog" || mode == "fog_cloud") ? "fog" : "mist";
         out << action << ',' << configuration
             << ',' << (par("dynamicRouting").boolValue() ? "dynamic_astar" : "astar")
             << ',' << location << ',' << simTime().dbl() << ',' << decisionStart << ',' << delay

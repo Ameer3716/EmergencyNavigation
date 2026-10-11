@@ -1,0 +1,13 @@
+context,pilot_window_s,configuration,density,scheduled_runs,completed_runs,included_seeds,excluded_seeds
+pilot_360,360,FogCloudAStarAdvance,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_360,360,FogCloudAStarAdvance,heavy600,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_360,360,MistDynamicFogFallback,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_360,360,MistDynamicFogFallback,heavy600,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_360,360,FogCloudDynamicAdvance,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_360,360,FogCloudDynamicAdvance,heavy600,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_120,120,FogCloudAStarAdvance,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_120,120,FogCloudAStarAdvance,heavy600,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_120,120,MistDynamicFogFallback,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_120,120,MistDynamicFogFallback,heavy600,10,9,101 102 103 104 105 107 108 109 110,106
+pilot_120,120,FogCloudDynamicAdvance,heavy400,10,10,101 102 103 104 105 106 107 108 109 110,
+pilot_120,120,FogCloudDynamicAdvance,heavy600,10,0,,101 102 103 104 105 106 107 108 109 110

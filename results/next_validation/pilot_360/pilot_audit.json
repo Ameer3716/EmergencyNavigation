@@ -1,0 +1,994 @@
+{
+  "passed": true,
+  "congestion_qualified": false,
+  "paired_response_rise_s": 1.75,
+  "departure_end_s": 360,
+  "rows": 60,
+  "groups": [
+    {
+      "density": "heavy400",
+      "configuration": "FogCloudAStarAdvance",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 148.25,
+      "mean_corridor_queue": 17.7,
+      "mean_corridor_slow_vehicle_s": 5028.15,
+      "mean_background_slow_vehicle_s": 31645.9,
+      "mean_inserted": 400
+    },
+    {
+      "density": "heavy400",
+      "configuration": "MistDynamicFogFallback",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 175.35,
+      "mean_corridor_queue": 16.6,
+      "mean_corridor_slow_vehicle_s": 5189.4,
+      "mean_background_slow_vehicle_s": 30373.2,
+      "mean_inserted": 400
+    },
+    {
+      "density": "heavy400",
+      "configuration": "FogCloudDynamicAdvance",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 180.15,
+      "mean_corridor_queue": 15.4,
+      "mean_corridor_slow_vehicle_s": 5106.4,
+      "mean_background_slow_vehicle_s": 31086.1,
+      "mean_inserted": 400
+    },
+    {
+      "density": "heavy600",
+      "configuration": "FogCloudAStarAdvance",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 150.0,
+      "mean_corridor_queue": 28,
+      "mean_corridor_slow_vehicle_s": 14718.9,
+      "mean_background_slow_vehicle_s": 86175.1,
+      "mean_inserted": 600
+    },
+    {
+      "density": "heavy600",
+      "configuration": "MistDynamicFogFallback",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 190.95,
+      "mean_corridor_queue": 29.1,
+      "mean_corridor_slow_vehicle_s": 16401.8,
+      "mean_background_slow_vehicle_s": 85329.7,
+      "mean_inserted": 600
+    },
+    {
+      "density": "heavy600",
+      "configuration": "FogCloudDynamicAdvance",
+      "scheduled": 10,
+      "arrivals": 10,
+      "mean_response_s": 165.95,
+      "mean_corridor_queue": 29.5,
+      "mean_corridor_slow_vehicle_s": 16811.2,
+      "mean_background_slow_vehicle_s": 85671.15,
+      "mean_inserted": 600
+    }
+  ],
+  "execution": {
+    "wall_seconds": 7740.0507872104645,
+    "completed_at": 1791717386.928833
+  },
+  "evidence": [
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed101",
+      "scalar_sha256": "2e0953e1e658e22193ca918337d54d49e641903f9437d7d1bf93f263b90ae57b",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed101.rou.xml": "48eecfc2ac4da5ba084ad8200473411499be7c8c4b27fc39ce8b7de55dfe05d9"
+      },
+      "suite_timing_audit": {
+        "passed": true,
+        "runs": 60,
+        "green_transitions": 608,
+        "phase_rechecks": 1,
+        "bounded_priority_holds": 401,
+        "fog_timing_balances": 40,
+        "em_precision_checks": 60,
+        "binary_sha256": [
+          "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed102",
+      "scalar_sha256": "6b05172f0a771ac942687f56f85183c18227dd0e9a39f48a78cf8823f7e0d376",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed102.rou.xml": "817fe9b663b8103a80e562d38e62283683667d1351a591ad198535e03df86dcf"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed103",
+      "scalar_sha256": "2635f62e00a99c39f376a7de3bae4305c1dad3c2ae9e56fa94f80615ad6bc33b",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed103.rou.xml": "e3dd13138d1baf8c73b2b2b6c636d1cf71309d28e9ccdd81ecdccab9a1fca452"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed104",
+      "scalar_sha256": "d500303d25f9c849569473a067b4f2e4604b5ee2bff19e4d32f598cf89c7919e",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed104.rou.xml": "e5c30efe5e83024635676be385dfd9114a9331c98fdd399cc4fe680ea092e66c"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed105",
+      "scalar_sha256": "9564bc9b80ea9612019e0240952232fd25e00a7ee6bcad01534fb60daf7a4f06",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed105.rou.xml": "be6625741d2438079e9b5dbf40b48aa7b8845d9b95ba714cd001f76e1455ba42"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed106",
+      "scalar_sha256": "3820630c31840b66bff2f80b2bbd4a82602da63b7669018da187d13763aee619",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed106.rou.xml": "93ebe5e1b981deb3078a9bbea041fd95468a626b0b39995a2519a106548863d5"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed107",
+      "scalar_sha256": "dddc1c954d36997e038435b944312a5067a8803fd580cdec36df976035a0bfdd",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed107.rou.xml": "6489bbd116e505e7515b163bb7b28545bc7390cbff4077db656380c87520fd35"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed108",
+      "scalar_sha256": "34dba13027d20236b48f30ed6bae09b4702175852133340b8b37a12d41fa6ddc",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed108.rou.xml": "f7930d9645d0c617dce9c06e2ba8e8170a86e6d3753d0674f2f53b94a542fece"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed109",
+      "scalar_sha256": "65d377f8754351ccd2e7a964be96b7158506a3c3a13b3f5142ceee4222f6c80b",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed109.rou.xml": "b969c9e892e45378b2e5e006f52bdb29f87bb21973572244d8a854311be4538d"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy400-seed110",
+      "scalar_sha256": "464ece4e04523d4299d9903f61e91da37b8a4fc569813eeeba6b50866210538d",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed110.rou.xml": "e02ed7e571577ff26f9ba01a3355c00aeafce5c729433af94a514a2716ad5cb1"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed101",
+      "scalar_sha256": "83d703980c401b03a14b3320ff89cf297d6bd706762773b860007ced3afd62da",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed101.rou.xml": "1f6ee757d7f8904dc0c9a16b98ca37249839b05a8f579810aa540b9edb8fa97c"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed102",
+      "scalar_sha256": "b1803b7bb98e763beb26c1504991f8ea27d0a40872740ff4e81a8fbfd9d5048f",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed102.rou.xml": "85bf29279b561c5a44a78f69fe13af7428f58606a27ae6588d35e14d4265025f"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed103",
+      "scalar_sha256": "d356beb27dc35f7e403628fbfcc551e1b73fcbdf92fbe286881b514d23440605",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed103.rou.xml": "e033e3dd4d86fb9db6e81fd367496087411917893e9cbbe8b20e4c0b71d0f306"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed104",
+      "scalar_sha256": "b6131353379f185383aeff73f77c4aa888fe9fad1ef5cd7e84df5309b3ef5480",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed104.rou.xml": "19f02dee51210af5548614b652049244ee9a045be3bb4eec4d6440ca122688e7"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed105",
+      "scalar_sha256": "c302389ef619f4ec1e7c625f28f8adf9321a8d199d4bd6be44b5dd8bf45e4aaf",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed105.rou.xml": "0ce494c2cd2b55147eb7136b0c2f659b70e5ea5788ff862ff984e6eeb07650a7"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed106",
+      "scalar_sha256": "e7f26ddcfdc4d82820aa916467d932ae8872b091de216108b2890bdb13af4a64",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed106.rou.xml": "6b2e7bf29f75a805a457c75bbcdbbdcdedccb2f44730b49de44d3585d21f0a58"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed107",
+      "scalar_sha256": "a88b452475513bfffbc01ea608c412e14fc4520fb3f43da680bbbdb33f425ac7",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed107.rou.xml": "57d6a5b99c865684cf14ad29f89800d6d1bdda54733a568553198beaa54dea87"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed108",
+      "scalar_sha256": "f05b9dd9e11027829ce60d9a2e99e6f3d50987e08cf310b076977c881da961a5",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed108.rou.xml": "220289f3fafaed2e929de6aabb15adaf119cff06054e0ac77b2d7eaf5f96f02e"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed109",
+      "scalar_sha256": "b0aff88f8d6f30f053d9c2fc66102458246c68daaec5766b34351111416cbab8",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed109.rou.xml": "a0bbdefc08e72416218813b27110ec0e25215bbeaf04234a313b348defd0d5a8"
+      }
+    },
+    {
+      "run": "FogCloudAStarAdvance-heavy600-seed110",
+      "scalar_sha256": "9f92517693e2f9ea4f66b53230864e530830554728a2e6280074bc3d668a9e5e",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed110.rou.xml": "7250bb2e03cdabd44e4a50f893903ee0ae857b58e15d56204caa99b41584c166"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed101",
+      "scalar_sha256": "af623f570a74674ea41903601077265529839efa2a8389fcc55e2e1ba93a96d5",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed101.rou.xml": "48eecfc2ac4da5ba084ad8200473411499be7c8c4b27fc39ce8b7de55dfe05d9"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed102",
+      "scalar_sha256": "223f1cde5791340cb3c978babd14be69b74cec8102739b7f2055349cdbb83f6a",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed102.rou.xml": "817fe9b663b8103a80e562d38e62283683667d1351a591ad198535e03df86dcf"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed103",
+      "scalar_sha256": "0af0ebe8c4509f97f401f2fe4bc3bf5dea61fea78d7cc35b9a6eaf48b3796548",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed103.rou.xml": "e3dd13138d1baf8c73b2b2b6c636d1cf71309d28e9ccdd81ecdccab9a1fca452"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed104",
+      "scalar_sha256": "e6a3d47851abe1dbae108cd80822109ea8739ba5db28be271acd134db6bf6337",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed104.rou.xml": "e5c30efe5e83024635676be385dfd9114a9331c98fdd399cc4fe680ea092e66c"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed105",
+      "scalar_sha256": "2446f28f5fcc1fcde17a9c6d7f2007a79a8fbbfb9169686445d1364bdc27c9b8",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed105.rou.xml": "be6625741d2438079e9b5dbf40b48aa7b8845d9b95ba714cd001f76e1455ba42"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed106",
+      "scalar_sha256": "b1ef0b70bc04e4c128053236e18ecd03d992ba6a2024ea5e77fcfdad937a292f",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 17,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed106.rou.xml": "93ebe5e1b981deb3078a9bbea041fd95468a626b0b39995a2519a106548863d5"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed107",
+      "scalar_sha256": "e82bba513482949251bcc86c85ba530bb60eb41e27d1c274ed5e2d3568bc2ce7",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed107.rou.xml": "6489bbd116e505e7515b163bb7b28545bc7390cbff4077db656380c87520fd35"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed108",
+      "scalar_sha256": "98ce22a3879cca16e95842d85643aabc9d136e312577898727e8f1b703d9e96f",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed108.rou.xml": "f7930d9645d0c617dce9c06e2ba8e8170a86e6d3753d0674f2f53b94a542fece"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed109",
+      "scalar_sha256": "5066ec7a0709aba1e0601ac05bb3b624e2fecbef091204abe89f3f0e651d2be1",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed109.rou.xml": "b969c9e892e45378b2e5e006f52bdb29f87bb21973572244d8a854311be4538d"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy400-seed110",
+      "scalar_sha256": "c616ae4b7a3284e99747822254550d8328aef47ced9059f11594ae8d9d4e848f",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed110.rou.xml": "e02ed7e571577ff26f9ba01a3355c00aeafce5c729433af94a514a2716ad5cb1"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed101",
+      "scalar_sha256": "09060552e21f9d3dfa9d40d4d6d75f701fd401d97a7dff593e75f1160c4427ab",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed101.rou.xml": "1f6ee757d7f8904dc0c9a16b98ca37249839b05a8f579810aa540b9edb8fa97c"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed102",
+      "scalar_sha256": "ae7bf1d3bf33f47e519405e71ae10eb396ff5d8a70222a2a8057f08c40d71374",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed102.rou.xml": "85bf29279b561c5a44a78f69fe13af7428f58606a27ae6588d35e14d4265025f"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed103",
+      "scalar_sha256": "b3125e92c372831173b73b00b4516dd5ac41e666852fded55bc318f2a983e366",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed103.rou.xml": "e033e3dd4d86fb9db6e81fd367496087411917893e9cbbe8b20e4c0b71d0f306"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed104",
+      "scalar_sha256": "5d4c1d51bdce23927c0c732884ccdda06d5c4f2f45b55fb57f3379c203019ce2",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed104.rou.xml": "19f02dee51210af5548614b652049244ee9a045be3bb4eec4d6440ca122688e7"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed105",
+      "scalar_sha256": "a07884793da72038531c4259848f20ac3b0b23fec1ef55e5f550a06fcc25d946",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed105.rou.xml": "0ce494c2cd2b55147eb7136b0c2f659b70e5ea5788ff862ff984e6eeb07650a7"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed106",
+      "scalar_sha256": "25d0dbf305e46bbf80490019f2f015a9abb9a693405409d849168267763cc62f",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 7,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed106.rou.xml": "6b2e7bf29f75a805a457c75bbcdbbdcdedccb2f44730b49de44d3585d21f0a58"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed107",
+      "scalar_sha256": "36106f873557ba0f676d8463078c7a38306f26c259c3aaae3604c1423ca8717a",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed107.rou.xml": "57d6a5b99c865684cf14ad29f89800d6d1bdda54733a568553198beaa54dea87"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed108",
+      "scalar_sha256": "5e4a2be8c1310b5a497a17e1f0210779b17ba8c324499085f4edc33e1d51b322",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed108.rou.xml": "220289f3fafaed2e929de6aabb15adaf119cff06054e0ac77b2d7eaf5f96f02e"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed109",
+      "scalar_sha256": "5db4be33dff760de05f647290a63e32c8dab55c6802c2cd664dfb3a35aafa975",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed109.rou.xml": "a0bbdefc08e72416218813b27110ec0e25215bbeaf04234a313b348defd0d5a8"
+      }
+    },
+    {
+      "run": "FogCloudDynamicAdvance-heavy600-seed110",
+      "scalar_sha256": "d83d0fc1d3231047f572cff80730d9586f694c20308fc8ccbf38886c93ebe861",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed110.rou.xml": "7250bb2e03cdabd44e4a50f893903ee0ae857b58e15d56204caa99b41584c166"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed101",
+      "scalar_sha256": "900790d4ae4df401b8ba85db82bcd2efef36010048009d0cae1a1fa5a250fd36",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed101.rou.xml": "48eecfc2ac4da5ba084ad8200473411499be7c8c4b27fc39ce8b7de55dfe05d9"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed102",
+      "scalar_sha256": "4d3e8b14a2f03bccbbe7de17cb584131a0a1005e637d6ca3b997384f10d39c5b",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed102.rou.xml": "817fe9b663b8103a80e562d38e62283683667d1351a591ad198535e03df86dcf"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed103",
+      "scalar_sha256": "85960962c4ac0900b3037a7c0898cb59c5f26c12d15fa4c5db93ab83937fef31",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed103.rou.xml": "e3dd13138d1baf8c73b2b2b6c636d1cf71309d28e9ccdd81ecdccab9a1fca452"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed104",
+      "scalar_sha256": "eec889c26719db98df67d21925419ec0d15b027c8eeceea0fb792dc66de0bf18",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed104.rou.xml": "e5c30efe5e83024635676be385dfd9114a9331c98fdd399cc4fe680ea092e66c"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed105",
+      "scalar_sha256": "8507d6885dd2216c62a3c47af632b0d279dae8aa5d540e8df52c5defc09ec607",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed105.rou.xml": "be6625741d2438079e9b5dbf40b48aa7b8845d9b95ba714cd001f76e1455ba42"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed106",
+      "scalar_sha256": "aad71d977300c02de69f1ae8e93e567630ad70af730a757519d84985a0b77c67",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 15,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed106.rou.xml": "93ebe5e1b981deb3078a9bbea041fd95468a626b0b39995a2519a106548863d5"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed107",
+      "scalar_sha256": "3ec592d2baa4fd171c6523caf181561a709f0c7a10d2efa73b065cdc61e35ec1",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed107.rou.xml": "6489bbd116e505e7515b163bb7b28545bc7390cbff4077db656380c87520fd35"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed108",
+      "scalar_sha256": "831dd4ac9d5f3d1fc7c8f71d24ed152b40545862b97f1ea354db244962b73155",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed108.rou.xml": "f7930d9645d0c617dce9c06e2ba8e8170a86e6d3753d0674f2f53b94a542fece"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed109",
+      "scalar_sha256": "b889c04228f5a1b7c03b5d90494bd91dfe37c8924051032631587923c1bc6080",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed109.rou.xml": "b969c9e892e45378b2e5e006f52bdb29f87bb21973572244d8a854311be4538d"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy400-seed110",
+      "scalar_sha256": "e1a1d11754d3530e4a609baff1d522afc5ec92a0a7ab16ec1c94fc8691db651c",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 400,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy400-seed110.rou.xml": "e02ed7e571577ff26f9ba01a3355c00aeafce5c729433af94a514a2716ad5cb1"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed101",
+      "scalar_sha256": "ff74514ed2739fb8d2367148f4e85092705d7881dcaeae46b9d907c73759ac5d",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed101.rou.xml": "1f6ee757d7f8904dc0c9a16b98ca37249839b05a8f579810aa540b9edb8fa97c"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed102",
+      "scalar_sha256": "d8f6eb280e36e0574ff2daedd5556e1f41fbe2cda0f8dcd185113b88ecd30287",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed102.rou.xml": "85bf29279b561c5a44a78f69fe13af7428f58606a27ae6588d35e14d4265025f"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed103",
+      "scalar_sha256": "b5a23a685ab2bf945ef6debe9de8beb0059004d65779e7fd00691f5536a852b2",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed103.rou.xml": "e033e3dd4d86fb9db6e81fd367496087411917893e9cbbe8b20e4c0b71d0f306"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed104",
+      "scalar_sha256": "f514e30057286df39d1681fac0147dca08059235cded6de04b1e38d3cbc78b29",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed104.rou.xml": "19f02dee51210af5548614b652049244ee9a045be3bb4eec4d6440ca122688e7"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed105",
+      "scalar_sha256": "6e47333f2a640453aadc829bdd7b2c1cf129b1ae8dce4b8574efe2e0fdb8d105",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed105.rou.xml": "0ce494c2cd2b55147eb7136b0c2f659b70e5ea5788ff862ff984e6eeb07650a7"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed106",
+      "scalar_sha256": "96fe4eabd71c87a8dd5ca2d827ad43b188bce3dc6e5077c8e9d2745b1861d94e",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 13,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed106.rou.xml": "6b2e7bf29f75a805a457c75bbcdbbdcdedccb2f44730b49de44d3585d21f0a58"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed107",
+      "scalar_sha256": "0be7af9471769cae259764f817186da59e809f554bc70e7ed9ffda9146b13914",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 7,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed107.rou.xml": "57d6a5b99c865684cf14ad29f89800d6d1bdda54733a568553198beaa54dea87"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed108",
+      "scalar_sha256": "c3ff4538732846d3ee606cd3d54d02c12d308c3de32d9bb5f8f3d2fcee78aef6",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed108.rou.xml": "220289f3fafaed2e929de6aabb15adaf119cff06054e0ac77b2d7eaf5f96f02e"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed109",
+      "scalar_sha256": "41ad0b0f642629e3342b694cffad0bf72c1853a621c37983eabe2fce041effe1",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed109.rou.xml": "a0bbdefc08e72416218813b27110ec0e25215bbeaf04234a313b348defd0d5a8"
+      }
+    },
+    {
+      "run": "MistDynamicFogFallback-heavy600-seed110",
+      "scalar_sha256": "1033523fa311b071ea21e276e4123b0f54c560d0a006a5e74f4f78d607df55c0",
+      "binary_sha256": "19b9ae0361e47e28a28970ed7fa604de3ecc5cdfd295d19d8edf565b40475a01",
+      "junction_entries": 5,
+      "arrived": true,
+      "background_count": 600,
+      "input_sha256": {
+        "grid.net.xml": "47fd51c38083eca3d6878d4922e7e5ead392c3251a537761907045777bca8480",
+        "special.rou.xml": "5c00fd207c8fcbaf9821c9d6dfea9d4c72ae4f808a237a2067bb515c7b355a0a",
+        "antenna.xml": "db64c5f88ef430ef36010e2093b11005c6066f4aa476ec81154a235d8cdeb3e0",
+        "config.xml": "7c6d902112b651a810e2f01ba325cbb08354034973086707393269a1db9a8ed0",
+        "normal-heavy600-seed110.rou.xml": "7250bb2e03cdabd44e4a50f893903ee0ae857b58e15d56204caa99b41584c166"
+      }
+    }
+  ]
+}

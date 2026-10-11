@@ -12,6 +12,7 @@ import hashlib
 import re
 import time
 import uuid
+import gzip
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
@@ -20,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 GRID = ROOT / "simulations/grid"
 CONFIGS = ("FogCloudAStar", "MistAStar", "MistDynamicAStar", "MistDynamicFogFallback", "NoPreemptionBaseline")
 POLICY_CONFIGS = CONFIGS + ("FogCloudAStarAdvance", "MistAStarAdvance")
+NEXT_CONFIGS = POLICY_CONFIGS + ("FogCloudDynamicAdvance",)
 # Fixed independent selection, identical across densities and every Mist approach.
 STALL_SEEDS = frozenset(random.Random(20261005).sample(range(1, 31), 8))
 STARTUP_ATTEMPTS = 10
@@ -89,13 +91,15 @@ seed-set = {seed}
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--densities", nargs="+", choices=("low", "medium", "high"), default=("low", "medium", "high"))
+    parser.add_argument("--densities", nargs="+", choices=("low", "medium", "high", "heavy400", "heavy600"), default=("low", "medium", "high"))
+    parser.add_argument("--demand-end", type=float, default=360)
     parser.add_argument("--seed-start", type=int, default=1)
     parser.add_argument("--seed-end", type=int, default=30)
     parser.add_argument("--configs", nargs="+", choices=CONFIGS, default=CONFIGS)
     parser.add_argument("--jobs", type=int, default=1, help="Independent density/seed groups to run concurrently")
     parser.add_argument("--force", action="store_true", help="Rerun selected seeds even when raw outputs exist")
     parser.add_argument("--resume-incomplete", action="store_true", help="Keep complete raw triplets and rerun only missing/incomplete run keys")
+    parser.add_argument("--compress-vectors", action="store_true", help="Publish vectors as lossless .vec.gz with uncompressed checksum")
     parser.add_argument("--seeds", nargs="+", type=int, help="Explicit matched seeds for a sample")
     parser.add_argument("--artifact-root", type=Path, default=ROOT, help="Store raw results and logs under a separate root")
     parser.add_argument("--sim-time-limit", type=int, help="Shorter simulation horizon for partition screening")
@@ -128,13 +132,14 @@ def main() -> None:
         if not route.exists():
             subprocess.run(["python3", str(ROOT / "scripts/generate_demand.py"),
                             "--density", density, "--seed", str(seed),
+                            "--departure-end", str(args.demand_end),
                             "--output-dir", str(base), "--sumo-home", str(SUMO_HOME)], check=True)
         for common in ("grid.net.xml", "special.rou.xml", "antenna.xml", "config.xml"):
             shutil.copyfile(GRID / common, base / common)
         one_sumo_config(base, route_name, seed)
         for config in args.configs:
             stem = f"{config}-{density}-seed{seed}"
-            outputs = [raw_dir / f"{stem}.{extension}" for extension in ("sca", "vec", "vci")]
+            outputs = [raw_dir / f"{stem}.{extension}" for extension in ("sca", "vec.gz" if args.compress_vectors else "vec", "vci")]
             if args.resume_incomplete and all(path.exists() and path.stat().st_size > 0 for path in outputs):
                 print(f"Retain completed {stem}", flush=True)
                 continue
@@ -164,12 +169,14 @@ def main() -> None:
                        "-n", f"{veins_root / 'src/veins'}:{ROOT / 'src'}",
                        "-l", str(veins_root / "src/veins"), "-l", str(library),
                        "-f", "omnetpp.ini"]
+            process_wall_seconds = 0.0
             for attempt in range(1, STARTUP_ATTEMPTS + 1):
                 startup_timed_out = False
                 with output.open("w", encoding="utf-8") as log:
                     # Serialize only launchd handshakes. Once a simulation
                     # advances, all workers execute concurrently as before.
                     with startup_lock:
+                        process_started = time.monotonic()
                         process = subprocess.Popen(command, cwd=run_dir, stdout=log,
                                                    stderr=subprocess.STDOUT)
                         started = time.monotonic()
@@ -187,6 +194,7 @@ def main() -> None:
                                 break
                             time.sleep(1)
                     result = subprocess.CompletedProcess(command, process.wait())
+                    process_wall_seconds += time.monotonic() - process_started
                 if result.returncode == 0 and not startup_timed_out:
                     break
                 text = output.read_text(encoding="utf-8", errors="replace")
@@ -211,12 +219,28 @@ def main() -> None:
                     result.check_returncode()
                 print(f"Retry startup connection {stem} (attempt {attempt + 1}/{STARTUP_ATTEMPTS})", flush=True)
                 time.sleep(3 * attempt)
+            manifest['process_wall_seconds'] = process_wall_seconds
+            (logs_dir / f"manifest-{stem}.json").write_text(json.dumps(manifest,indent=2)+'\n')
             for extension in ("sca", "vec", "vci"):
                 source = run_dir / "results" / f"Batch-#0.{extension}"
                 if not source.exists():
                     raise RuntimeError(f"Missing result: {source}")
                 destination = raw_dir / f"{stem}.{extension}"
-                publish_result(source, destination)
+                if extension == 'vec' and args.compress_vectors:
+                    destination = destination.with_suffix('.vec.gz')
+                    temporary = destination.with_name(destination.name+'.publishing-'+uuid.uuid4().hex)
+                    digest = hashlib.sha256()
+                    with source.open('rb') as input_vector, gzip.open(temporary,'wb',compresslevel=1) as compressed:
+                        while block := input_vector.read(1024*1024):
+                            digest.update(block)
+                            compressed.write(block)
+                    os.replace(temporary,destination)
+                    manifest['vector_uncompressed_sha256'] = digest.hexdigest()
+                    manifest['vector_uncompressed_bytes'] = source.stat().st_size
+                    (logs_dir / f"manifest-{stem}.json").write_text(json.dumps(manifest,indent=2)+'\n')
+                    source.unlink()
+                else:
+                    publish_result(source, destination)
             print(f"Complete {stem}", flush=True)
 
     keys = [(density, seed) for density in args.densities

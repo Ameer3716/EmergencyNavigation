@@ -57,7 +57,7 @@ def first_approach_states(mobility,release):
     return result
 
 
-def collect(root):
+def collect(root, accepted_stems=None):
     scenario=json.loads((root/'scenario.json').read_text())
     source=Path(scenario['source_project'])
     if root.anchor.startswith('\\\\'):
@@ -71,9 +71,13 @@ def collect(root):
         assert scenario['source_model_sha256']==scenario['selection']['source_model_sha256'],'Model source changed after held-out selection'
     densities=scenario.get('executed_densities',('low','medium','high'))
     expected={(c,d,s) for c in scenario['configurations'] for d in densities for s in scenario['executed_seeds']}
+    if accepted_stems is not None:
+        expected={key for key in expected if f'{key[0]}-{key[1]}-seed{key[2]}' in accepted_stems}
+        assert len(expected)==len(accepted_stems),'Unknown completed-run key'
     rows=[];audit=[];seen=set();input_groups={};background_samples={};oldroot=process.ROOT;process.ROOT=root
     try:
         for path in sorted((root/'results/raw').glob('*.sca')):
+            if accepted_stems is not None and path.stem not in accepted_stems:continue
             c,d,suffix=path.stem.split('-');seed=int(suffix.removeprefix('seed'))
             key=(c,d,seed);assert key in expected and key not in seen,key;seen.add(key)
             logs=root/'artifacts/logs/batch'
@@ -158,7 +162,7 @@ def collect(root):
     finally:process.ROOT=oldroot
     assert seen==expected,(len(seen),len(expected),sorted(expected-seen)[:10])
     assert len({r['binary_sha256'] for r in audit})==1,'Mixed binaries'
-    safety=timing_audit(root)
+    safety=timing_audit(root,accepted_stems=accepted_stems)
     assert safety['passed'],safety['failures'][:10]
     audit[0]['suite_timing_audit']=safety
     # Prevent changes in insertion/completion composition from creating an

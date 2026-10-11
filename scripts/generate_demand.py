@@ -8,13 +8,14 @@ import sys
 from pathlib import Path
 
 
-PERIODS = {"low": 5.0, "medium": 2.5, "high": 1.8}
+PERIODS = {"low": 5.0, "medium": 2.5, "high": 1.8, "heavy400": .9, "heavy600": .6}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--density", choices=PERIODS, required=True)
     parser.add_argument("--seed", type=int, required=True)
+    parser.add_argument("--departure-end", type=float, default=360)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--sumo-home", type=Path, default=os.environ.get("SUMO_HOME"))
     args = parser.parse_args()
@@ -32,8 +33,8 @@ def main() -> None:
         "--output-trip-file", str(trip_file),
         "--route-file", str(route_file),
         "--begin", "0",
-        "--end", "360",
-        "--period", str(PERIODS[args.density]),
+        "--end", str(args.departure_end),
+        "--period", str(args.departure_end / int(args.density.removeprefix('heavy')) if args.density.startswith('heavy') else PERIODS[args.density]),
         "--seed", str(args.seed),
         "--prefix", "normal",
         "--validate",

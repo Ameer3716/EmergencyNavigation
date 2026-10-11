@@ -1,0 +1,7 @@
+density,configuration,scheduled,arrivals,mean_response_s,mean_corridor_queue,mean_corridor_slow_vehicle_s,mean_background_slow_vehicle_s,mean_inserted
+heavy400,FogCloudAStarAdvance,10,10,148.25,17.7,5028.15,31645.9,400
+heavy400,MistDynamicFogFallback,10,10,175.35,16.6,5189.4,30373.2,400
+heavy400,FogCloudDynamicAdvance,10,10,180.15,15.4,5106.4,31086.1,400
+heavy600,FogCloudAStarAdvance,10,10,150.0,28,14718.9,86175.1,600
+heavy600,MistDynamicFogFallback,10,10,190.95,29.1,16401.8,85329.7,600
+heavy600,FogCloudDynamicAdvance,10,10,165.95,29.5,16811.2,85671.15,600

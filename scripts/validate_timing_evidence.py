@@ -11,12 +11,13 @@ sys.path.insert(0, str(ROOT / "analysis"))
 from raw_data import events, scalars
 
 
-def audit(root):
+def audit(root, accepted_stems=None):
     binaries = set()
     failures, counts = [], {"runs": 0, "green_transitions": 0, "phase_rechecks": 0,
                             "bounded_priority_holds": 0,
                             "fog_timing_balances": 0, "em_precision_checks": 0}
     for path in sorted((root / "results/raw").glob("*.sca")):
+        if accepted_stems is not None and path.stem not in accepted_stems:continue
         if "-seed" not in path.stem:
             continue
         counts["runs"] += 1

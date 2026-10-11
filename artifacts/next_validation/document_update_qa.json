@@ -1,0 +1,14 @@
+﻿{
+    "document":  "docs/Emergency_Vehicle_Navigation_Final_Submission.docx",
+    "rendered_pages":  76,
+    "visually_reviewed_pages":  76,
+    "layout_passed":  true,
+    "completed_csv_rows":  109,
+    "excluded_cases":  11,
+    "preserved_historical_images":  100,
+    "final_images":  112,
+    "tests_run":  32,
+    "tests_passed":  31,
+    "tests_skipped":  1,
+    "simulation_restarted":  false
+}

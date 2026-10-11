@@ -168,3 +168,7 @@ A separate 360-run matrix uses a physical C1C2 stopped queue after initial route
 ## Matched-policy extension (2026-10-10)
 
 The new isolated experiment contains 630 ordinary and 540 obstruction runs, plus 180 held-out candidate runs on seeds 101–110. Previous tables in this file describe the retained original-policy experiment. New matched-policy estimates and explicit unmet requirements are in [POLICY_VALIDATION.md](POLICY_VALIDATION.md). The fixed design is in [POLICY_EXPERIMENT_PLAN.md](POLICY_EXPERIMENT_PLAN.md); the prior timing and zero-wait diagnosis is in [DIAGNOSIS.md](DIAGNOSIS.md). The selected settings are frozen in results/policy_validation/selection.json. No artificial waiting or outcome gate is used.
+
+## Cancelled experiment completed evidence
+
+The new experiment was cancelled before reported seeds began. COMPLETED_PILOT_RESULTS.md and results/next_validation/completed_pilots contain only 109 completed held-out pilot runs, with 11 unfinished or unstarted cases excluded and coverage disclosed. The audit validates included evidence, not a complete scheduled matrix or performance success. Preserved reported results remain in POLICY_VALIDATION.md.
