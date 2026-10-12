@@ -23,3 +23,7 @@ The new isolated experiment contains 630 ordinary and 540 obstruction runs, plus
 ## Cancelled experiment completed evidence
 
 The new experiment was cancelled before reported seeds began. COMPLETED_PILOT_RESULTS.md and results/next_validation/completed_pilots contain only 109 completed held-out pilot runs, with 11 unfinished or unstarted cases excluded and coverage disclosed. The audit validates included evidence, not a complete scheduled matrix or performance success. Preserved reported results remain in POLICY_VALIDATION.md.
+
+## Unified project submission
+
+The Word submission now presents the project from the beginning: overview, system components, operating process, routing frameworks, signal and fallback mechanisms, experimental settings, metric definitions, complete matched results, completed pilot evidence, ablations and conclusions. The reproducible builder is scripts/generate_complete_project_report.py. Its graph gallery covers every available matched and completed-pilot metric, with the seven primary metrics first and a simple explanation for every panel. Earlier results remain in the historical submission. The experiment remains cancelled and no simulation was restarted for this document revision.
